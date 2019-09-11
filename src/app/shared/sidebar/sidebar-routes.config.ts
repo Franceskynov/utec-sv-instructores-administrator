@@ -14,7 +14,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/instructores/catalogo',
         title: 'Catalogo',
-        icon: 'ft-list',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -37,7 +37,7 @@ export const ROUTES: RouteInfo[] = [
         path: '/docentes/directorio',
         title: 'Directorio',
         icon: '',
-        class: 'menu-item',
+        class: '',
         badge: '',
         badgeClass: '',
         isExternalLink: false,
@@ -59,7 +59,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/reporting/instructores',
         title: 'Instructores inscritos',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -70,8 +70,8 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/reporting/asistencia',
         title: 'Asistencia a materias',
-        icon: 'ft-paperclip',
-        class: 'menu-item',
+        icon: '',
+        class: '',
         badge: '',
         badgeClass: '',
         isExternalLink: false,
@@ -82,7 +82,7 @@ export const ROUTES: RouteInfo[] = [
         path: '/reporting/docentes',
         title: 'Docentes inscritos',
         icon: '',
-        class: 'menu-item',
+        class: '',
         badge: '',
         badgeClass: '',
         isExternalLink: false,
@@ -104,7 +104,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/configuraciones/materias',
         title: 'Materias',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -115,7 +115,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/configuraciones/ciclo',
         title: 'Ciclos',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -126,7 +126,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/configuraciones/facultad',
         title: 'Facultades',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -137,7 +137,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/configuraciones/horario',
         title: 'Horarios',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
@@ -148,7 +148,7 @@ export const ROUTES: RouteInfo[] = [
       {
         path: '/configuraciones/aula',
         title: 'Aula',
-        icon: 'ft-user-check',
+        icon: '',
         class: 'menu-item',
         badge: '',
         badgeClass: '',
