@@ -1,0 +1,16 @@
+<!-- File Upload -->
+<div class="input-group file-upload">
+    <!--input type="file" (change)="fileChange(input)" #input class="file-upload-btn" accept=".csv,.xlsx" multiple="false" /-->
+    <input type="file" (change)="onFileChange($event, input)" #input class="file-upload-btn" accept=".xlsx" multiple="false" />
+    <input type="text" class="form-control" placeholder="Selecccione un archivo de su sistema ..." value="{{ filename }}">
+    <i class="fa fa-times delete-file ml-3" (click)="removeFile()" *ngIf="filename"></i>
+    <span class="input-group-append">
+          <button class="btn btn-outline-primary" ngbTooltip="Selecccione un archivo de su sistema ..."  type="button" >
+            <i class="fa fa-folder-open" ></i>
+          </button>
+          <button class="btn btn-outline-success" ngbTooltip="Cargar el archivo" type="button" (click)="readFile()" title="Read file" [disabled]="!filename">
+            <i class="fa fa-upload"></i>
+          </button>
+      </span>
+</div>
+<!-- /File Upload -->

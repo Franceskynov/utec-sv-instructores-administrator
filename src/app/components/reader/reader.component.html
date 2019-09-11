@@ -1,0 +1,109 @@
+<section class="text-center">
+    <div class="container">
+        <app-upload (upload)="upload($event)"></app-upload>
+    </div>
+</section>
+
+<br>
+
+<div class="row justify-content-center mb-1">
+    <div class="md-auto">
+        <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="viewOptions" ngbTooltip="Puede navegar entre las opciones">
+            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+                <input ngbButton type="radio" [value]="true" [disabled]="enbld">Registros
+            </label>
+            <label ngbButtonLabel class="btn-outline-primary btn-sm" >
+                <input ngbButton type="radio" [value]="false" [disabled]="enbld">Informaci&oacute;n del archivo
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-1">
+    <div class="md-auto">
+        <div class="row justify-content-center mb-1">
+            <div class="md-auto">
+                <button class="btn btn-outline-secondary fa fa-eraser" ngbTooltip="Clean" (click)="reset()" ></button>
+                <button class="btn btn-outline-primary fa fa-save ml-2" ngbTooltip="Save" (click)="retrieveData()" [disabled]="enbld"></button>
+                <!--
+                    <button class="btn btn-outline-secondary fa fa-print ml-2" ngbTooltip="Print" (click)="print(tableContent)" ></button> 
+                    <button class="btn btn-outline-primary fa fa-save ml-2" ngbTooltip="Save" (click)="save()" [disabled]="enbld"></button>
+                -->
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="" #tableContent id="tableContent">
+    <div class="container">
+        <div *ngIf="viewOptions == true">
+            <div class="row">
+                <table class="table table-striped text-center" id="data">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let row of titles let i = index" class="text-center">
+                                {{ row }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of contents let i = index">
+                            <td *ngFor="let val of row let j = index">
+                                {{ val }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="viewOptions == false">
+            <div class="row">
+                <table class="table table-striped text-center" id="fileInfo">
+                    <thead>
+                    <tr>
+                        <th class="text-center" colspan="2">Detalles</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td> {{ files.fileInfo.name }} </td>
+                    </tr>
+                    <tr>
+                        <td>Tama&ntilde;o : </td>
+                        <td> {{ files.fileInfo.size }} </td>
+                    </tr>
+                    <tr>
+                        <td>Fecha de moficaci&oacute;n:</td>
+                        <td> {{ files.fileInfo.lastModifiedDate }}  </td>
+                    </tr>
+                    <tr>
+                        <td>Mimetype:</td>
+                        <td> {{ files.fileInfo.type }} </td>
+                    </tr>
+                    <tr>
+                        <td>Columnas:</td>
+                        <td> {{ titles.length }} </td>
+                    </tr>
+                    <tr>
+                        <td>Filas:</td>
+                        <td> {{ contents.length }} </td>
+                    </tr>
+                    <tr>
+                        <td>Celdas:</td>
+                        <td> {{ titles.length * contents.length }} </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+    <code>
+    {{ files.data | json }}
+</code>
+
+-->

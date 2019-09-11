@@ -1,0 +1,28 @@
+.file-upload{
+  .file-upload-btn{
+    position: absolute;
+    width: 95%;
+    height: 35px;
+    z-index: 9;
+    opacity: 0;
+  }
+  .delete-file{
+    position: absolute;
+    right: 80px;
+    top: 8px;
+    font-size: 16px;
+    opacity: .8;
+    cursor: pointer;
+    z-index: 10;
+    visibility: hidden;
+  }
+  &:hover .delete-file{
+    visibility: visible;
+  }
+}
+
+.input-group-append .btn.btn-success,
+.input-group-append .btn.btn-outline-success{
+  z-index: 11;
+}
+

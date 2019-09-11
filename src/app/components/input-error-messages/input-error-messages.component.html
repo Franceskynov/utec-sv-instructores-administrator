@@ -1,0 +1,27 @@
+<div class="text-danger small" *ngIf="frm.get(ipn).hasError('required') && frm.get(ipn).touched">
+    <p class="font-italic">
+        El campo es requerido.
+    </p>
+</div>
+
+
+<div class="text-danger small" *ngIf="frm.get(ipn).hasError('minlength') && frm.get(ipn).touched">
+    <p class="font-italic">
+        Debe de contener al menos <!-- {{obj.ipn.minLength}} --> {{ obj[ipn].minLength }} caracteres.
+    </p>
+</div>
+
+
+<div class="text-danger small" *ngIf="frm.get(ipn).hasError('maxlength') && frm.get(ipn).touched">
+    <p class="font-italic">
+        Debe de contener al m&aacute;ximo <!-- {{obj.ipn.maxLength}}  --> {{ obj[ipn].maxLength }} caracteres.
+    </p>
+</div>
+
+<!--code>
+    form : {{ frm }}
+    <br>
+    input : {{ ipn }}
+    <br>
+    object :{{ obj | json }}
+</code-->
