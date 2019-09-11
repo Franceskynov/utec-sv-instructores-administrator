@@ -6,6 +6,8 @@ import { routes, routing } from 'app/modules/reporting/reporting.routing';
 import { AssistsComponent } from 'app/modules/reporting/assists/assists.component';
 import { UtilModule } from 'app/modules/util/util.module';
 import { IndexComponent } from './index/index.component';
+import { InstructorsComponent } from './instructors/instructors.component';
+import { TeachersComponent } from './teachers/teachers.component';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import { IndexComponent } from './index/index.component';
     CommonModule,
     routing
   ],
-  declarations: [AssistsComponent, IndexComponent]
+  declarations: [AssistsComponent, IndexComponent, InstructorsComponent, TeachersComponent]
 })
 export class ReportingModule { }

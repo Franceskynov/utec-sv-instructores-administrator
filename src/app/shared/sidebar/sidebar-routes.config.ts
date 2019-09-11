@@ -57,7 +57,7 @@ export const ROUTES: RouteInfo[] = [
     isNavHeader: false,
     submenu: [
       {
-        path: '/reporting/instructors',
+        path: '/reporting/instructores',
         title: 'Instructores inscritos',
         icon: 'ft-user-check',
         class: 'menu-item',
@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/reporting/subjects',
+        path: '/reporting/asistencia',
         title: 'Asistencia a materias',
         icon: 'ft-paperclip',
         class: 'menu-item',
@@ -79,7 +79,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/reporting/teachers',
+        path: '/reporting/docentes',
         title: 'Docentes inscritos',
         icon: '',
         class: 'menu-item',
