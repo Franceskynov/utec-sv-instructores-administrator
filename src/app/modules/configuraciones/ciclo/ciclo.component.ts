@@ -47,6 +47,23 @@ export class CicloComponent implements OnInit {
     });
   }
 
-  public openModal(content, row): void {}
+  public postData(): void {}
+  public patchData(): void {}
+
+  public openModal(content, row): void {
+    this.modalService.open(content, {size: 'lg'});
+  }
+
+  public paintError(form, input): any {
+    return {
+      'is-invalid': form.get(input).touched && !form.get(input).valid,
+      'is-valid': form.get(input).touched && form.get(input).valid
+    };
+  }
+
+  public preparaForDelete(content, row) {
+    this.modalService.open(content);
+    this.idForDestroy = row.id;
+  }
 
 }

@@ -58,8 +58,8 @@
                 <ngx-datatable-column name="Acciones" prop="actions">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
                     <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
-                    <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-edit-2" placement="top" ngbTooltip="Editar" (click)="editMode=true; openModal(content, row)"></button>-->
-                    <!--                    <button type="button" class="btn btn-sm btn-outline-danger ft-trash-2" placement="top" ngbTooltip="Eliminar" (click)="preparaForDelete(deletion, row)"></button>-->
+                                        <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-edit-2" placement="top" ngbTooltip="Editar" (click)="editMode=true; openModal(content, row)"></button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger ft-trash-2" placement="top" ngbTooltip="Eliminar" (click)="preparaForDelete(deletion, row)"></button>
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
@@ -70,3 +70,64 @@
     </div>
   </section>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="editMode == false" class="modal-title">Registrar un Horario</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Editar un Horario </h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="">
+      <div class="form-group">
+        <label for="">Dia </label>
+        <input type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="">Hora inicio </label>
+        <input type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="">Hora fin </label>
+        <input type="text" class="form-control">
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(); c('Close click')" ></button>
+    <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" (click)="patchData(); c('Close click')" ></button>
+  </div>
+</ng-template>
+
+<ng-template #deletion let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Borrar un registro </h4>
+
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-4 text-center align-self-center">
+        <i class="ft-alert-triangle text-danger" style="font-size:3em;"></i>
+      </div>
+      <div class="col-sm-8">
+        <h3>
+          Esta seguro de que quiere borrar el registro?
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-danger ft-trash-2 mr-1" ngbTooltip="Borrar" (click)="deleteData(); c('Close click');" ></button>
+  </div>
+</ng-template>
