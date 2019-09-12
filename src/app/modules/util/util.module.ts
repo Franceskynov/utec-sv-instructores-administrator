@@ -14,37 +14,43 @@ import { environment } from 'environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FilterPipe } from 'app/pipes/filter.pipe';
+import { OnlynumberDirective } from './directives/onlynumber.directive';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxDatatableModule,
     NgbModule,
-    
+
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
-    
-    //NgbModule.forRoot(),
+    NgxMaskModule.forRoot(),
+
+    // NgbModule.forRoot(),
   ],
   declarations: [
     InputErrorMessagesComponent,
     FilterPipe,
     ReaderComponent,
     UploadComponent,
+    OnlynumberDirective,
 
   ],
   exports: [
     InputErrorMessagesComponent,
     NgxDatatableModule,
     NgbModule,
-    //ToastrModule,
+    // ToastrModule,
     ReactiveFormsModule,
     FormsModule,
     FilterPipe,
     ReaderComponent,
     UploadComponent,
-    NgSelectModule
+    NgSelectModule,
+    OnlynumberDirective,
+    NgxMaskModule,
   ]
 })
 export class UtilModule { }

@@ -4837,10 +4837,17 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-ng-http-loader@2.3.0:
+ng-http-loader@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ng-http-loader/-/ng-http-loader-2.3.0.tgz#5c395da9ca338e8c971387964987f93c348a7fd0"
   integrity sha512-CW5iUnFytFuaT5fFTw8glv1yp4NuQomWVV10aSa1k9cAoC2DSHmbz+6P/uoaR+3M/51+3GzwSMwmZxASrL9zzQ==
+  dependencies:
+    tslib "^1.9.0"
+
+ngx-mask@^8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-8.0.5.tgz#38aaa7004af715bb6604a1c5b33c6cee223781c9"
+  integrity sha512-/gGSccak4m8/nqQowx0l4nU+zBfkPvVkpox1305QrOZpEgDvCqh8satueuVKZVKv9w4qZYjmdIYeuX7N7Z9Mlg==
   dependencies:
     tslib "^1.9.0"
 

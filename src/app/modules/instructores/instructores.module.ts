@@ -4,6 +4,7 @@ import { IndexComponent } from './index/index.component';
 import { routes, routing } from './instructores.routing';
 import { UtilModule } from 'app/modules/util/util.module';
 import { CatalogoComponent } from './catalogo/catalogo.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { CatalogoComponent } from './catalogo/catalogo.component';
     routing,
     UtilModule,
   ],
-  declarations: [IndexComponent, CatalogoComponent]
+  declarations: [IndexComponent, CatalogoComponent, PerfilComponent]
 })
 export class InstructoresModule { }

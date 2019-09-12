@@ -17,12 +17,17 @@ import { environment } from 'environments/environment';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NotFoundComponent } from 'app/components/not-found/not-found.component';
+import { LoaderService } from 'app/services/loader.service';
+import { LoaderInterceptor } from 'app/interceptors/loader.interceptor';
+import { LoaderComponent } from 'app/components/loader/loader.component';
+
 
 @NgModule({
   declarations: [
       AppComponent,
       FixedNavbarFooterLayoutComponent,
       NotFoundComponent,
+      LoaderComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -37,6 +42,9 @@ import { NotFoundComponent } from 'app/components/not-found/not-found.component'
     }),
   ],
   providers: [
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+
     AuthService,
     AuthGuard,
     {
