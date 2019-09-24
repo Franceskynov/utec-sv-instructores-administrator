@@ -106,6 +106,16 @@
         <input-error-messages [frmName]="frm" ipName="abreviacion" [dataValidation]="permissions"></input-error-messages>
       </div>
 
+      <ng-select
+        [items]="materias"
+        [multiple]="true"
+        [closeOnSelect]="false"
+        [hideSelected]="true"
+        bindLabel="nombre"
+        bindValue="id"
+        placeholder="Seleccione las materias">
+      </ng-select>
+
     </form>
   </div>
   <div class="modal-footer">

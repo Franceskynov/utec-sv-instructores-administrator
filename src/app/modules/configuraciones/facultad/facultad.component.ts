@@ -6,6 +6,7 @@ import { PermissionsService } from 'app/services/permissions.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { FacultadService } from 'app/services/facultad.service';
+import { MateriasService } from 'app/services/materias.service';
 
 @Component({
   selector: 'app-facultad',
@@ -26,14 +27,17 @@ export class FacultadComponent implements OnInit {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public materias: Array<any>;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private service: FacultadService,
+    private materiaService: MateriasService,
   ) { }
 
   ngOnInit() {
+    this.materias = [];
     this.ctrls = ['name', 'description', 'abreviacion'];
     this.permissions = {
       name: {
@@ -55,6 +59,7 @@ export class FacultadComponent implements OnInit {
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.searchColums = ['nombre', 'descripcion', 'abreviacion'];
     this.retrieveData();
+    this.retrieveFacultades();
   }
 
   public get f() { return this.frm.controls; }
@@ -63,6 +68,15 @@ export class FacultadComponent implements OnInit {
     this.service.retrieve().subscribe(response => {
       const tmp = response.data;
       this.rows = tmp.filter(row =>  row.is_enabled === '1');
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
+  }
+
+  public retrieveFacultades(): void {
+    this.materiaService.retrieve().subscribe(response => {
+      const tmp = response.data;
+      this.materias = tmp.filter(row =>  row.is_enabled === '1');
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
