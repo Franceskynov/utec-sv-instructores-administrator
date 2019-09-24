@@ -33,3 +33,84 @@
 
 #user-profile .navbar-profile {
   margin-left: 130px; }
+
+
+ngx-datatable.material.ngx-datatable {
+  box-shadow: none;
+
+  &:not(.cell-selection) {
+    .datatable-body-row:hover {
+      background-color: #fff;
+      .datatable-row-group {
+        background-color: #fff;
+      }
+      &.datatable-row-even {
+        background: transparent;
+        .datatable-row-group {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  datatable-header.datatable-header {
+    border: 1px solid #e3ebf3;
+    border-bottom: 2px solid #e3ebf3;
+    //border-radius: 4px 4px 0px 0px;
+
+    .datatable-header-cell {
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+
+      .datatable-header-cell-wrapper {
+        display: inline-block;
+        width: 90%;
+        .datatable-header-cell-label {
+          width: 100%;
+          display: block;
+          color: #404E67;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+      }
+      .resize-handle {
+        visibility: visible;
+      }
+    }
+  }
+
+  datatable-body.datatable-body {
+    border-left: 1px solid #e3ebf3;
+    border-right: 1px solid #e3ebf3;
+
+    datatable-row-wrapper.datatable-row-wrapper {
+      .datatable-body-row {
+        border-bottom: 1px solid #e3ebf3;
+        &.datatable-row-even {
+          background: rgba(245, 247, 250, 0.5);
+        }
+
+        .datatable-body-cell {
+          padding: 6px 12px;
+          &:not(:last-child) {
+            border-right: 1px solid #e3ebf3;
+          }
+          .datatable-body-cell-label {
+            span {
+              color: #404E67;
+            }
+          }
+        }
+      }
+      &:not(:last-child) {
+        // border-bottom: 1px solid #e3ebf3;
+      }
+    }
+  }
+
+  .empty-row {
+    text-align: center;
+    height: auto;
+  }
+}

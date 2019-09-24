@@ -27,7 +27,7 @@ import { LoaderComponent } from 'app/components/loader/loader.component';
       AppComponent,
       FixedNavbarFooterLayoutComponent,
       NotFoundComponent,
-      LoaderComponent
+      LoaderComponent,
   ],
   imports: [
     BrowserAnimationsModule,
