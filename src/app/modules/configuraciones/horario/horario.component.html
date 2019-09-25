@@ -81,28 +81,42 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action="">
+    <form [formGroup]="frm">
       <div class="form-group">
-        <label for="">Dia </label>
-        <input type="text" class="form-control">
+        <label for="dia">Dia:</label>
+
+        <ng-select
+          id="dia"
+          name="dia"
+          [items]="days"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione las materias" formControlName="dia">
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="dia" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Hora inicio </label>
-        <input type="text" class="form-control">
+        <label for="inicio">Hora de inicio</label>
+        <ngb-timepicker  [meridian]="meridian" [(ngModel)]="inicio" name="inicio" id="inicio" formControlName="inicio"></ngb-timepicker>
+<!--        <input type="text" class="form-control" id="inicio" name="inicio" formControlName="inicio" [ngClass]="paintError(frm, 'inicio')">-->
+        <input-error-messages [frmName]="frm" ipName="inicio" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Hora fin </label>
-        <input type="text" class="form-control">
+        <label for="fin">Hora de finalizacion</label>
+        <ngb-timepicker  [meridian]="meridian" [(ngModel)]="fin" name="inicio" id="fin" formControlName="fin"></ngb-timepicker>
+<!--        <input type="text" class="form-control" id="fin" name="description" formControlName="fin" [ngClass]="paintError(frm, 'fin')">-->
+        <input-error-messages [frmName]="frm" ipName="fin" [dataValidation]="permissions"></input-error-messages>
       </div>
-
     </form>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
-    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(); c('Close click')" ></button>
-    <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" (click)="patchData(); c('Close click')" ></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear"  [disabled]="frm.invalid" (click)="postData(); c('Close click')" ></button>
+    <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" [disabled]="frm.invalid" (click)="patchData(); c('Close click')" ></button>
   </div>
 </ng-template>
 
