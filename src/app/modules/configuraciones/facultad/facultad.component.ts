@@ -16,6 +16,7 @@ import { MateriasService } from 'app/services/materias.service';
 })
 export class FacultadComponent implements OnInit {
 
+  public selectedMaterias: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -37,8 +38,9 @@ export class FacultadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.selectedMaterias = [];
     this.materias = [];
-    this.ctrls = ['name', 'description', 'abreviacion'];
+    this.ctrls = ['name', 'description', 'abreviacion', 'materias'];
     this.permissions = {
       name: {
         required: true,
@@ -54,6 +56,9 @@ export class FacultadComponent implements OnInit {
         required: true,
         minLength: 5,
         maxLength: 50
+      },
+      materias: {
+        required: true
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
@@ -86,7 +91,8 @@ export class FacultadComponent implements OnInit {
     const frmData = {
       nombre: this.f.name.value,
       descripcion: this.f.description.value,
-      abreviacion: this.f.abreviacion.value
+      abreviacion: this.f.abreviacion.value,
+      materias: this.mapMaterias(this.f.materias.value)
     };
     this.service.make(frmData).subscribe(
       data => {
@@ -102,7 +108,8 @@ export class FacultadComponent implements OnInit {
     const frmData = {
       nombre: this.f.name.value,
       descripcion: this.f.description.value,
-      abreviacion: this.f.abreviacion.value
+      abreviacion: this.f.abreviacion.value,
+      materias: this.mapMaterias(this.f.materias.value)
     };
     this.service.modify(this.idForEdit, frmData).subscribe(
       data => {
@@ -122,6 +129,9 @@ export class FacultadComponent implements OnInit {
       this.f.name.patchValue(row.nombre);
       this.f.description.patchValue(row.descripcion);
       this.f.abreviacion.patchValue(row.abreviacion);
+      this.f.materias.setValue(row.materias);
+    } else {
+      this.frm.reset();
     }
   }
 
@@ -147,6 +157,12 @@ export class FacultadComponent implements OnInit {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
       }
     );
+  }
+
+  public mapMaterias(materias): Array<any> {
+    return materias.map((row) => {
+      return row.id;
+    });
   }
 
 }

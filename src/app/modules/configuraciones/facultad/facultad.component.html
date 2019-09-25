@@ -109,11 +109,9 @@
       <ng-select
         [items]="materias"
         [multiple]="true"
-        [closeOnSelect]="false"
-        [hideSelected]="true"
+        [closeOnSelect]="true"
         bindLabel="nombre"
-        bindValue="id"
-        placeholder="Seleccione las materias">
+        placeholder="Seleccione las materias" formControlName="materias">
       </ng-select>
 
     </form>
