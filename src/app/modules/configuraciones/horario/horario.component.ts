@@ -19,6 +19,7 @@ export class HorarioComponent implements OnInit {
   public fin: any;
   public meridian: boolean;
   public days: Array<any>;
+  public day: any;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -39,6 +40,7 @@ export class HorarioComponent implements OnInit {
 
   ngOnInit() {
     this.meridian = true;
+    this.day = '';
     this.inicio = {hour: 6, minute: 30};
     this.fin = { hour: 21, minute: 30};
     this.days = [
@@ -102,11 +104,13 @@ export class HorarioComponent implements OnInit {
   }
   public patchData(): void {
     const frmData = {
-      dia:          this.f.dia.value.id,
-      nombre_dia:   this.f.dia.value.nombre,
+      dia:          this.day,
+      nombre_dia:   this.f.dia.value,
       inicio:       this.mapTime(this.f.inicio.value),
       fin:          this.mapTime(this.f.fin.value)
     };
+
+    console.log('pathdata', frmData);
     this.service.modify(this.idForEdit, frmData).subscribe(
       data => {
         this.retrieveData();
@@ -121,9 +125,12 @@ export class HorarioComponent implements OnInit {
   public openModal(content, row): void {
     this.modalService.open(content);
     if (this.editMode) {
+      this.idForEdit = row.id;
       this.f.dia.patchValue(row.nombre_dia);
-      this.f.inicio.patchValue(row.inicio);
-      this.f.fin.patchValue(row.fin);
+      this.inicio = this.decomposeTime(row.inicio);
+      this.fin = this.decomposeTime(row.fin);
+      this.day = row.dia;
+      console.log('inicio', this.decomposeTime(row.inicio));
     } else {
       this.frm.reset();
       this.meridian = true;
@@ -142,6 +149,13 @@ export class HorarioComponent implements OnInit {
   public preparaForDelete(content, row) {
     this.modalService.open(content);
     this.idForDestroy = row.id;
+  }
+
+  public decomposeTime(time): any {
+    return {
+      hour: parseInt(time, 10),
+      minute: parseInt(time.substring(3, 5), 10)
+    };
   }
 
 }
