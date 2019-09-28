@@ -7,6 +7,7 @@ import { PermissionsService } from 'app/services/permissions.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { LoginService } from 'app/services/login.service';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { LoginService } from 'app/services/login.service';
 })
 export class LoginComponent implements OnInit {
 
+  public token: any;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -34,9 +36,24 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private loginService: LoginService,
+    private decodeToken: DecodeTokenService,
   ) { }
 
   ngOnInit() {
+    this.token = {
+      iss: null,
+      iat: null,
+      exp: null,
+      nbf: null,
+      jti: null,
+      sub: null,
+      prv: null,
+      is_admin: null,
+      role: null,
+      descrpcn: null,
+      username: null,
+      email: null
+    };
     this.ctrls = ['email', 'password'];
     this.permissions = {
       email: {
@@ -59,18 +76,21 @@ export class LoginComponent implements OnInit {
       'email': this.f.email.value,
       'password': this.f.password.value
     }).subscribe(response => {
-      console.log(response)
+      console.log(response);
       if (!response.error) {
+        localStorage.setItem('token', response.data.token);
         this.goTo();
       } else {
-        this.toastr.warning('El usuario y la clave no coinciden', 'Login iconrrecto')
+        this.toastr.warning('El usuario y la clave no coinciden', 'Login iconrrecto');
       }
     }, error => {
-      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR)
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
 
   public goTo(): void {
+    this.token = this.decodeToken.decodePayload();
+    console.log(this.token);
     this.router.navigate(['/', 'instructores', 'catalogo']);
   }
 

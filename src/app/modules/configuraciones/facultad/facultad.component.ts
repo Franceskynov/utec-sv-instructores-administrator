@@ -38,6 +38,7 @@ export class FacultadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.limit = environment.MAX_ROWS_PER_PAGE;
     this.selectedMaterias = [];
     this.materias = [];
     this.ctrls = ['name', 'description', 'abreviacion', 'materias'];
@@ -123,7 +124,10 @@ export class FacultadComponent implements OnInit {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content, {size: 'lg', keyboard: false, });
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
     if (this.editMode) {
       this.idForEdit = row.id;
       this.f.name.patchValue(row.nombre);

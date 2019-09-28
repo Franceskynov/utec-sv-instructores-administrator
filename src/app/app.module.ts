@@ -20,6 +20,8 @@ import { NotFoundComponent } from 'app/components/not-found/not-found.component'
 import { LoaderService } from 'app/services/loader.service';
 import { LoaderInterceptor } from 'app/interceptors/loader.interceptor';
 import { LoaderComponent } from 'app/components/loader/loader.component';
+import { HttpErrorInterceptor } from 'app/interceptors/http-error.interceptor';
+import { UserIdleModule } from 'angular-user-idle';
 
 
 @NgModule({
@@ -40,16 +42,30 @@ import { LoaderComponent } from 'app/components/loader/loader.component';
     ToastrModule.forRoot({
         timeOut: environment.TOASTER_TIMEOUT,
     }),
+    UserIdleModule.forRoot({
+      idle: environment.IDLE_SETTINGS.IDLE,
+      timeout: environment.IDLE_SETTINGS.TIMEOUT,
+      ping: environment.IDLE_SETTINGS.PING
+    }),
+
   ],
   providers: [
     LoaderService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-
     AuthService,
     AuthGuard,
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    },
+    {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent],

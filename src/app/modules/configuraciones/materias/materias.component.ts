@@ -34,6 +34,7 @@ export class MateriasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.limit = environment.MAX_ROWS_PER_PAGE;
     this.retrieveData();
 
     this.ctrls = ['name', 'description'];
@@ -83,7 +84,10 @@ export class MateriasComponent implements OnInit {
   }
 
   public openModal(content, row) {
-    this.modalService.open(content, {size: 'lg'});
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
 
     if (this.editMode) {
       this.idForEdit = row.id;

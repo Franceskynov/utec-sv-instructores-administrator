@@ -28,11 +28,15 @@ export const routes: Routes = [
       {
         path: 'configuraciones',
         loadChildren: 'app/modules/configuraciones/configuraciones.module#ConfiguracionesModule'
+      },
+      {
+        path: 'admin',
+        loadChildren: 'app/modules/admin/admin.module#AdminModule'
       }
     ]
   },
   {
-    path: 'auth',
+    path: 'login',
     loadChildren: 'app/modules/auth/auth.module#AuthModule'
   },
   {

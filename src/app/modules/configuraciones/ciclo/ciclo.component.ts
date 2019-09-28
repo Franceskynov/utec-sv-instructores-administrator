@@ -34,6 +34,7 @@ export class CicloComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.limit = environment.MAX_ROWS_PER_PAGE;
     this.ctrls = ['name', 'description'];
     this.permissions = {
       name: {
@@ -92,7 +93,10 @@ export class CicloComponent implements OnInit {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content, {size: 'lg'});
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
     if (this.editMode) {
       this.idForEdit = row.id;
       this.f.name.patchValue(row.nombre);

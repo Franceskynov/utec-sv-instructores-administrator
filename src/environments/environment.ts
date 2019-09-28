@@ -27,5 +27,11 @@ export const environment = {
   },
   MAX_RESULTS_PER_PAGE: 6,
   TOASTER_TIMEOUT: 2000,
-  PREVENT_DUPLICATES: true
+  PREVENT_DUPLICATES: true,
+  MAX_ROWS_PER_PAGE: 10,
+  IDLE_SETTINGS: {
+    IDLE: 3 * 60,
+    TIMEOUT: 10,
+    PING: 5,
+  }
 };

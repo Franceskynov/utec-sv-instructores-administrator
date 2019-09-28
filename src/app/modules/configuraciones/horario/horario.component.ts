@@ -39,6 +39,7 @@ export class HorarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.limit = environment.MAX_ROWS_PER_PAGE;
     this.meridian = true;
     this.day = '';
     this.inicio = {hour: 6, minute: 30};
@@ -77,7 +78,8 @@ export class HorarioComponent implements OnInit {
       const tmp = response.data;
       this.rows = tmp.filter(row =>  row.is_enabled === '1');
     }, error => {
-      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+      // this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+      this.toastr.error(error.headers.get('service-description'), 'Error');
     });
   }
 
@@ -147,7 +149,10 @@ export class HorarioComponent implements OnInit {
   }
 
   public preparaForDelete(content, row) {
-    this.modalService.open(content);
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
     this.idForDestroy = row.id;
   }
 

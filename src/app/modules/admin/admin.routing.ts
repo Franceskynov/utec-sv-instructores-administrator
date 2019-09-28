@@ -1,10 +1,13 @@
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
-import { LoginComponent } from 'app/modules/auth/login/login.component';
+import { IndexComponent } from './index/index.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent }
+  {
+    path: '',
+    component: IndexComponent,
+    children: []
+  },
 
 ];
-
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);
