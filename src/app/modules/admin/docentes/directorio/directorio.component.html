@@ -19,7 +19,7 @@
 <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
 
 <div class="row mt-2">
-  <div class="col-xl-4 col-md-6 col-12" *ngFor="let number of [0, 1, 2, 3, 4]">
+  <div class="col-xl-4 col-md-6 col-12" *ngFor="let docente of docentes">
     <div class="card profile-card-with-cover">
       <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
       <div class="card-img-top img-fluid bg-cover height-200" style="background: url('/assets/img/18.jpg');"></div>
@@ -29,26 +29,24 @@
       </div>
       <div class="profile-card-with-cover-content text-center">
         <div class="card-body">
-          <h4 class="card-title">Nombre Apellido</h4>
+          <h4 class="card-title"> {{ docente.nombre }}  {{ docente.apellido }} </h4>
           <ul class="list-inline">
-            <li>docente@utec.com.sv</li>
+            <li> {{ docente.email }} </li>
           </ul>
-          <h6 class="card-subtitle text-muted">Ingeniero</h6>
+          <h6 class="card-subtitle text-muted">
+            <span *ngFor="let especialidad of docente.especialidades">
+              {{ especialidad.nombre }}
+            </span>
+          </h6>
         </div>
-        <div class="text-center">
-          <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-facebook">
-            <span class="fa fa-google-plus"></span>
-          </a>
-<!--          <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-twitter">-->
-<!--            <span class="fa fa-twitter"></span>-->
+<!--        <div class="text-center">-->
+<!--          <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-facebook">-->
+<!--            <span class="fa fa-google-plus"></span>-->
 <!--          </a>-->
-          <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-linkedin">
-            <span class="fa fa-linkedin font-medium-4"></span>
-          </a>
-<!--          <a href="#" class="btn btn-social-icon mb-1 btn-outline-github">-->
-<!--            <span class="fa fa-github font-medium-4"></span>-->
+<!--          <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-linkedin">-->
+<!--            <span class="fa fa-linkedin font-medium-4"></span>-->
 <!--          </a>-->
-        </div>
+<!--        </div>-->
       </div>
     </div>
   </div>
@@ -64,31 +62,45 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action="">
+    <form [formGroup]="frm">
       <div class="form-group">
-        <label for="">Nombre </label>
-        <input type="text" class="form-control">
+        <label for="name">Nombre:</label>
+        <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')">
+        <input-error-messages [frmName]="frm" ipName="name" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Apellido </label>
-        <input type="text" class="form-control">
+        <label for="lastname">Apellido:</label>
+        <input type="text" class="form-control" id="lastname" name="lastname" formControlName="lastname" [ngClass]="paintError(frm, 'lastname')">
+        <input-error-messages [frmName]="frm" ipName="lastname" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Especialidad </label>
-        <input type="text" class="form-control">
+        <label for="email">Email:</label>
+        <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')">
+        <input-error-messages [frmName]="frm" ipName="email" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Email primario </label>
-        <input type="text" class="form-control">
+        <label for="name">Telefono:</label>
+        <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')">
+        <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Email secundario </label>
-        <input type="text" class="form-control">
+        <label for="speciality">Especialidad: </label>
+        <ng-select
+          [items]="especialidades"
+          [multiple]="true"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione las materias"
+          name="speciality"
+          id="speciality"
+          formControlName="speciality">
+        </ng-select>
       </div>
+
     </form>
   </div>
   <div class="modal-footer">
