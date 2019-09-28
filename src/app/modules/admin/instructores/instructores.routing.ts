@@ -3,19 +3,23 @@ import { ModuleWithProviders } from '@angular/core';
 import { IndexComponent } from 'app/modules/admin/instructores/index/index.component';
 import { CatalogoComponent } from './catalogo/catalogo.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: IndexComponent
+    component: IndexComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'catalogo',
-    component: CatalogoComponent
+    component: CatalogoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'perfil',
-    component: PerfilComponent
+    component: PerfilComponent,
+    canActivate: [AuthGuard]
   }
 
 ];

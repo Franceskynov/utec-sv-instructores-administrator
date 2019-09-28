@@ -6,31 +6,38 @@ import { CicloComponent } from './ciclo/ciclo.component';
 import { FacultadComponent } from './facultad/facultad.component';
 import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
+import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: IndexComponent
+    component: IndexComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'materias',
-    component: MateriasComponent
+    component: MateriasComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'ciclo',
-    component: CicloComponent
+    component: CicloComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'facultad',
-    component: FacultadComponent
+    component: FacultadComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'horario',
-    component: HorarioComponent
+    component: HorarioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'aula',
-    component: AulaComponent
+    component: AulaComponent,
+    canActivate: [AuthGuard]
   }
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

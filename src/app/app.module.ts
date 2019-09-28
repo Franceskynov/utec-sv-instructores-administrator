@@ -22,6 +22,7 @@ import { LoaderInterceptor } from 'app/interceptors/loader.interceptor';
 import { LoaderComponent } from 'app/components/loader/loader.component';
 import { HttpErrorInterceptor } from 'app/interceptors/http-error.interceptor';
 import { UserIdleModule } from 'angular-user-idle';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { UserIdleModule } from 'angular-user-idle';
       FixedNavbarFooterLayoutComponent,
       NotFoundComponent,
       LoaderComponent,
+      WelcomeComponent,
   ],
   imports: [
     BrowserAnimationsModule,

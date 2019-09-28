@@ -1,29 +1,28 @@
 import { RouteInfo } from './sidebar.metadata';
 
-export const ROUTES: RouteInfo[] = [
-
+const ADMIN_ROUTES: RouteInfo[] = [
   {
-    path: '',
-    title: 'Instructores',
-    icon: 'ft-book',
-    class: 'nav-item has-sub',
-    badge: '',
-    badgeClass: 'badge badge badge-primary badge-pill float-right mr-2',
-    isExternalLink: false, isNavHeader: false,
-    submenu: [
-      {
-        path: '/admin/instructores/catalogo',
-        title: 'Catalogo',
-        icon: '',
-        class: 'menu-item',
-        badge: '',
-        badgeClass: '',
-        isExternalLink: false,
-        isNavHeader: false,
-        submenu: []
-      },
-    ]
-  },
+  path: '',
+  title: 'Instructores',
+  icon: 'ft-book',
+  class: 'nav-item has-sub',
+  badge: '',
+  badgeClass: 'badge badge badge-primary badge-pill float-right mr-2',
+  isExternalLink: false, isNavHeader: false,
+  submenu: [
+    {
+      path: '/admin/instructores/catalogo',
+      title: 'Catalogo',
+      icon: '',
+      class: 'menu-item',
+      badge: '',
+      badgeClass: '',
+      isExternalLink: false,
+      isNavHeader: false,
+      submenu: []
+    },
+  ]
+},
   {
     path: '',
     title: 'Docentes',
@@ -157,6 +156,10 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
     ]
-  }
+  }];
+const DOCENTE_ROUTES: RouteInfo[] = [];
+const INSTRUCTOR_ROUTES: RouteInfo[] = [];
 
-];
+export const ADM_ROUTES: RouteInfo[] = [...ADMIN_ROUTES];
+export const DCNT_ROUTES: RouteInfo[] = [...DOCENTE_ROUTES];
+export const INSTR_ROUTES: RouteInfo[] = [...INSTRUCTOR_ROUTES];

@@ -33,12 +33,8 @@ export class NavbarComponent implements OnInit {
   }
 
   public logOut(): void {
-    if (environment.production) {
-      this.router.navigate(['/login']);
-      localStorage.clear();
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/login']);
+    localStorage.clear();
   }
 
 }

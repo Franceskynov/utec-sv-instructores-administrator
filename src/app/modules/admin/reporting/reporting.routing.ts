@@ -6,6 +6,7 @@ import { AssistsComponent } from 'app/modules/admin/reporting/assists/assists.co
 import { InstructorsComponent } from './instructors/instructors.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,19 +15,23 @@ export const routes: Routes = [
   },
   {
     path: 'asistencia',
-    component: AssistsComponent
+    component: AssistsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'instructores',
-    component: InstructorsComponent
+    component: InstructorsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'docentes',
-    component: TeachersComponent
+    component: TeachersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   }
 
 ];

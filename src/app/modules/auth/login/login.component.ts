@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { LoginService } from 'app/services/login.service';
 import { DecodeTokenService } from 'app/services/decode-token.service';
+import {ADM_ROUTES, DCNT_ROUTES, INSTR_ROUTES} from 'app/shared/sidebar/sidebar-routes.config';
 
 @Component({
   selector: 'app-login',
@@ -90,8 +91,13 @@ export class LoginComponent implements OnInit {
 
   public goTo(): void {
     this.token = this.decodeToken.decodePayload();
-    console.log(this.token);
-    this.router.navigate(['/', 'instructores', 'catalogo']);
+    if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
+      this.router.navigate(['/', 'admin']);
+    } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
+      this.router.navigate(['/', 'docente']);
+    } else {
+      this.router.navigate(['/', 'instructor']);
+    }
   }
 
 }

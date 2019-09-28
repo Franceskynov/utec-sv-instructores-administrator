@@ -1,6 +1,7 @@
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { IndexComponent } from './index/index.component';
+import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,19 +14,23 @@ export const routes: Routes = [
       },
       {
         path: 'instructores',
-        loadChildren: 'app/modules/admin/instructores/instructores.module#InstructoresModule'
+        loadChildren: 'app/modules/admin/instructores/instructores.module#InstructoresModule',
+        canActivate: [AuthGuard]
       },
       {
         path: 'docentes',
-        loadChildren: 'app/modules/admin/docentes/docentes.module#DocentesModule'
+        loadChildren: 'app/modules/admin/docentes/docentes.module#DocentesModule',
+        canActivate: [AuthGuard]
       },
       {
         path: 'reporting',
-        loadChildren: 'app/modules/admin/reporting/reporting.module#ReportingModule'
+        loadChildren: 'app/modules/admin/reporting/reporting.module#ReportingModule',
+        canActivate: [AuthGuard]
       },
       {
         path: 'configuraciones',
-        loadChildren: 'app/modules/admin/configuraciones/configuraciones.module#ConfiguracionesModule'
+        loadChildren: 'app/modules/admin/configuraciones/configuraciones.module#ConfiguracionesModule',
+        canActivate: [AuthGuard]
       },
     ]
   },
