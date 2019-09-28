@@ -12,7 +12,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false, isNavHeader: false,
     submenu: [
       {
-        path: '/instructores/catalogo',
+        path: '/admin/instructores/catalogo',
         title: 'Catalogo',
         icon: '',
         class: 'menu-item',
@@ -34,7 +34,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false, isNavHeader: false,
     submenu: [
       {
-        path: '/docentes/directorio',
+        path: '/admin/docentes/directorio',
         title: 'Directorio',
         icon: '',
         class: '',
@@ -57,7 +57,7 @@ export const ROUTES: RouteInfo[] = [
     isNavHeader: false,
     submenu: [
       {
-        path: '/reporting/instructores',
+        path: '/admin/reporting/instructores',
         title: 'Instructores inscritos',
         icon: '',
         class: 'menu-item',
@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/reporting/asistencia',
+        path: '/admin/reporting/asistencia',
         title: 'Asistencia a materias',
         icon: '',
         class: '',
@@ -79,7 +79,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/reporting/docentes',
+        path: '/admin/reporting/docentes',
         title: 'Docentes inscritos',
         icon: '',
         class: '',
@@ -102,7 +102,7 @@ export const ROUTES: RouteInfo[] = [
     isNavHeader: false,
     submenu: [
       {
-        path: '/configuraciones/materias',
+        path: '/admin/configuraciones/materias',
         title: 'Materias',
         icon: '',
         class: 'menu-item',
@@ -113,7 +113,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/configuraciones/ciclo',
+        path: '/admin/configuraciones/ciclo',
         title: 'Ciclos',
         icon: '',
         class: 'menu-item',
@@ -124,7 +124,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/configuraciones/facultad',
+        path: '/admin/configuraciones/facultad',
         title: 'Facultades',
         icon: '',
         class: 'menu-item',
@@ -135,7 +135,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/configuraciones/horario',
+        path: '/admin/configuraciones/horario',
         title: 'Horarios',
         icon: '',
         class: 'menu-item',
@@ -146,7 +146,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: '/configuraciones/aula',
+        path: '/admin/configuraciones/aula',
         title: 'Aula',
         icon: '',
         class: 'menu-item',

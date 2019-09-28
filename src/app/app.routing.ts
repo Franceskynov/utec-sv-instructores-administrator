@@ -14,22 +14,6 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'instructores',
-        loadChildren: 'app/modules/instructores/instructores.module#InstructoresModule'
-      },
-      {
-        path: 'docentes',
-        loadChildren: 'app/modules/docentes/docentes.module#DocentesModule'
-      },
-      {
-        path: 'reporting',
-        loadChildren: 'app/modules/reporting/reporting.module#ReportingModule'
-      },
-      {
-        path: 'configuraciones',
-        loadChildren: 'app/modules/configuraciones/configuraciones.module#ConfiguracionesModule'
-      },
-      {
         path: 'admin',
         loadChildren: 'app/modules/admin/admin.module#AdminModule'
       }

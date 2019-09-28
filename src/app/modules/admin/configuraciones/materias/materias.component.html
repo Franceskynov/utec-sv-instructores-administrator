@@ -1,0 +1,131 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Materias</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Configuraciones
+        </li>
+
+        <li class="breadcrumb-item active">
+          Materias
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+            <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>
+            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+<!--            <button class="btn btn-outline-secondary mr-1 ft-upload" type="button" placement="top" ngbTooltip="Carga masiva"></button>-->
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50" [limit]="limit"
+                             [rowHeight]="'auto'"
+
+                             [rows]='rows|filter:filterValue:searchColums'>
+<!---->
+                <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Descripcion" prop="descripcion"></ngx-datatable-column>
+                <ngx-datatable-column name="Acciones" prop="actions">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-edit-2" placement="top" ngbTooltip="Editar" (click)="editMode=true; openModal(content, row)"></button>
+                    <button type="button" class="btn btn-sm btn-outline-danger ft-trash-2" placement="top" ngbTooltip="Eliminar" (click)="preparaForDelete(deletion, row)"></button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="editMode == false" class="modal-title">Crear una nueva asistencia</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Editar una asistencia</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')">
+        <input-error-messages [frmName]="frm" ipName="name" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripci&oacute;n</label>
+        <input type="text" class="form-control" id="description" name="description" formControlName="description" [ngClass]="paintError(frm, 'description')">
+        <input-error-messages [frmName]="frm" ipName="description" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(); c('Close click')" [disabled]="frm.invalid"></button>
+    <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" (click)="patchData(); c('Close click')" [disabled]="frm.invalid"></button>
+  </div>
+</ng-template>
+
+
+<ng-template #deletion let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Borrar un registro </h4>
+
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-4 text-center align-self-center">
+        <i class="ft-alert-triangle text-danger" style="font-size:3em;"></i>
+      </div>
+      <div class="col-sm-8">
+        <h3>
+          Esta seguro de que quiere borrar el registro?
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-danger ft-trash-2 mr-1" ngbTooltip="Borrar" (click)="deleteData(); c('Close click');" ></button>
+  </div>
+</ng-template>
