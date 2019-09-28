@@ -8,6 +8,7 @@ import { CicloComponent } from './ciclo/ciclo.component';
 import { FacultadComponent } from './facultad/facultad.component';
 import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
+import { EspecialidadesComponent } from './especialidades/especialidades.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { AulaComponent } from './aula/aula.component';
     routing,
     UtilModule
   ],
-  declarations: [IndexComponent, MateriasComponent, CicloComponent, FacultadComponent, HorarioComponent, AulaComponent]
+  declarations: [IndexComponent, MateriasComponent, CicloComponent, FacultadComponent, HorarioComponent, AulaComponent, EspecialidadesComponent]
 })
 export class ConfiguracionesModule { }

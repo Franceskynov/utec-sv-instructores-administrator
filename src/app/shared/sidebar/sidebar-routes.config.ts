@@ -155,6 +155,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         isNavHeader: false,
         submenu: []
       },
+      {
+        path: '/admin/configuraciones/especialidad',
+        title: 'Especialidad',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
     ]
   }];
 const DOCENTE_ROUTES: RouteInfo[] = [];

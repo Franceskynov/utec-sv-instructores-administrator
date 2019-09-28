@@ -6,7 +6,8 @@ import { CicloComponent } from './ciclo/ciclo.component';
 import { FacultadComponent } from './facultad/facultad.component';
 import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
-import {AuthGuard} from 'app/guards/auth.guard';
+import { AuthGuard } from 'app/guards/auth.guard';
+import { EspecialidadesComponent } from './especialidades/especialidades.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Aula'
+    }
+  },
+  {
+    path: 'especialidad',
+    component: EspecialidadesComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Especialidades'
     }
   }
 ];
