@@ -19,6 +19,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NotFoundComponent } from 'app/components/not-found/not-found.component';
 import { LoaderService } from 'app/services/loader.service';
 import { LoaderInterceptor } from 'app/interceptors/loader.interceptor';
+import { AuthInterceptor } from 'app/interceptors/token.interceptor';
 import { LoaderComponent } from 'app/components/loader/loader.component';
 import { HttpErrorInterceptor } from 'app/interceptors/http-error.interceptor';
 import { UserIdleModule } from 'angular-user-idle';
@@ -68,7 +69,13 @@ import { WelcomeComponent } from './welcome/welcome.component';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+
   ],
   bootstrap: [AppComponent],
   schemas: [
