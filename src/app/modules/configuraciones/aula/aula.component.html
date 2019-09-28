@@ -82,21 +82,38 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action="">
+    <form [formGroup]="frm">
       <div class="form-group">
-        <label for="">Edificio </label>
-        <input type="text" class="form-control">
+        <label for="dia">Edificio:</label>
+
+        <ng-select
+          id="dia"
+          name="dia"
+          [items]="edificios"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+
+          placeholder="Seleccione el dia" formControlName="edificio">
+            <ng-template ng-label-tmp let-item="item">
+            {{ item.nombre }}
+            </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="edificio" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Codigo </label>
-        <input type="text" class="form-control">
+        <label for="codigo">Codigo</label>
+        <input type="text" class="form-control" id="codigo" name="codigo" formControlName="codigo" [ngClass]="paintError(frm, 'codigo')">
+        <input-error-messages [frmName]="frm" ipName="codigo" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
-        <label for="">Capacidad </label>
-        <input type="text" class="form-control">
+        <label for="capacidad">Capacidad</label>
+        <input type="text" class="form-control" id="capacidad" name="capacidad" formControlName="capacidad" [ngClass]="paintError(frm, 'capacidad')">
+        <input-error-messages [frmName]="frm" ipName="capacidad" [dataValidation]="permissions"></input-error-messages>
       </div>
+
     </form>
   </div>
   <div class="modal-footer">
