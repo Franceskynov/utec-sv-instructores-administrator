@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  CONTROL_URL_API: 'http://localhost:8000/api/',
+  CONTROL_URL_API: 'http://localhost:8000/api/v1/',
   // CONTROL_URL_API: window.location.protocol + "//" + window.location.host + "/",
   MESSAGES: {
     SERVICE_ERROR: 'Error al conectarse al servicio',

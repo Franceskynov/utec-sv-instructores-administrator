@@ -16,22 +16,34 @@ export const routes: Routes = [
   {
     path: 'asistencia',
     component: AssistsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Reporte de asistencia'
+    }
   },
   {
     path: 'instructores',
     component: InstructorsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Reporte de Instructores'
+    }
   },
   {
     path: 'docentes',
     component: TeachersComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Reporte de Docentes'
+    }
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Dashboard'
+    }
   }
 
 ];

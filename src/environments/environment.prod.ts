@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  CONTROL_URL_API: window.location.protocol + '//' + window.location.host + '/',
+  CONTROL_URL_API: window.location.protocol + '//' + window.location.host + '/api/v1/',
   MESSAGES: {
     SERVICE_ERROR: 'Error al conectarse al servicio',
     SERVICE_WARN: '',

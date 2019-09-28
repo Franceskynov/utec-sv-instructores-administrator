@@ -13,7 +13,10 @@ export const routes: Routes = [
   {
     path: 'directorio',
     component: DirectorioComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Directorio de docentes'
+    }
   }
 
 ];

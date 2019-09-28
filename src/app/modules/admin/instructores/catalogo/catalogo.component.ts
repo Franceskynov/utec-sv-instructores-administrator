@@ -66,7 +66,7 @@ export class CatalogoComponent implements OnInit {
   public patchData(): void {}
 
   goPlaces() {
-    this.router.navigate(['/', 'instructores', 'perfil']);
+    this.router.navigate(['/', 'admin', 'instructores', 'perfil', 1]);
   }
 
   public openModal(content, row): void {

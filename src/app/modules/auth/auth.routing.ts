@@ -3,7 +3,13 @@ import { ModuleWithProviders } from '@angular/core';
 import { LoginComponent } from 'app/modules/auth/login/login.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent }
+    {
+      path: '',
+      component: LoginComponent,
+      data: {
+        title: 'Login'
+      }
+    }
 
 ];
 

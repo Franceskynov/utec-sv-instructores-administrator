@@ -14,12 +14,18 @@ export const routes: Routes = [
   {
     path: 'catalogo',
     component: CatalogoComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Catalogo de Instructores'
+    }
   },
   {
-    path: 'perfil',
+    path: 'perfil/:id',
     component: PerfilComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Perfil del instructor'
+    }
   }
 
 ];

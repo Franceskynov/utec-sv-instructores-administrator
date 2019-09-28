@@ -17,27 +17,42 @@ export const routes: Routes = [
   {
     path: 'materias',
     component: MateriasComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Materias'
+    }
   },
   {
     path: 'ciclo',
     component: CicloComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Ciclo'
+    }
   },
   {
     path: 'facultad',
     component: FacultadComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Fcultad'
+    }
   },
   {
     path: 'horario',
     component: HorarioComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Horario'
+    }
   },
   {
     path: 'aula',
     component: AulaComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Aula'
+    }
   }
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);
