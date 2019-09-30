@@ -19,10 +19,10 @@
 <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
 
 <div class="row mt-2">
-  <div class="col-xl-4 col-md-6 col-12" *ngFor="let docente of docentes">
+  <div class="col-xl-4 col-md-6 col-12" *ngFor="let docente of docentes | paginate: config">
     <div class="card profile-card-with-cover">
       <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
-      <div class="card-img-top img-fluid bg-cover height-200" style="background: url('/assets/img/18.jpg');"></div>
+      <div class="card-img-top img-fluid bg-cover height-200" style="background: url('/assets/img/deco.png');"></div>
       <div class="card-profile-image">
         <img src="/assets/img/avatar-s-4.png" class="rounded-circle img-border box-shadow-1"
              alt="Card image">
@@ -35,7 +35,7 @@
           </ul>
           <h6 class="card-subtitle text-muted">
             <span *ngFor="let especialidad of docente.especialidades">
-              {{ especialidad.nombre }}
+              {{ especialidad.nombre }},
             </span>
           </h6>
         </div>
@@ -51,6 +51,7 @@
     </div>
   </div>
 </div>
+<pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'"></pagination-controls>
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -65,26 +66,32 @@
     <form [formGroup]="frm">
       <div class="form-group">
         <label for="name">Nombre:</label>
-        <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')">
+        <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')" autocomplete="off">
         <input-error-messages [frmName]="frm" ipName="name" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
         <label for="lastname">Apellido:</label>
-        <input type="text" class="form-control" id="lastname" name="lastname" formControlName="lastname" [ngClass]="paintError(frm, 'lastname')">
+        <input type="text" class="form-control" id="lastname" name="lastname" formControlName="lastname" [ngClass]="paintError(frm, 'lastname')" autocomplete="off">
         <input-error-messages [frmName]="frm" ipName="lastname" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')">
+        <input type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')" autocomplete="off">
         <input-error-messages [frmName]="frm" ipName="email" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">
         <label for="name">Telefono:</label>
-        <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')">
+        <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')" autocomplete="off">
         <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Oficina:</label>
+        <input type="text" class="form-control" id="office" name="phone" formControlName="office" [ngClass]="paintError(frm, 'office')" autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="office" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">

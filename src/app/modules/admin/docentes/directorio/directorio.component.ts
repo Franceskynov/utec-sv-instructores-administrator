@@ -17,6 +17,7 @@ import { DocenteService } from 'app/services/docente.service';
 })
 export class DirectorioComponent implements OnInit {
 
+  public config: any;
   public docente: any;
   public docentes: Array<any>;
   public especialidades: Array<any>;
@@ -42,6 +43,11 @@ export class DirectorioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.config = {
+      itemsPerPage: 0,
+      currentPage: 0,
+      totalItems: 0
+    };
     this.docentes = [];
     this.especialidades = [];
     this.docente = {
@@ -55,7 +61,7 @@ export class DirectorioComponent implements OnInit {
     };
     this.retrieveEspecialidadData();
     this.retrieveData();
-    this.ctrls = ['name', 'lastname', 'email', 'phone', 'speciality'];
+    this.ctrls = ['name', 'lastname', 'email', 'phone', 'speciality', 'office'];
     this.permissions = {
       name: {
         required: true,
@@ -81,6 +87,9 @@ export class DirectorioComponent implements OnInit {
       speciality: {
         required: true,
       },
+      office: {
+        required: true,
+      },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
   }
@@ -100,6 +109,12 @@ export class DirectorioComponent implements OnInit {
       noPaginate: true
     }).subscribe(response => {
       this.docentes = response.data;
+
+      this.config = {
+        itemsPerPage: 6,
+        currentPage: 1,
+        totalItems: this.docentes.length
+      };
       console.log(response);
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
@@ -107,9 +122,20 @@ export class DirectorioComponent implements OnInit {
   }
 
   public postData(): void {
-    console.log(
-      this.frm.getRawValue()
-    );
+    const data = {
+      nombre: this.f.name.value,
+      apellido: this.f.lastname.value ,
+      email:  this.f.email.value,
+      telefono:  this.f.phone.value,
+      oficina: this.f.office.value,
+      especialidades: this.mapEspecialidad(this.f.speciality.value)
+    };
+    this.service.make(data).subscribe(response => {
+      this.retrieveData();
+      this.frm.reset();
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
   }
   public patchData(): void {}
 
@@ -125,6 +151,16 @@ export class DirectorioComponent implements OnInit {
       'is-invalid': form.get(input).touched && !form.get(input).valid,
       'is-valid': form.get(input).touched && form.get(input).valid
     };
+  }
+
+  public mapEspecialidad(data): Array<any> {
+    return data.map((row) => {
+      return row.id;
+    });
+  }
+
+  public pageChanged(event){
+    this.config.currentPage = event;
   }
 
 }

@@ -16,6 +16,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FilterPipe } from 'app/pipes/filter.pipe';
 import { OnlynumberDirective } from './directives/onlynumber.directive';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import { NgxMaskModule } from 'ngx-mask';
     FormsModule,
     NgSelectModule,
     NgxMaskModule.forRoot(),
-
+    NgxPaginationModule,
     // NgbModule.forRoot(),
   ],
   declarations: [
@@ -51,6 +52,7 @@ import { NgxMaskModule } from 'ngx-mask';
     NgSelectModule,
     OnlynumberDirective,
     NgxMaskModule,
+    NgxPaginationModule,
   ]
 })
 export class UtilModule { }

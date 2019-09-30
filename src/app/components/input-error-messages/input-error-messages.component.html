@@ -18,6 +18,12 @@
     </p>
 </div>
 
+<div class="text-danger small" *ngIf="frm.get(ipn).hasError('email') && frm.get(ipn).touched">
+  <p class="font-italic">
+    No es un email valido
+  </p>
+</div>
+
 <!--code>
     form : {{ frm }}
     <br>

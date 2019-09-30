@@ -31,6 +31,10 @@ export class PermissionsService {
         validations.push(Validators.maxLength(permission[key].maxLength));
       }
 
+      if ( permission[key].email) {
+        validations.push(Validators.email);
+      }
+
       contr[key] = ['', validations];
 
       } else {
