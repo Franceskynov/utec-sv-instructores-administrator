@@ -159,7 +159,7 @@ export class DirectorioComponent implements OnInit {
     });
   }
 
-  public pageChanged(event){
+  public pageChanged(event) {
     this.config.currentPage = event;
   }
 
