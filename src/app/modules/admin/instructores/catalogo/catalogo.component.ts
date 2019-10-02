@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { MateriasService } from 'app/services/materias.service';
 import { ExpedienteService } from 'app/services/expediente.service';
+import {InstructorService} from 'app/services/instructor.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -17,6 +18,7 @@ import { ExpedienteService } from 'app/services/expediente.service';
 })
 export class CatalogoComponent implements OnInit {
 
+  public instructores: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -36,9 +38,11 @@ export class CatalogoComponent implements OnInit {
     private permissionsService: PermissionsService,
     private materiaService: MateriasService,
     private expedienteService: ExpedienteService,
+    private service: InstructorService,
     ) { }
 
   ngOnInit() {
+    this.instructores = [];
     this.frm = new FormGroup({
       nombre: new FormControl({value: '', disabled: true}, Validators.required),
       carnet: new FormControl({value: '', disabled: false}, Validators.required),
@@ -46,10 +50,19 @@ export class CatalogoComponent implements OnInit {
       cum: new FormControl({value: '', disabled: true}, Validators.required)
     });
     this.searchColums = ['nombre', 'descripcion'];
+    this.retrieve();
   }
 
   public get f() { return this.frm.controls; }
 
+  public retrieve(): void {
+    this.service.retrieve().subscribe(response => {
+      console.log(response);
+      this.instructores = response.data;
+    }, error => {
+      this.toastr.error('No se pudo conectar a el servidor', 'Error');
+    });
+  }
   public retrieceExpediente(): void {
     this.expedienteService.retrieve({carnet: this.f.carnet.value}).subscribe( response => {
       console.log(response);
@@ -70,7 +83,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content, {size: 'lg'});
+    this.modalService.open(content);
   }
 
   public paintError(form, input): any {

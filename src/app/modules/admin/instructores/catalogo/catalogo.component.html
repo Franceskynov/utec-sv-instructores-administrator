@@ -15,10 +15,10 @@
   </div>
 </div>
 
-<button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>
+<button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null);"></button>
 <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
 <div class="row mt-2">
-  <div class="col-xl-4 col-md-6 col-12" *ngFor="let number of [0, 1, 2, 3, 4]">
+  <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores">
     <div class="card profile-card-with-stats">
       <div class="text-center">
         <div class="card-body">
@@ -26,12 +26,12 @@
                alt="Card image">
         </div>
         <div class="card-body">
-          <h4 class="card-title">Nombre Apellido</h4>
+          <h4 class="card-title"> {{ instructor.nombre }} </h4>
           <ul class="list-inline">
-            <li>0000000000@mail.utec.edu.sv</li>
+            <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
           </ul>
           <h6 class="card-subtitle text-muted">Instructor</h6>
-          <p>CUM: 7.7</p>
+          <p>CUM: {{ instructor.cum }}</p>
         </div>
         <div class="card-body">
 
