@@ -8,7 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { MateriasService } from 'app/services/materias.service';
 import { ExpedienteService } from 'app/services/expediente.service';
-import {InstructorService} from 'app/services/instructor.service';
+import { InstructorService } from 'app/services/instructor.service';
+import { InstructorSharingService } from 'app/services/instructor-sharing.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -39,6 +40,7 @@ export class CatalogoComponent implements OnInit {
     private materiaService: MateriasService,
     private expedienteService: ExpedienteService,
     private service: InstructorService,
+    private instructorSharingService: InstructorSharingService,
     ) { }
 
   ngOnInit() {
@@ -91,6 +93,10 @@ export class CatalogoComponent implements OnInit {
       'is-invalid': form.get(input).touched && !form.get(input).valid,
       'is-valid': form.get(input).touched && form.get(input).valid
     };
+  }
+
+  public selectForAssign(row): void {
+    this.instructorSharingService.setInstructor(row);
   }
 
 }

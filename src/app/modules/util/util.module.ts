@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup,  ReactiveFormsModule, Validators, 
 import { InputErrorMessagesComponent } from 'app/components/input-error-messages/input-error-messages.component';
 import { UploadComponent } from 'app/components/upload/upload.component';
 import { ReaderComponent } from 'app/components/reader/reader.component';
-
+import { CartComponent } from 'app/components/cart/cart.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,7 +37,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReaderComponent,
     UploadComponent,
     OnlynumberDirective,
-
+    CartComponent,
   ],
   exports: [
     InputErrorMessagesComponent,
@@ -53,6 +53,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     OnlynumberDirective,
     NgxMaskModule,
     NgxPaginationModule,
+    CartComponent,
   ]
 })
 export class UtilModule { }

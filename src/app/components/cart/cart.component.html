@@ -1,0 +1,55 @@
+<!--<p class="flex flex-wrap flex-center flex-gap-xxs">-->
+<!--  <a href="javascript:;" class="cd-add-to-cart js-cd-add-to-cart" (click)="addElement($event)" data-price="25.99">Add To Cart</a>-->
+<!--</p>-->
+
+<div #cart class="cd-cart  js-cd-cart" [ngClass]="{ 'cd-cart--empty': isEmpty, 'cd-cart--open': isOpen }">
+  <a href="javascript:;" (click)="manipulateModal()" class="cd-cart__trigger text-replace">
+    <ul class="cd-cart__count"> <!-- cart items count -->
+      <li> {{ elements.length }} </li>
+      <li> 0 </li>
+    </ul> <!-- .cd-cart__count -->
+  </a>
+
+  <div class="cd-cart__content">
+    <div class="cd-cart__layout">
+      <header class="cd-cart__header">
+        <h2>Seleccion</h2>
+        <span class="cd-cart__undo">Item removed. <a href="javascript:;">Undo</a></span>
+      </header>
+
+      <div class="cd-cart__body">
+        <ul>
+          <!-- products added to the cart will be inserted here using JavaScript -->
+          <li class="cd-cart__product" *ngFor="let element of elements">
+            <div class="cd-cart__image">
+              <a href="javascript:;">
+                <img src="/assets/img/product-preview.png" alt="placeholder">
+              </a>
+            </div>
+            <div class="cd-cart__details">
+              <h3 class="truncate">
+                <span> {{ element.nombre }} </span><br>
+                <span> {{ element.carnet }} </span><br>
+                <span> {{ element.carrera }} </span>
+              </h3>
+              <span class="cd-cart__price"> {{ element.cum }} CUM</span>
+              <div class="cd-cart__actions">
+                <a href="javascript:;" class="cd-cart__delete-item" (click)="deleteElement(element)">Borrar</a>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <footer class="cd-cart__footer">
+        <a href="javascript:;" class="cd-cart__checkout" [class.disabled]="elements.length <=0">
+          <em> Asignar
+            <svg class="icon icon--sm" viewBox="0 0 24 24"><g fill="none" stroke="currentColor"><line stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="3" y1="12" x2="21" y2="12"/><polyline stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="15,6 21,12 15,18 "/></g>
+            </svg>
+          </em>
+        </a>
+      </footer>
+    </div>
+  </div> <!-- .cd-cart__content -->
+</div> <!-- cd-cart -->

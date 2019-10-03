@@ -16,13 +16,13 @@
 </div>
 
 <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null);"></button>
-<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieve()"></button>
 <div class="row mt-2">
   <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores">
     <div class="card profile-card-with-stats">
       <div class="text-center">
         <div class="card-body">
-          <img src="/assets/img/avatar-m-8.png" class="rounded-circle  height-150"
+          <img src="/assets/img/product-preview.png" class="rounded-circle  height-150"
                alt="Card image">
         </div>
         <div class="card-body">
@@ -37,8 +37,12 @@
 
 <!--          <p>Lorem ipsum dolor sit amet, autem imperdiet et nam. Nullam labores-->
 <!--            id quo, sed ei.</p>-->
-          <button type="button" class="btn btn-outline-danger btn-md mr-1"><i class="fa fa-plus"></i> Seleccionar</button>
-          <button type="button" class="btn btn-outline-primary btn-md mr-1" (click)="goPlaces()"><i class="ft-user" ></i> Perfil</button>
+          <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)">
+            <i class="fa fa-plus"></i> Seleccionar
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-md mr-1" (click)="goPlaces()">
+            <i class="ft-user" ></i> Perfil
+          </button>
         </div>
       </div>
     </div>
@@ -122,3 +126,5 @@
   </div>
 </ng-template>
 
+
+<app-cart></app-cart>
