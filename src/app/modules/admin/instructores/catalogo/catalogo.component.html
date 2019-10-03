@@ -90,6 +90,18 @@
         <input-error-messages [frmName]="frm" ipName="cum" [dataValidation]="permissions"></input-error-messages>
       </div>
 
+      <div class="form-group">
+        <label for="phone">Telefono:</label>
+        <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" [ngClass]="paintError(frm, 'phone')" autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="personalEmail">Email personal:</label>
+        <input type="text" class="form-control" id="personalEmail" name="personalEmail" formControlName="personalEmail" [ngClass]="paintError(frm, 'personalEmail')" autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="personalEmail" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
     </form>
   </div>
   <div class="modal-footer">

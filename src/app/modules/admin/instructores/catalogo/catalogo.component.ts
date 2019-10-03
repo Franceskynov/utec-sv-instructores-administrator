@@ -51,7 +51,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       nombre: new FormControl({value: '', disabled: true}, Validators.required),
       carnet: new FormControl({value: '', disabled: false}, Validators.required),
       carrera: new FormControl({value: '', disabled: true}, Validators.required),
-      cum: new FormControl({value: '', disabled: true}, Validators.required)
+      cum: new FormControl({value: '', disabled: true}, Validators.required),
+      phone: new FormControl({value: '', disabled: false}, Validators.required),
+      personalEmail: new FormControl({value: '', disabled: false}, [ Validators.required, Validators.email])
     });
     this.searchColums = ['nombre', 'descripcion'];
     this.retrieve();
@@ -84,7 +86,29 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     });
   }
   public retrieveData(): void {}
-  public postData(): void {}
+  public postData(): void {
+    const carnet = this.f.carnet.value;
+    const pEmail = this.f.personalEmail.value;
+    const frmData = {
+
+      nombre: this.f.nombre.value,
+      carnet: carnet,
+      carrera: this.f.carrera.value,
+      cum: this.f.cum.value,
+      telefono: this.f.phone.value,
+      email: carnet.concat('@mail.utec.edu.sv'),
+      emailPersonal: pEmail,
+      username: pEmail.split('@')[0]
+    };
+    this.service.make(frmData).subscribe(result => {
+      console.log(result);
+      this.retrieve();
+      this.frm.reset();
+      this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
+  }
   public patchData(): void {}
 
   goPlaces() {
