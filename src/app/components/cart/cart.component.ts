@@ -50,6 +50,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   public deleteElement(element): void {
+    this.instructorSharingService.setStatus(element);
     for ( let i = 0; i < this.elements.length; i++) {
       if ( this.elements[i].id === element.id) {
         this.elements.splice(i, 1);

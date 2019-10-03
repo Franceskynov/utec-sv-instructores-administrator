@@ -37,7 +37,7 @@
 
 <!--          <p>Lorem ipsum dolor sit amet, autem imperdiet et nam. Nullam labores-->
 <!--            id quo, sed ei.</p>-->
-          <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)">
+          <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="instructor.is_selected === '1'">
             <i class="fa fa-plus"></i> Seleccionar
           </button>
           <button type="button" class="btn btn-outline-primary btn-md mr-1" (click)="goPlaces()">

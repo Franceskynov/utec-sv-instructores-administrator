@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { MateriasService } from 'app/services/materias.service';
 import { ExpedienteService } from 'app/services/expediente.service';
 import { InstructorService } from 'app/services/instructor.service';
 import { InstructorSharingService } from 'app/services/instructor-sharing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-catalogo',
@@ -17,8 +18,9 @@ import { InstructorSharingService } from 'app/services/instructor-sharing.servic
   styleUrls: ['./catalogo.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CatalogoComponent implements OnInit {
+export class CatalogoComponent implements OnInit, OnDestroy {
 
+  public subscription: Subscription;
   public instructores: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -53,6 +55,11 @@ export class CatalogoComponent implements OnInit {
     });
     this.searchColums = ['nombre', 'descripcion'];
     this.retrieve();
+    this.subscription = this.instructorSharingService.getStatus().subscribe(result => {
+      this.changeStatusElement(
+        this.identifyElement(result)
+      );
+    });
   }
 
   public get f() { return this.frm.controls; }
@@ -97,6 +104,20 @@ export class CatalogoComponent implements OnInit {
 
   public selectForAssign(row): void {
     this.instructorSharingService.setInstructor(row);
+    this.changeStatusElement(
+      this.identifyElement(row)
+    );
   }
 
+  public identifyElement(row): number {
+    return  this.instructores.indexOf(row);
+  }
+
+  public changeStatusElement(index): void {
+    this.instructores[index].is_selected =  (this.instructores[index].is_selected === '0') ? '1' : '0';
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
