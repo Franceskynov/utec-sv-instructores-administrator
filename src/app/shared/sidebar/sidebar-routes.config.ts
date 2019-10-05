@@ -21,6 +21,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
       isNavHeader: false,
       submenu: []
     },
+    {
+      path: '/admin/instructores/instructoria',
+      title: 'Instructorias',
+      icon: '',
+      class: 'menu-item',
+      badge: '',
+      badgeClass: '',
+      isExternalLink: false,
+      isNavHeader: false,
+      submenu: []
+    },
   ]
 },
   {

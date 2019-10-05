@@ -3,7 +3,9 @@ import { ModuleWithProviders } from '@angular/core';
 import { IndexComponent } from 'app/modules/admin/instructores/index/index.component';
 import { CatalogoComponent } from './catalogo/catalogo.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import {AuthGuard} from 'app/guards/auth.guard';
+import { AsignacionComponent } from './asignacion/asignacion.component';
+import { InstructoriaComponent } from './instructoria/instructoria.component';
+import { AuthGuard } from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -25,6 +27,22 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Perfil del instructor'
+    }
+  },
+  {
+    path: 'asignacion',
+    component: AsignacionComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Asignacion de estudiantes'
+    }
+  },
+  {
+    path: 'instructoria',
+    component: InstructoriaComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Instructorias asignadas'
     }
   }
 

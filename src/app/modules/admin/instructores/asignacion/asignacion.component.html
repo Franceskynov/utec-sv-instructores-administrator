@@ -1,0 +1,171 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Asignaci&oacute;n de instuctores</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+
+        <li class="breadcrumb-item ">
+          Instructores
+        </li>
+
+        <li class="breadcrumb-item active">
+          Asignaci&oacute;n de instuctores
+        </li>
+
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [limit]="limit"
+                             [rowHeight]="'auto'"
+                             [rows]='rows|filter:filterValue:searchColums'>
+                <!---->
+                <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Carrera" prop="carrera"></ngx-datatable-column>
+                <ngx-datatable-column name="Cum" prop="cum"></ngx-datatable-column>
+                <ngx-datatable-column name="Acciones" prop="actions">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-box" placement="top" ngbTooltip="Asignar instructoria" (click)="openModal(content, row)"></button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Asignar una instructorias</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+
+      <div class="form-group">
+        <label for="nombre">Nombre de la asignacion</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" [ngClass]="paintError(frm, 'nombre')" autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="nombre" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="ciclo">Ciclo:</label>
+
+        <ng-select
+          id="ciclo"
+          name="ciclo"
+          [items]="ciclos"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+
+          placeholder="Seleccione el ciclo" formControlName="ciclo">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="horario">Horario:</label>
+
+        <ng-select
+          id="horario"
+          name="horario"
+          [items]="horarios"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre_dia"
+          placeholder="Seleccione el horario" formControlName="horario">
+          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="aula">Aula:</label>
+
+        <ng-select
+          id="aula"
+          name="aula"
+          [items]="aulas"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="codigo"
+
+          placeholder="Seleccione el aula" formControlName="aula">
+          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+            Codigo: {{ item.codigo }} Capacidad: {{ item.capacidad }} alumnos
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="aula" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="materia">Materia:</label>
+
+        <ng-select
+          id="materia"
+          name="materia"
+          [items]="materias"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+
+          placeholder="Seleccione el dia" formControlName="materia">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="materia" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" [disabled]="frm.invalid"  (click)="postData(c);" ></button>
+  </div>
+</ng-template>

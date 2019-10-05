@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChildren, Directive, QueryList, ElementRef, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import { InstructorSharingService } from 'app/services/instructor-sharing.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
     private instructorSharingService: InstructorSharingService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -58,7 +60,11 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
-  public assign(): void {}
+  public assign(): void {
+    localStorage.removeItem('instructores');
+    localStorage.setItem('instructores', JSON.stringify(this.elements));
+    this.router.navigate(['/admin/instructores/asignacion']);
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
