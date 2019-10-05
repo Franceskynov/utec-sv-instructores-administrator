@@ -106,13 +106,18 @@
         <input-error-messages [frmName]="frm" ipName="abreviacion" [dataValidation]="permissions"></input-error-messages>
       </div>
 
-      <ng-select
-        [items]="materias"
-        [multiple]="true"
-        [closeOnSelect]="true"
-        bindLabel="nombre"
-        placeholder="Seleccione las materias" formControlName="materias">
-      </ng-select>
+      <div class="form-group">
+        <label for="materias">Materias</label>
+        <ng-select
+          [items]="materias"
+          [multiple]="true"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          id="materias"
+          name="materias"
+          placeholder="Seleccione las materias" formControlName="materias">
+        </ng-select>
+      </div>
 
     </form>
   </div>

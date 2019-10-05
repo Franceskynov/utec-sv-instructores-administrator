@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { AulaService } from 'app/services/aula.service';
 import { EdificioService } from 'app/services/edificio.service';
+import { HorarioService } from 'app/services/horario.service';
 
 @Component({
   selector: 'app-aula',
@@ -17,6 +18,7 @@ import { EdificioService } from 'app/services/edificio.service';
 export class AulaComponent implements OnInit {
 
   public edificios: Array<any>;
+  public horarios: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -34,13 +36,14 @@ export class AulaComponent implements OnInit {
     private permissionsService: PermissionsService,
     private service: AulaService,
     private edificioService: EdificioService,
+    private horarioService: HorarioService
   ) { }
 
   ngOnInit() {
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.edificios = [];
     this.searchColums = ['nombre', 'descripcion'];
-    this.ctrls = ['edificio', 'codigo', 'capacidad'];
+    this.ctrls = ['edificio', 'codigo', 'capacidad', 'horarios'];
     this.permissions = {
       edificio: {
         required: true
@@ -50,11 +53,15 @@ export class AulaComponent implements OnInit {
       },
       capacidad: {
         required: true
+      },
+      horarios: {
+        required: true
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.retrieveData();
     this.retrieveEdificios();
+    this.retrieveHorarios();
   }
 
   get f () { return  this.frm.controls; }
@@ -66,10 +73,18 @@ export class AulaComponent implements OnInit {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
+  public retrieveHorarios(): void {
+    this.horarioService.retrieve().subscribe(response => {
+      this.horarios = response.data;
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
+  }
   public retrieveData(): void {
     this.service.retrieve().subscribe(response => {
       const tmp = response.data;
       this.rows = tmp.filter(row =>  row.is_enabled === '1');
+      console.log('response', this.rows);
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
@@ -80,6 +95,7 @@ export class AulaComponent implements OnInit {
       codigo: this.f.codigo.value,
       capacidad: parseInt(this.f.capacidad.value, 10),
       edificio_id: this.f.edificio.value.id,
+      horarios: this.mapHorarios(this.f.horarios.value)
     };
     this.service.make(frmData).subscribe(
       data => {
@@ -96,6 +112,7 @@ export class AulaComponent implements OnInit {
       codigo: this.f.codigo.value,
       capacidad: parseInt(this.f.capacidad.value, 10),
       edificio_id: this.f.edificio.value.id,
+      horarios: this.mapHorarios(this.f.horarios.value)
     };
     this.service.modify(this.idForEdit, frmData).subscribe(
       data => {
@@ -111,12 +128,17 @@ export class AulaComponent implements OnInit {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content);
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
     if (this.editMode) {
       this.idForEdit = row.id;
-      this.f.edificio.setValue(row.edificio.nombre);
+      this.f.edificio.setValue(row.edificio);
       this.f.codigo.setValue(row.codigo);
       this.f.capacidad.setValue(row.capacidad);
+      this.f.horarios.setValue(row.horarios);
+      console.log(row);
     }
   }
 
@@ -145,6 +167,12 @@ export class AulaComponent implements OnInit {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
       }
     );
+  }
+
+  public mapHorarios(horarios): Array<any> {
+    return horarios.map((row) => {
+      return row.id;
+    });
   }
 
 }

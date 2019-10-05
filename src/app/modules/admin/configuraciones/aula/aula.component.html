@@ -55,6 +55,16 @@
                 <ngx-datatable-column name="Codigo" prop="codigo"></ngx-datatable-column>
                 <ngx-datatable-column name="Capacidad" prop="capacidad"></ngx-datatable-column>
                 <ngx-datatable-column name="Edificio" prop="edificio.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Horario" prop="horarios">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                   <div *ngFor="let horario of row.horarios">
+                     Dia: {{ horario.nombre_dia }} <br>
+                     Hora inicio: {{ horario.inicio }} <br>
+                     Hora fin: {{ horario.fin }} <br>
+                     ----------------------
+                   </div>
+                  </ng-template>
+                </ngx-datatable-column>
                 <ngx-datatable-column name="Acciones" prop="actions">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
                     <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
@@ -100,6 +110,21 @@
             </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="edificio" [dataValidation]="permissions"></input-error-messages>
+      </div>
+      <div class="form-group">
+        <label for="horarios">Horarios:</label>
+        <ng-select
+          [items]="horarios"
+          [multiple]="true"
+          [closeOnSelect]="true"
+          bindLabel="nombre_dia"
+          id="horarios"
+          name="horarios"
+          placeholder="Seleccione los horarios" formControlName="horarios">
+          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
+          </ng-template>
+        </ng-select>
       </div>
 
       <div class="form-group">

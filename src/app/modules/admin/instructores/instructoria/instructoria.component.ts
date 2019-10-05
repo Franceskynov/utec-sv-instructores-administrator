@@ -7,6 +7,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { AulaService } from 'app/services/aula.service';
 import { EdificioService } from 'app/services/edificio.service';
+import { CicloService } from 'app/services/ciclo.service';
+import { HorarioService } from 'app/services/horario.service';
+import { MateriasService } from 'app/services/materias.service';
+import { AsignacionService } from 'app/services/asignacion.service';
 
 @Component({
   selector: 'app-instructoria',
@@ -16,6 +20,10 @@ import { EdificioService } from 'app/services/edificio.service';
 })
 export class InstructoriaComponent implements OnInit {
 
+  public ciclos: Array<any>;
+  public horarios: Array<any>;
+  public aulas: Array<any>;
+  public materias: Array<any>;
   public edificios: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -23,6 +31,7 @@ export class InstructoriaComponent implements OnInit {
   public editMode: boolean;
   public limit: Number;
   public rows: Array<any>;
+  public row: any;
   public idForDestroy: any;
   public idForEdit: any;
   public searchColums: Array<String>;
@@ -32,28 +41,43 @@ export class InstructoriaComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
-    private service: AulaService,
+    private service: AsignacionService,
     private edificioService: EdificioService,
+    private cicloService: CicloService,
+    private horarioService: HorarioService,
+    private aulaService: AulaService,
+    private materiasService: MateriasService,
+    private asignacionService: AsignacionService
   ) { }
 
   ngOnInit() {
+    this.editMode = false;
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.edificios = [];
-    this.searchColums = ['nombre', 'descripcion'];
-    this.ctrls = ['edificio', 'codigo', 'capacidad'];
+    this.row = {};
+    this.searchColums = ['nombre', 'carrera', 'cum'];
+    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia'];
     this.permissions = {
-      edificio: {
+      nombre: {
+        required: true,
+        minLength: 5
+      },
+      ciclo: {
         required: true
       },
-      codigo: {
+      horario: {
         required: true
       },
-      capacidad: {
+      aula: {
+        required: true
+      },
+      materia: {
         required: true
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.retrieveData();
+    this.retrieve();
   }
 
   get f () { return  this.frm.controls; }
@@ -66,49 +90,48 @@ export class InstructoriaComponent implements OnInit {
     });
   }
 
-  public postData(): void {
-    const frmData = {
-      codigo: this.f.codigo.value,
-      capacidad: parseInt(this.f.capacidad.value, 10),
-      edificio_id: this.f.edificio.value.id,
-    };
-    this.service.make(frmData).subscribe(
-      data => {
-        this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
-        this.frm.reset();
-        this.retrieveData();
-      },
-      error => {
-        this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
-      });
+  public retrieve(): void {
+    this.cicloService.retrieve().subscribe(response => { this.ciclos = response.data; }, error => { this.errorResponse(); });
+    this.horarioService.retrieve().subscribe(response => { this.horarios = response.data; }, error => { this.errorResponse(); });
+    this.aulaService.retrieve().subscribe(response => { this.aulas = response.data; }, error => { this.errorResponse(); });
+    this.materiasService.retrieve().subscribe(response => { this.materias = response.data; }, error => { this.errorResponse(); });
   }
 
-  public patchData(): void {
-    const frmData = {
-      codigo: this.f.codigo.value,
-      capacidad: parseInt(this.f.capacidad.value, 10),
-      edificio_id: this.f.edificio.value.id,
-    };
-    this.service.modify(this.idForEdit, frmData).subscribe(
-      data => {
-        this.retrieveData();
-        this.frm.reset();
-        this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
-      },
-      error => {
-        this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
-      });
+  public postData(): void {}
 
-    console.log(frmData);
+  public patchData(fn): void {
+    const formData = {
+      nombre: this.f.nombre.value,
+      ciclo_id: this.f.ciclo.value.id,
+      horario_id: this.f.horario.value.id,
+      aula_id: this.f.aula.value.id,
+      instructor_id: Number(this.row.instructor_id),
+      materia_id: this.f.materia.value.id
+    };
+    this.asignacionService.modify(this.idForEdit, formData).subscribe(response => {
+      console.log('response', response);
+      if (!response.error) {
+        fn();
+        this.retrieveData();
+      }
+    }, error => {
+      this.errorResponse();
+    });
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content);
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
+    this.idForEdit = row.id;
+    this.row = row;
     if (this.editMode) {
-      this.idForEdit = row.id;
-      this.f.edificio.setValue(row.edificio.nombre);
-      this.f.codigo.setValue(row.codigo);
-      this.f.capacidad.setValue(row.capacidad);
+      this.f.nombre.setValue(row.nombre);
+      this.f.ciclo.setValue(row.ciclo);
+      this.f.horario.setValue(row.horario);
+      this.f.aula.setValue(row.aula);
+      this.f.materia.setValue(row.materia);
     }
   }
 
@@ -128,7 +151,7 @@ export class InstructoriaComponent implements OnInit {
   }
 
   public deleteData(): void {
-    this.service.destroy(this.idForDestroy).subscribe(
+    this.asignacionService.destroy(this.idForDestroy).subscribe(
       data => {
         this.toastr.success(environment.MESSAGES.DELETION_OK, 'Ok');
         this.retrieveData();
@@ -137,6 +160,10 @@ export class InstructoriaComponent implements OnInit {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
       }
     );
+  }
+
+  public errorResponse(): void {
+    this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
   }
 
 }

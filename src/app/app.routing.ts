@@ -13,7 +13,10 @@ export const routes: Routes = [
       {
         path: '',
         component: WelcomeComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Bienvenid@!!'
+        }
       },
       {
         path: 'admin',
