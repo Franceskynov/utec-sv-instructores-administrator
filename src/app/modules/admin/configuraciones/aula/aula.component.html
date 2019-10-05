@@ -58,10 +58,10 @@
                 <ngx-datatable-column name="Horario" prop="horarios">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
                    <div *ngFor="let horario of row.horarios">
-                     Dia: {{ horario.nombre_dia }} <br>
-                     Hora inicio: {{ horario.inicio }} <br>
-                     Hora fin: {{ horario.fin }} <br>
-                     ----------------------
+<!--                     Dia: {{ horario.nombre_dia }} <br>-->
+<!--                     Hora inicio: {{ horario.inicio }}  <br>-->
+<!--                     Hora fin: {{ horario.fin }} <br>-->
+                     <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ horario.nombre_dia }} {{ horario.fin }} - {{ horario.fin }}  </span>
                    </div>
                   </ng-template>
                 </ngx-datatable-column>
