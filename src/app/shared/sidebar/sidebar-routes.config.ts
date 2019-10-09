@@ -177,6 +177,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         isNavHeader: false,
         submenu: []
       },
+      {
+        path: '/admin/configuraciones/capacitacion',
+        title: 'Capacitacion',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
     ]
   }];
 const DOCENTE_ROUTES: RouteInfo[] = [];

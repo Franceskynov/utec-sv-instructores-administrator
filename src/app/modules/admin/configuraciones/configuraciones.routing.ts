@@ -8,6 +8,7 @@ import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
 import { AuthGuard } from 'app/guards/auth.guard';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
+import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Especialidades'
+    }
+  },
+  {
+    path: 'capacitacion',
+    component: CapacitacionComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Capacitaciones'
     }
   }
 ];
