@@ -85,11 +85,15 @@
         <div class="card-body">
           <div *ngIf="row.instructoria.length > 0">
             <h4 class="card-title"></h4>
-            <p>Nombre: {{ row.instructoria[0].nombre }}</p>
-            <p>Ciclo: {{ row.instructoria[0].ciclo.nombre }}</p>
-            <p>Aula: {{ row.instructoria[0].aula.codigo }}</p>
-            <p>Materia: {{ row.instructoria[0].materia.nombre }}</p>
-            <p>Horario: <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ row.instructoria[0].horario.nombre_dia }} {{ row.instructoria[0].horario.fin }} - {{ row.instructoria[0].horario.fin }}  </span></p>
+            <p> <b>Nombre</b>: {{ row.instructoria[0].nombre }}</p>
+            <p> <b>Ciclo</b>: {{ row.instructoria[0].ciclo.nombre }}</p>
+            <p> <b>Aula</b>: {{ row.instructoria[0].aula.codigo }}</p>
+            <p> <b>Docente</b> :
+              <span>  <b>Nombre</b> : {{ row.instructoria[0].docente.nombre }}</span> &nbsp;
+              <span> <b>Apellido</b>: {{ row.instructoria[0].docente.apellido }} </span>
+            </p>
+            <p> <b>Materia</b> : {{ row.instructoria[0].materia.nombre }}</p>
+            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ row.instructoria[0].horario.nombre_dia }} {{ row.instructoria[0].horario.fin }} - {{ row.instructoria[0].horario.fin }}  </span></p>
 
           </div>
           <div>
@@ -109,8 +113,8 @@
         </div>
         <div class="card-body">
           <h4 class="card-title"></h4>
-          <p>Nombre de usuario: {{ row.user.username }} </p>
-          <p>Email: {{ row.user.email }} </p>
+          <p> <b>Nombre de usuario</b> : {{ row.user.username }} </p>
+          <p> <b>Email</b>: {{ row.user.email }} </p>
         </div>
       </div>
     </div>
@@ -124,14 +128,21 @@
         </div>
         <div class="card-body">
           <h4 class="card-title"></h4>
+          <form>
+            <div class="form-group">
+              <label for="searchBox">Busquedas:</label>
+              <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
+            </div>
+          </form>
           <ngx-datatable class='material'
                          [columnMode]="'force'"
                          [headerHeight]="50"
                          [footerHeight]="50"
                          [limit]="5"
                          [rowHeight]="'auto'"
-                         [rows]='row.notas'>
-            <ngx-datatable-column name="Materia" prop="mat_codigo"></ngx-datatable-column>
+                         [rows]='row.notas | filter:searchBox:searchColumns'>
+            <ngx-datatable-column name="Codigo" prop="mat_codigo"></ngx-datatable-column>
+            <ngx-datatable-column name="Materia" prop="mat_nombre"></ngx-datatable-column>
             <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
             <ngx-datatable-column name="Estado" prop="estado"></ngx-datatable-column>
           </ngx-datatable>
@@ -159,7 +170,33 @@
                          [rows]='row.historial'>
             <ngx-datatable-column name="Comentarios" prop="comentarios"></ngx-datatable-column>
             <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
             <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linkss">
+          <h4 class="card-title">Capacitaciones</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.capacitaciones'>
+            <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
+            <ngx-datatable-column name="Tipo" prop="tipo"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="pivot.nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Estado" prop="pivot.estado"></ngx-datatable-column>
           </ngx-datatable>
         </div>
       </div>

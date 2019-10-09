@@ -98,16 +98,23 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       telefono: this.f.phone.value,
       email: carnet.concat('@mail.utec.edu.sv'),
       emailPersonal: pEmail,
-      username: pEmail.split('@')[0]
+      username: pEmail.split('@')[0],
+      notas: this.trimmingNotas(this.row.notas)
     };
     this.service.make(frmData).subscribe(result => {
       console.log(result);
-      this.retrieve();
-      this.frm.reset();
-      this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+      if (!result.error) {
+        this.retrieve();
+        this.frm.reset();
+        this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+      } else {
+        this.toastr.error('No se pudo procesar', 'Error');
+      }
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
+    // console.log(frmData);
+    // console.log('notas', this.row.notas);
   }
   public patchData(): void {}
 
@@ -139,6 +146,22 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public changeStatusElement(index): void {
     this.instructores[index].is_selected =  (this.instructores[index].is_selected === '0') ? '1' : '0';
+  }
+
+  public trimWhiteSpaces(str): string {
+    return str.replace(/[ \t][ \t]+/, '');
+  }
+
+  public trimmingNotas(data): any {
+   return  data.map((row) => {
+      return {
+        mat_codigo: this.trimWhiteSpaces(row.mat_codigo),
+        mat_nombre: this.trimWhiteSpaces(row.mat_nombre),
+        estado: row.estado,
+        nota: row.nota,
+        ciclo: row.ciclo
+      };
+    });
   }
 
   ngOnDestroy(): void {

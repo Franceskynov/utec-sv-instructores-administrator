@@ -12,6 +12,8 @@ import { environment } from 'environments/environment';
 })
 export class PerfilComponent implements OnInit {
 
+  public searchColumns: Array<any>;
+  public searchBox: any;
   public row: any;
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +22,7 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.searchColumns = ['mat_codigo', 'mat_nombre', 'nota', 'estado'];
     this.row = {
       nombre: null,
       carnet: '0000000000',
@@ -52,6 +55,10 @@ export class PerfilComponent implements OnInit {
           aula: {
             codigo: null,
             capacidad: null
+          },
+          docente: {
+            nombre: null,
+            apellido: null
           }
         }
       ]
