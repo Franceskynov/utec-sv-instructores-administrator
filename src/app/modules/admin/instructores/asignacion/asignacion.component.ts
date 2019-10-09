@@ -135,10 +135,15 @@ export class AsignacionComponent implements OnInit {
   public makeAssignationName(row): string {
     const name = row.nombre.toLowerCase().split(' ');
     const first = name[0];
-    const last = name[3];
+    const last = name[2];
     const carnet = row.carnet;
     const uuidstring =  uuid.v4().split('-');
     return `${last}-${first}-${carnet}-${uuidstring[0]}`;
   }
 
+  public unUsed(rows): Array<any> {
+    const tmp = rows;
+    console.log(rows);
+    return rows; // rows.filter(r => r.pivot.is_used === '0' );
+  }
 }

@@ -1,16 +1,171 @@
-<div class="content-header-left col-md-6 col-12 mb-2">
-  <h3 class="content-header-title mb-0">Instructores</h3>
-  <div class="row breadcrumbs-top">
-    <div class="breadcrumb-wrapper col-12">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          Perfil
-        </li>
+<!--<div class="content-header-left col-md-6 col-12 mb-2">-->
+<!--  <h3 class="content-header-title mb-0">Instructores</h3>-->
+<!--  <div class="row breadcrumbs-top">-->
+<!--    <div class="breadcrumb-wrapper col-12">-->
+<!--      <ol class="breadcrumb">-->
+<!--        <li class="breadcrumb-item">-->
+<!--          Perfil-->
+<!--        </li>-->
 
-        <li class="breadcrumb-item active">
-          Instructores
-        </li>
-      </ol>
+<!--        <li class="breadcrumb-item active">-->
+<!--          Instructores-->
+<!--        </li>-->
+<!--      </ol>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div id="user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card profile-with-cover">
+        <div class="card-img-top img-fluid bg-cover height-350" style="background: url('/assets/img/bgperfi_newl.png') 50%;"></div>
+        <div class="media profil-cover-details w-100">
+          <div class="media-left pl-2 pt-2">
+            <a href="#" class="profile-image">
+              <img src="/assets/img/product-preview.png" class="rounded-circle img-border height-100" alt="Card image">
+            </a>
+          </div>
+          <div class="media-body pt-3 px-2">
+            <div class="row">
+              <div class="col">
+                <h3 class="text-white"> {{ row.nombre }} </h3>
+                <h3 class="text-white"> {{ formatCarnet(row.carnet) }} </h3>
+                <h3 class="text-white"> {{ row.cum }} </h3>
+              </div>
+              <div class="col text-right">
+<!--                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Follow</button>-->
+<!--                <div class="btn-group d-none d-md-block float-right ml-2" role="group" aria-label="Basic example">-->
+<!--                  <button type="button" class="btn btn-success"><i class="fa fa-dashcube"></i> Message</button>-->
+<!--                  <button type="button" class="btn btn-success"><i class="fa fa-cog"></i></button>-->
+<!--                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="navbar navbar-light navbar-profile align-self-end">
+          <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation"></button>
+<!--          <nav class="navbar navbar-expand-lg">-->
+<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--              <ul class="navbar-nav mr-auto">-->
+<!--                <li class="nav-item active">-->
+<!--                  <a class="nav-link" href="#"><i class="fa fa-line-chart"></i> Timeline <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link" href="#"><i class="ft-user"></i> Profile</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link" href="#"><i class="fa fa-briefcase"></i> Projects</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link" href="#"><i class="fa fa-heart-o"></i> Favourites</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link" href="#"><i class="fa fa-bell-o"></i> Notifications</a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </nav>-->
+        </nav>
+      </div>
+
     </div>
   </div>
 </div>
+
+
+<section id="card-headings">
+  <div class="row">
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksc">
+          <h4 class="card-title">Instructoria</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <div *ngIf="row.instructoria.length > 0">
+            <h4 class="card-title"></h4>
+            <p>Nombre: {{ row.instructoria[0].nombre }}</p>
+            <p>Ciclo: {{ row.instructoria[0].ciclo.nombre }}</p>
+            <p>Aula: {{ row.instructoria[0].aula.codigo }}</p>
+            <p>Materia: {{ row.instructoria[0].materia.nombre }}</p>
+            <p>Horario: <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ row.instructoria[0].horario.nombre_dia }} {{ row.instructoria[0].horario.fin }} - {{ row.instructoria[0].horario.fin }}  </span></p>
+
+          </div>
+          <div>
+            <div class="alert alert-warning" role="alert" *ngIf="row.instructoria.length === 0">
+              Por el momento no tiene asignada una instructoria.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linksa">
+          <h4 class="card-title">Usuario</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <p>Nombre de usuario: {{ row.user.username }} </p>
+          <p>Email: {{ row.user.email }} </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-links">
+          <h4 class="card-title">Notas</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.notas'>
+            <ngx-datatable-column name="Materia" prop="mat_codigo"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Estado" prop="estado"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linksb">
+          <h4 class="card-title">Historia</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+
+          </div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.historial'>
+            <ngx-datatable-column name="Comentarios" prop="comentarios"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>

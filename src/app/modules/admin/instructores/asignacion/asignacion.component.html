@@ -107,24 +107,6 @@
       </div>
 
       <div class="form-group">
-        <label for="horario">Horario:</label>
-
-        <ng-select
-          id="horario"
-          name="horario"
-          [items]="horarios"
-          [multiple]="false"
-          [closeOnSelect]="true"
-          bindLabel="nombre_dia"
-          placeholder="Seleccione el horario" formControlName="horario">
-          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
-            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
-          </ng-template>
-        </ng-select>
-        <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>
-      </div>
-
-      <div class="form-group">
         <label for="aula">Aula:</label>
 
         <ng-select
@@ -142,6 +124,25 @@
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="aula" [dataValidation]="permissions"></input-error-messages>
       </div>
+
+      <div class="form-group">
+        <label for="horario">Horario:</label>
+        <ng-select
+          id="horario"
+          name="horario"
+          [items]="frm.get('aula').value.horarios"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre_dia"
+          placeholder="Seleccione el horario" formControlName="horario">
+          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+
 
       <div class="form-group">
         <label for="materia">Materia:</label>

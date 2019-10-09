@@ -125,23 +125,6 @@
         <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
       </div>
 
-      <div class="form-group">
-        <label for="horario">Horario:</label>
-
-        <ng-select
-          id="horario"
-          name="horario"
-          [items]="horarios"
-          [multiple]="false"
-          [closeOnSelect]="true"
-          bindLabel="nombre_dia"
-          placeholder="Seleccione el horario" formControlName="horario">
-          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
-            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
-          </ng-template>
-        </ng-select>
-        <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>
-      </div>
 
       <div class="form-group">
         <label for="aula">Aula:</label>
@@ -153,13 +136,30 @@
           [multiple]="false"
           [closeOnSelect]="true"
           bindLabel="codigo"
-
+          (focusout)="filterData(frm.get('aula').value.horarios)"
           placeholder="Seleccione el aula" formControlName="aula">
           <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
             Codigo: {{ item.codigo }} Capacidad: {{ item.capacidad }} alumnos
           </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="aula" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="horario">Horario:</label>
+        <ng-select
+          id="horario"
+          name="horario"
+          [items]="hh"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre_dia"
+          placeholder="Seleccione el horario" formControlName="horario">
+          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>
       </div>
 
       <div class="form-group">

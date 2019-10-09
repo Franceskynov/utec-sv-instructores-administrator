@@ -125,7 +125,10 @@ export class HorarioComponent implements OnInit {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content);
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
     if (this.editMode) {
       this.idForEdit = row.id;
       this.f.dia.patchValue(row.nombre_dia);

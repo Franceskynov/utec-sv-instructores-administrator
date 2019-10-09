@@ -20,6 +20,7 @@ import { AsignacionService } from 'app/services/asignacion.service';
 })
 export class InstructoriaComponent implements OnInit {
 
+  public hh: any;
   public ciclos: Array<any>;
   public horarios: Array<any>;
   public aulas: Array<any>;
@@ -51,6 +52,7 @@ export class InstructoriaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.hh = [];
     this.editMode = false;
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.edificios = [];
@@ -164,6 +166,11 @@ export class InstructoriaComponent implements OnInit {
 
   public errorResponse(): void {
     this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+  }
+
+  public filterData(rows): void {
+    console.log(rows);
+    this.hh =  rows.filter(row =>  row.pivot.is_used === '0');
   }
 
 }

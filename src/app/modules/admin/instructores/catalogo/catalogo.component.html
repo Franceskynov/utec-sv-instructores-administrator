@@ -40,7 +40,7 @@
           <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="instructor.is_selected === '1'">
             <i class="fa fa-plus"></i> Seleccionar
           </button>
-          <button type="button" class="btn btn-outline-primary btn-md mr-1" (click)="goPlaces()">
+          <button type="button" class="btn btn-outline-primary btn-md mr-1" routerLink="/admin/instructores/perfil/{{ instructor.id }}">
             <i class="ft-user" ></i> Perfil
           </button>
         </div>

@@ -16,6 +16,13 @@ export class InstructorService {
       }));
   }
 
+  public retrieveById(id) {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('instructor/', id))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   public make(frmData) {
     return this.http.post<any>(environment.CONTROL_URL_API.concat('instructor'), frmData)
       .pipe(map(data => {
