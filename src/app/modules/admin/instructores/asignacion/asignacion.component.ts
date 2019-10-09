@@ -6,6 +6,7 @@ import { HorarioService } from 'app/services/horario.service';
 import { AulaService } from 'app/services/aula.service';
 import { MateriasService } from 'app/services/materias.service';
 import { AsignacionService } from 'app/services/asignacion.service';
+import { DocenteService } from 'app/services/docente.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
@@ -20,6 +21,8 @@ import * as uuid from 'uuid';
 })
 export class AsignacionComponent implements OnInit {
 
+  public filtered: any;
+  public docentes: Array<any>;
   public ciclos: Array<any>;
   public horarios: Array<any>;
   public aulas: Array<any>;
@@ -41,14 +44,15 @@ export class AsignacionComponent implements OnInit {
     private horarioService: HorarioService,
     private aulaService: AulaService,
     private materiasService: MateriasService,
-    private asignacionService: AsignacionService
+    private asignacionService: AsignacionService,
+    private docenteService: DocenteService,
   ) { }
 
   ngOnInit() {
     this.row = {};
     this.searchColums = ['nombre', 'carrera', 'cum'];
     this.limit = environment.MAX_ROWS_PER_PAGE;
-    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia'];
+    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia', 'docente'];
     this.permissions = {
       nombre: {
         required: true,
@@ -65,6 +69,9 @@ export class AsignacionComponent implements OnInit {
       },
       materia: {
         required: true
+      },
+      docente: {
+        required: true
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
@@ -78,6 +85,7 @@ export class AsignacionComponent implements OnInit {
     this.horarioService.retrieve().subscribe(response => { this.horarios = response.data; }, error => { this.errorResponse(); });
     this.aulaService.retrieve().subscribe(response => { this.aulas = response.data; }, error => { this.errorResponse(); });
     this.materiasService.retrieve().subscribe(response => { this.materias = response.data; }, error => { this.errorResponse(); });
+    this.docenteService.retrieve({ noPaginate: true}).subscribe(response => { this.docentes = response.data; }, error => { this.errorResponse(); });
   }
 
   public openModal(content, row): void {
@@ -109,16 +117,22 @@ export class AsignacionComponent implements OnInit {
       horario_id: this.f.horario.value.id,
       aula_id: this.f.aula.value.id,
       instructor_id: this.row.id,
-      materia_id: this.f.materia.value.id
+      materia_id: this.f.materia.value.id,
+      docente_id : this.f.docente.value.id
     };
     this.asignacionService.make(formData).subscribe(response => {
       console.log('response', response);
-      if (response.error) {
+      if (!response.error) {
         fn();
+        this.frm.reset();
+        this.toaster.success(environment.MESSAGES.CREATED_OK, environment.MESSAGES.OK);
+      } else {
+        this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
       }
     }, error => {
       this.errorResponse();
     });
+    console.log(formData);
   }
 
   public paintError(form, input): any {
@@ -145,5 +159,10 @@ export class AsignacionComponent implements OnInit {
     const tmp = rows;
     console.log(rows);
     return rows; // rows.filter(r => r.pivot.is_used === '0' );
+  }
+
+  public filterData(rows): void {
+    console.log(rows);
+    this.filtered =  rows.filter(row =>  row.pivot.is_used === '0');
   }
 }

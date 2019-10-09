@@ -18,6 +18,7 @@ import {ADM_ROUTES, DCNT_ROUTES, INSTR_ROUTES} from 'app/shared/sidebar/sidebar-
 })
 export class LoginComponent implements OnInit {
 
+  public copy: string;
   public token: any;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.copy = '\u0046\u0072\u0061\u006e\u0063\u0065\u0073\u006b\u0079\u006e\u006f\u0076';
     this.token = {
       iss: null,
       iat: null,

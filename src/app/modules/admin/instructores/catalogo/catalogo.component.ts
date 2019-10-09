@@ -68,7 +68,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public retrieve(): void {
     this.service.retrieve().subscribe(response => {
-      console.log(response);
+      console.log('instructores', response);
       this.instructores = response.data;
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');

@@ -11,6 +11,7 @@ import { CicloService } from 'app/services/ciclo.service';
 import { HorarioService } from 'app/services/horario.service';
 import { MateriasService } from 'app/services/materias.service';
 import { AsignacionService } from 'app/services/asignacion.service';
+import { DocenteService } from 'app/services/docente.service';
 
 @Component({
   selector: 'app-instructoria',
@@ -20,7 +21,8 @@ import { AsignacionService } from 'app/services/asignacion.service';
 })
 export class InstructoriaComponent implements OnInit {
 
-  public hh: any;
+  public filtered: any;
+  public docentes: Array<any>;
   public ciclos: Array<any>;
   public horarios: Array<any>;
   public aulas: Array<any>;
@@ -48,17 +50,18 @@ export class InstructoriaComponent implements OnInit {
     private horarioService: HorarioService,
     private aulaService: AulaService,
     private materiasService: MateriasService,
-    private asignacionService: AsignacionService
+    private asignacionService: AsignacionService,
+    private docenteService: DocenteService,
   ) { }
 
   ngOnInit() {
-    this.hh = [];
+    this.filtered = [];
     this.editMode = false;
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.edificios = [];
     this.row = {};
-    this.searchColums = ['nombre', 'carrera', 'cum'];
-    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia'];
+    this.searchColums = ['nombre', 'carrera', 'cum', 'docente'];
+    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia', 'docente'];
     this.permissions = {
       nombre: {
         required: true,
@@ -74,6 +77,9 @@ export class InstructoriaComponent implements OnInit {
         required: true
       },
       materia: {
+        required: true
+      },
+      docente: {
         required: true
       }
     };
@@ -97,6 +103,7 @@ export class InstructoriaComponent implements OnInit {
     this.horarioService.retrieve().subscribe(response => { this.horarios = response.data; }, error => { this.errorResponse(); });
     this.aulaService.retrieve().subscribe(response => { this.aulas = response.data; }, error => { this.errorResponse(); });
     this.materiasService.retrieve().subscribe(response => { this.materias = response.data; }, error => { this.errorResponse(); });
+    this.docenteService.retrieve({ noPaginate: true}).subscribe(response => { this.docentes = response.data; }, error => { this.errorResponse(); });
   }
 
   public postData(): void {}
@@ -108,7 +115,8 @@ export class InstructoriaComponent implements OnInit {
       horario_id: this.f.horario.value.id,
       aula_id: this.f.aula.value.id,
       instructor_id: Number(this.row.instructor_id),
-      materia_id: this.f.materia.value.id
+      materia_id: this.f.materia.value.id,
+      docente_id: this.f.docente.value.id
     };
     this.asignacionService.modify(this.idForEdit, formData).subscribe(response => {
       console.log('response', response);
@@ -134,6 +142,7 @@ export class InstructoriaComponent implements OnInit {
       this.f.horario.setValue(row.horario);
       this.f.aula.setValue(row.aula);
       this.f.materia.setValue(row.materia);
+      this.f.docente.setValue(row.docente);
     }
   }
 
@@ -170,7 +179,7 @@ export class InstructoriaComponent implements OnInit {
 
   public filterData(rows): void {
     console.log(rows);
-    this.hh =  rows.filter(row =>  row.pivot.is_used === '0');
+    this.filtered =  rows.filter(row =>  row.pivot.is_used === '0');
   }
 
 }
