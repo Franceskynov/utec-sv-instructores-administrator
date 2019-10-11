@@ -30,6 +30,13 @@ export class InstructorService {
       }));
   }
 
+  public instructorTraining(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('instructor/capacitacion/'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   public modify(item, frmData) {
     return this.http.patch<any>(environment.CONTROL_URL_API.concat(`instructor/${ item }`), frmData)
       .pipe(map(data => {

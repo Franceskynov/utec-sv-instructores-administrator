@@ -16,6 +16,7 @@ import { CapacitacionService } from 'app/services/capacitacion.service';
 })
 export class PerfilComponent implements OnInit {
 
+  public instructorId: any;
   public capacitaciones: any;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -33,6 +34,7 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.instructorId = this.route.snapshot.paramMap.get('id');
     this.ctrls = ['capacitacion', 'nota'];
     this.permissions = {
       capacitacion: {
@@ -88,6 +90,8 @@ export class PerfilComponent implements OnInit {
     this.retrieveCapacitaciones();
   }
 
+  get f() { return this.frm.controls; }
+
   public retrieveCapacitaciones(): void {
     this.capacitacionService.retrieve().subscribe(result => {
       this.capacitaciones = result.data;
@@ -98,8 +102,7 @@ export class PerfilComponent implements OnInit {
   }
 
   public retrieveProfile(): void {
-     const id = this.route.snapshot.paramMap.get('id');
-     this.service.retrieveById(id).subscribe(result => {
+     this.service.retrieveById(this.instructorId).subscribe(result => {
        if (!result.error) {
          this.row = result.data;
        }
@@ -123,6 +126,26 @@ export class PerfilComponent implements OnInit {
     this.modalService.open(content, {
       backdrop: 'static',
       keyboard: false
+    });
+  }
+
+  public postData(fn): void {
+    const formData = {
+      instructorId: Number(this.instructorId),
+      trainingId: this.f.capacitacion.value.id,
+      nota: this.f.nota.value
+    };
+
+    this.service.instructorTraining(formData).subscribe(response => {
+      if (!response.error) {
+        this.retrieveProfile();
+        fn();
+        this.frm.reset();
+      } else {
+        this.toaster.warning(response.message, environment.MESSAGES.WARN);
+      }
+    }, error => {
+      this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
 

@@ -10,7 +10,7 @@ export const environment = {
   MESSAGES: {
     SERVICE_ERROR: 'Error al conectarse al servicio',
     SERVICE_WARN: '',
-
+    WARN: 'Advertencia',
     SERVICE_OK: '',
     DELETION_OK: 'El registro se realizo exitosamente',
     UPDATED_OK: 'La actualizacion se realizo exitosamente',
