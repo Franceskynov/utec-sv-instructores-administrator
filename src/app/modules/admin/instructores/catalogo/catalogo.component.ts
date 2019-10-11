@@ -135,12 +135,20 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public selectForAssign(row): void {
     if (row.capacitaciones.length > 0 ) {
-      this.instructorSharingService.setInstructor(row);
-      this.changeStatusElement(
-        this.identifyElement(row)
-      );
+      if (row.capacitaciones.length === 3) {
+        if (row.notas.length > 0) {
+          this.instructorSharingService.setInstructor(row);
+          this.changeStatusElement(
+            this.identifyElement(row)
+          );
+        } else {
+          this.toastr.warning('El instrcuctor no posee notas para evaluar', environment.MESSAGES.WARN);
+        }
+      } else {
+        this.toastr.warning('El instructor debe de poseer las tres capacitaciones', environment.MESSAGES.WARN);
+      }
     } else {
-      this.toastr.warning('El instructor no puede se asignado por que no posee capacitaciones', 'Advertencia');
+      this.toastr.warning('El instructor no puede se asignado por que no posee capacitaciones', environment.MESSAGES.WARN);
     }
   }
 
