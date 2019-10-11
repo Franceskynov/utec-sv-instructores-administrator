@@ -162,7 +162,10 @@ export class AsignacionComponent implements OnInit {
   }
 
   public filterData(rows): void {
-    console.log(rows);
-    this.filtered =  rows.filter(row =>  row.pivot.is_used === '0');
+    if ( rows.length !== 0) {
+      this.filtered = rows.filter(row =>  row.pivot.is_used === '0');
+    } else  {
+      this.filtered = [];
+    }
   }
 }

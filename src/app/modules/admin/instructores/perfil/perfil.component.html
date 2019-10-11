@@ -181,8 +181,7 @@
       <div class="card">
         <div class="card-header" id="heading-linkss">
           <h4 class="card-title">Capacitaciones</h4>
-          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-
+          <button class="btn btn-outline-secondary mr-1 ft-plus pull-right" type="button" placement="top" ngbTooltip="Agregar" (click)="openModal(Capacitaciones)" ></button>
         </div>
         <div class="card-body">
           <h4 class="card-title"></h4>
@@ -206,3 +205,42 @@
   </div>
 
 </section>
+
+
+<ng-template #Capacitaciones let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Agregar una capacitacion</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="capacitacion">Capacitacion:</label>
+        <ng-select
+          id="capacitacion"
+          name="capacitacion"
+          [items]="capacitaciones"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione el dia" formControlName="capacitacion">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="capacitacion" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="">Nota:</label>
+        <input type="text" name="nota" id="nota" class="form-control">
+        <input-error-messages [frmName]="frm" ipName="capacitacion" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+
+    </form>
+  </div>
+</ng-template>

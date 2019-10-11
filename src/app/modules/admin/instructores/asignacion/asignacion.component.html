@@ -119,7 +119,8 @@
           (focusout)="filterData(frm.get('aula').value.horarios)"
           placeholder="Seleccione el aula" formControlName="aula">
           <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
-            Codigo: {{ item.codigo }} Capacidad: {{ item.capacidad }} alumnos
+            <b>Codigo</b> {{ item.codigo }} <br>
+            <b>Capacidad:</b> {{ item.capacidad }} alumnos
           </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="aula" [dataValidation]="permissions"></input-error-messages>
@@ -174,8 +175,10 @@
           [closeOnSelect]="true"
           bindLabel="nombre"
           placeholder="Seleccione el docente" formControlName="docente">
-          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
-            {{ item.nombre }}
+          <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+            <b>Apellido:</b> {{ item.apellido }} <br>
+            <b>Nombre:</b> {{ item.nombre }} <br>
+            <b>Email:</b> {{ item.email }}
           </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="docente" [dataValidation]="permissions"></input-error-messages>

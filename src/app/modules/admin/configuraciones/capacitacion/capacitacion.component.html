@@ -72,8 +72,8 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 *ngIf="editMode == false" class="modal-title">Registrar un ciclo</h4>
-    <h4 *ngIf="editMode == true" class="modal-title">Editar un ciclo </h4>
+    <h4 *ngIf="editMode == false" class="modal-title">Registrar una capacitacion</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Editar una capacitacion </h4>
     <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
     <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -91,6 +91,43 @@
         <label for="description">Descripci&oacute;n</label>
         <input type="text" class="form-control" id="description" name="description" formControlName="description" [ngClass]="paintError(frm, 'description')">
         <input-error-messages [frmName]="frm" ipName="description" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Tipo:</label>
+        <ng-select
+          id="tipo"
+          name="tipo"
+          [items]="tipoTraining"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione el tipo"
+          formControlName="tipo">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="tipo" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="docente">Docente:</label>
+        <ng-select
+          id="docente"
+          name="docente"
+          [items]="docentes"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione al docente" formControlName="docente">
+          <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+            <b>Apellido:</b> {{ item.apellido }} <br>
+            <b>Nombre:</b> {{ item.nombre }} <br>
+            <b>Email:</b> {{ item.email }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="docente" [dataValidation]="permissions"></input-error-messages>
       </div>
 
     </form>

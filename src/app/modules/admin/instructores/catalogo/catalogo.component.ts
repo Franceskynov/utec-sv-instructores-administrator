@@ -134,10 +134,14 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public selectForAssign(row): void {
-    this.instructorSharingService.setInstructor(row);
-    this.changeStatusElement(
-      this.identifyElement(row)
-    );
+    if (row.capacitaciones.length > 0 ) {
+      this.instructorSharingService.setInstructor(row);
+      this.changeStatusElement(
+        this.identifyElement(row)
+      );
+    } else {
+      this.toastr.warning('El instructor no puede se asignado por que no posee capacitaciones', 'Advertencia');
+    }
   }
 
   public identifyElement(row): number {
