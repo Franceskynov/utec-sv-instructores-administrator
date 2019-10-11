@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { routing } from './docente.routing';
 import { IndexComponent } from './index/index.component';
+import { InstructoriaComponent } from './instructoria/instructoria.component';
 
 
 @NgModule({
@@ -9,6 +10,9 @@ import { IndexComponent } from './index/index.component';
     CommonModule,
     routing,
   ],
-  declarations: [IndexComponent, ]
+  declarations: [
+    IndexComponent,
+    InstructoriaComponent,
+  ]
 })
 export class DocenteModule { }

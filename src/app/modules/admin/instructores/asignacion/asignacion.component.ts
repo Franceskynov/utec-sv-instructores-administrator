@@ -7,6 +7,7 @@ import { AulaService } from 'app/services/aula.service';
 import { MateriasService } from 'app/services/materias.service';
 import { AsignacionService } from 'app/services/asignacion.service';
 import { DocenteService } from 'app/services/docente.service';
+import { InstructorService } from 'app/services/instructor.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
@@ -21,7 +22,11 @@ import * as uuid from 'uuid';
 })
 export class AsignacionComponent implements OnInit {
 
+  public searchColumns: Array<any>;
+  public searchBox: any;
   public filtered: any;
+  public instructor: any;
+  public instructorId: number;
   public docentes: Array<any>;
   public ciclos: Array<any>;
   public horarios: Array<any>;
@@ -46,11 +51,16 @@ export class AsignacionComponent implements OnInit {
     private materiasService: MateriasService,
     private asignacionService: AsignacionService,
     private docenteService: DocenteService,
+    private instructorService: InstructorService,
   ) { }
 
   ngOnInit() {
+    this.instructorId = 0;
     this.row = {};
-    this.searchColums = ['nombre', 'carrera', 'cum'];
+    this.instructor = {
+      notas: []
+    };
+    this.searchColumns = ['mat_codigo', 'mat_nombre', 'nota', 'estado'];
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia', 'docente'];
     this.permissions = {
@@ -88,6 +98,15 @@ export class AsignacionComponent implements OnInit {
     this.docenteService.retrieve({ noPaginate: true}).subscribe(response => { this.docentes = response.data; }, error => { this.errorResponse(); });
   }
 
+  public retrieveInstructorData(id): void {
+    this.instructorService.retrieveById(id).subscribe(response => {
+      this.instructor = response.data;
+      console.log('instructor', response);
+      }, error => {
+      this.errorResponse();
+    });
+  }
+
   public openModal(content, row): void {
     this.modalService.open(content, {
       backdrop: 'static',
@@ -97,6 +116,7 @@ export class AsignacionComponent implements OnInit {
     this.f.nombre.setValue(
       this.makeAssignationName(row)
     );
+    this.retrieveInstructorData(row.id);
   }
 
   public loadFromStorage(): void {

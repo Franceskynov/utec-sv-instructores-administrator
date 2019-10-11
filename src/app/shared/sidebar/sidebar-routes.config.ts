@@ -190,7 +190,30 @@ const ADMIN_ROUTES: RouteInfo[] = [
       },
     ]
   }];
-const DOCENTE_ROUTES: RouteInfo[] = [];
+const DOCENTE_ROUTES: RouteInfo[] = [
+  {
+    path: '',
+    title: 'Instructorias',
+    icon: 'ft-book',
+    class: 'nav-item has-sub',
+    badge: '',
+    badgeClass: 'badge badge badge-primary badge-pill float-right mr-2',
+    isExternalLink: false, isNavHeader: false,
+    submenu: [
+      {
+        path: '/docente/instructoria',
+        title: 'Catalogo',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+    ]
+  }
+];
 const INSTRUCTOR_ROUTES: RouteInfo[] = [];
 
 export const ADM_ROUTES: RouteInfo[] = [...ADMIN_ROUTES];

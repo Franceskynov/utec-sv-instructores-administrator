@@ -30,6 +30,7 @@
           <a class="heading-elements-toggle">
             <i class="fa fa-ellipsis-v font-medium-3"></i>
           </a>
+          <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieve()"></button>
 
         </div>
         <div class="card-content collapse show">
@@ -57,7 +58,8 @@
                 <ngx-datatable-column name="Cum" prop="cum"></ngx-datatable-column>
                 <ngx-datatable-column name="Acciones" prop="actions">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
-                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-box" placement="top" ngbTooltip="Asignar instructoria" (click)="openModal(content, row)"></button>
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-box" placement="top" ngbTooltip="Asignar instructoria" (click)="openModal(content, row)"></button>-->
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-file-text" placement="top" ngbTooltip="Revisar materias" (click)="openModal(contentNotas, row)"></button>
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
@@ -189,5 +191,40 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
     <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" [disabled]="frm.invalid"  (click)="postData(c);" ></button>
+  </div>
+</ng-template>
+
+<ng-template #contentNotas let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Revisar materias</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="searchBox">Busquedas:</label>
+        <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
+      </div>
+    </form>
+    <ngx-datatable class='material'
+                   [columnMode]="'force'"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [limit]="4"
+                   [rowHeight]="'auto'"
+                   [rows]='instructor.notas | filter:searchBox:searchColumns'>
+      <ngx-datatable-column name="Codigo" prop="mat_codigo"></ngx-datatable-column>
+      <ngx-datatable-column name="Materia" prop="mat_nombre"></ngx-datatable-column>
+      <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+      <ngx-datatable-column name="Estado" prop="estado"></ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+<!--    <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" [disabled]="frm.invalid"  (click)="postData(c);" ></button>-->
+    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-box" placement="top" ngbTooltip="Asignar instructoria" (click)="openModal(content, row)"></button>
   </div>
 </ng-template>
