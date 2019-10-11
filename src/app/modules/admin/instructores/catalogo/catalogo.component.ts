@@ -142,7 +142,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
             this.identifyElement(row)
           );
         } else {
-          this.toastr.warning('El instrcuctor no posee notas para evaluar', environment.MESSAGES.WARN);
+          this.toastr.warning('El instructor no posee notas para evaluar', environment.MESSAGES.WARN);
         }
       } else {
         this.toastr.warning('El instructor debe de poseer las tres capacitaciones', environment.MESSAGES.WARN);
