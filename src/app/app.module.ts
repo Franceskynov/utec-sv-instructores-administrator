@@ -23,8 +23,8 @@ import { AuthInterceptor } from 'app/interceptors/token.interceptor';
 import { LoaderComponent } from 'app/components/loader/loader.component';
 import { HttpErrorInterceptor } from 'app/interceptors/http-error.interceptor';
 import { UserIdleModule } from 'angular-user-idle';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { CredentialsComponent } from './credentials/credentials.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { CredentialsComponent } from './components/credentials/credentials.component';
 import { UtilModule } from 'app/modules/util/util.module';
 
 @NgModule({

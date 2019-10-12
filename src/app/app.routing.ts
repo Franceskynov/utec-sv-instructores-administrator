@@ -2,9 +2,9 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders, Component } from '@angular/core';
 import { FixedNavbarFooterLayoutComponent } from 'app/layouts/fixed-navbar-footer-layout/fixed-navbar-footer-layout.component';
 import { NotFoundComponent } from 'app/components/not-found/not-found.component';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuard } from 'app/guards/auth.guard';
-import { CredentialsComponent } from './credentials/credentials.component';
+import { CredentialsComponent } from './components/credentials/credentials.component';
 
 export const routes: Routes = [
   {
@@ -41,8 +41,8 @@ export const routes: Routes = [
         data: {
           title: 'Cambio de credenciales'
         }
-      }
-    ]
+      },
+    ],
   },
   {
     path: 'login',
