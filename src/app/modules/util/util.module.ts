@@ -17,6 +17,7 @@ import { FilterPipe } from 'app/pipes/filter.pipe';
 import { OnlynumberDirective } from './directives/onlynumber.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxMaskModule.forRoot(),
     NgxPaginationModule,
     // NgbModule.forRoot(),
+    PasswordStrengthMeterModule
   ],
   declarations: [
     InputErrorMessagesComponent,
@@ -54,6 +56,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxMaskModule,
     NgxPaginationModule,
     CartComponent,
+    PasswordStrengthMeterModule,
   ]
 })
 export class UtilModule { }

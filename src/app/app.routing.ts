@@ -4,6 +4,7 @@ import { FixedNavbarFooterLayoutComponent } from 'app/layouts/fixed-navbar-foote
 import { NotFoundComponent } from 'app/components/not-found/not-found.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthGuard } from 'app/guards/auth.guard';
+import { CredentialsComponent } from './credentials/credentials.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,14 @@ export const routes: Routes = [
         path: 'instructor',
         loadChildren: 'app/modules/instructor/instructor.module#InstructorModule',
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'credenciales',
+        component: CredentialsComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Cambio de credenciales'
+        }
       }
     ]
   },

@@ -27,6 +27,7 @@
     "@ng-select/ng-select": "2.3.1",
     "@swimlane/ngx-datatable": "13.0.1",
     "@types/jquery": "^3.3.1",
+    "angular-password-strength-meter": "0.0.4",
     "angular-user-idle": "^2.2.1",
     "bourbon": "^5.0.0",
     "classlist.js": "^1.1.20150312",
@@ -48,7 +49,8 @@
     "uuid": "^3.3.3",
     "web-animations-js": "^2.3.1",
     "xlsx": "^0.14.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "zxcvbn": "4.4.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0",
