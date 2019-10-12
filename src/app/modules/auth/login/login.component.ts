@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.copy = '\u0046\u0072\u0061\u006e\u0063\u0065\u0073\u006b\u0079\u006e\u006f\u0076';
+    this.copy = environment.copy;
     this.token = {
       iss: null,
       iat: null,

@@ -16,4 +16,18 @@ export class CredentialService {
         return data;
       }));
   }
+
+  public check(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('credentials/checkUserByEmail'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public activate(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('credentials/activateUser'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

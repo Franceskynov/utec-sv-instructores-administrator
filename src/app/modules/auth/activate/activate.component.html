@@ -1,0 +1,55 @@
+<div class="col-4 mx-auto login-form">
+  <div class="card mb-1">
+    <div class="card-header border-0 pb-0">
+      <div class="card-title text-center">
+      </div>
+      <h1 class="text-center mt-3 mb-0">Activar cuenta de usuario</h1>
+    </div>
+    <div class="card-content">
+      <div class="card-body mx-2">
+        <div id="checkUserByEmailFrm" [ngClass]="{ 'hidden': emailChecked }">
+          <form [formGroup]="checkUserFrm" class="form-horizontal form-simple">
+            <fieldset class="form-group position-relative has-icon-left mb-2">
+              <input type="text" class="form-control form-control-lg" id="email" placeholder="Email" formControlName="email" required autocomplete="email">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </fieldset>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block" [disabled]="checkUserFrm.invalid" (click)="checkUserByEmail()">
+              <i class="ft-check"></i> Verificar email
+            </button>
+          </form>
+        </div>
+
+        <div [ngClass]="{ 'hidden': !emailChecked, 'show': emailChecked }">
+          <form class="form-horizontal form-simple" [formGroup]="activateUserFrm">
+            <fieldset class="form-group position-relative has-icon-left mb-2">
+              <input type="text" class="form-control form-control-lg" id="user-name" placeholder="Email" formControlName="email" required autocomplete="off">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </fieldset>
+            <fieldset class="form-group position-relative has-icon-left">
+              <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" required (keydown.enter)="activateUser()" autocomplete="off">
+              <div class="form-control-position">
+                <i class="fa fa-key"></i>
+              </div>
+            </fieldset>
+            <div class="form-group row">
+            </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="activateUser()" (keydown.enter)="activateUser()" [disabled]="activateUserFrm.invalid">
+              <i class="ft-unlock"></i> &nbsp; Activar cuenta
+            </button>
+          </form>
+        </div>
+
+      </div>
+      <div class="card-footer pt-0 border-0">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="copyright">
+  <p class="text-center">&copy;  2019 {{ copy }}</p>
+</div>

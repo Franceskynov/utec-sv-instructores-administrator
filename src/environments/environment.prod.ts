@@ -24,5 +24,6 @@ export const environment = {
     IDLE: 3 * 60,
     TIMEOUT: 10,
     PING: 5,
-  }
+  },
+  copy: '\u0046\u0072\u0061\u006e\u0063\u0065\u0073\u006b\u0079\u006e\u006f\u0076'
 };
