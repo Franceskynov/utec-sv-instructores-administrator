@@ -17,7 +17,7 @@
             </div>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left">
-            <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" required (keydown.enter)="authenticate()">
+            <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" autocomplete="current-password" required (keydown.enter)="authenticate()">
             <div class="form-control-position">
               <i class="fa fa-key"></i>
             </div>
@@ -32,11 +32,11 @@
       <div class="card-footer pt-0 border-0">
         <div class="mx-2">
           <h6 class="line-on-side text-muted text-center font-small-3 my-2"><span>O</span></h6>
-<!--          <p class="text-center">-->
-<!--            <a [routerLink]="['/forgotPassword']" class="card-link align-self-center">-->
-<!--              &laquo; Recuperar contraseña &raquo;-->
-<!--            </a>-->
-<!--          </p>-->
+          <p class="text-center">
+            <a [routerLink]="['/login/accountRecover']" class="card-link align-self-center">
+              &laquo; Recuperar contraseña &raquo;
+            </a>
+          </p>
         </div>
       </div>
     </div>

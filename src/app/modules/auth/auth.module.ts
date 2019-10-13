@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { routes, routing } from 'app/modules/auth/auth.routing';
 import { UtilModule } from 'app/modules/util/util.module';
 import { ActivateComponent } from './activate/activate.component';
+import { RecoverComponent } from './recover/recover.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { ActivateComponent } from './activate/activate.component';
   ],
   declarations: [
     LoginComponent,
-    ActivateComponent
+    ActivateComponent,
+    RecoverComponent
   ]
 })
 export class AuthModule { }

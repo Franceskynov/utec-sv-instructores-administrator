@@ -25,13 +25,20 @@
         <div [ngClass]="{ 'hidden': !emailChecked, 'show': emailChecked }">
           <form class="form-horizontal form-simple" [formGroup]="activateUserFrm">
             <fieldset class="form-group position-relative has-icon-left mb-2">
-              <input type="text" class="form-control form-control-lg" id="user-name" placeholder="Email" formControlName="email" required autocomplete="off">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="user-name"
+                     placeholder="Email"
+                     formControlName="email" required autocomplete="off">
               <div class="form-control-position">
                 <i class="ft-user"></i>
               </div>
             </fieldset>
             <fieldset class="form-group position-relative has-icon-left">
-              <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" required (keydown.enter)="activateUser()" autocomplete="off">
+              <input type="password" class="form-control form-control-lg"
+                     id="user-password"
+                     placeholder=" Contrase&ntilde;a"
+                     formControlName="password" required (keydown.enter)="activateUser()" autocomplete="off">
               <div class="form-control-position">
                 <i class="fa fa-key"></i>
               </div>

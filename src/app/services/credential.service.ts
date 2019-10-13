@@ -30,4 +30,11 @@ export class CredentialService {
         return data;
       }));
   }
+
+  public recover(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('credentials/accountRecover'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

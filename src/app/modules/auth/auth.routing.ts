@@ -2,6 +2,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { LoginComponent } from 'app/modules/auth/login/login.component';
 import { ActivateComponent } from './activate/activate.component';
+import { RecoverComponent } from './recover/recover.component';
 
 export const routes: Routes = [
     {
@@ -16,6 +17,13 @@ export const routes: Routes = [
       component: ActivateComponent,
       data: {
         title: 'Activar cuenta de usuario'
+      }
+    },
+    {
+      path: 'accountRecover',
+      component: RecoverComponent,
+      data: {
+        title: 'Recuperacion de cuenta'
       }
     }
 

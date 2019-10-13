@@ -214,7 +214,63 @@ const DOCENTE_ROUTES: RouteInfo[] = [
     ]
   }
 ];
-const INSTRUCTOR_ROUTES: RouteInfo[] = [];
+const INSTRUCTOR_ROUTES: RouteInfo[] = [
+  {
+    path: '',
+    title: 'Instructor',
+    icon: 'ft-book',
+    class: 'nav-item has-sub',
+    badge: '',
+    badgeClass: 'badge badge badge-primary badge-pill float-right mr-2',
+    isExternalLink: false, isNavHeader: false,
+    submenu: [
+      {
+        path: '/instructor/dashboard',
+        title: 'Dashboard',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
+        path: '/instructor/instructoria',
+        title: 'Instructoria',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
+        path: '/instructor/historial',
+        title: 'Historial',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
+        path: '/instructor/horasSociales',
+        title: 'Horas sociales',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+    ]
+  },
+];
 
 export const ADM_ROUTES: RouteInfo[] = [...ADMIN_ROUTES];
 export const DCNT_ROUTES: RouteInfo[] = [...DOCENTE_ROUTES];
