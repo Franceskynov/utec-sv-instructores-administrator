@@ -82,5 +82,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  public refreshToken(): void{
+    
+  }
+
   ngOnDestroy(): void {}
 }

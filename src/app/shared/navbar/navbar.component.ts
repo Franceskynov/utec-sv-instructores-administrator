@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DecodeTokenService } from 'app/services/decode-token.service';
-import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import { LoginService } from 'app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-navbar',
@@ -16,8 +18,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     private decodeToken: DecodeTokenService,
     private router: Router,
-  ) {
-  }
+    private loginService: LoginService,
+    private toaster: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     this.userName = '';
@@ -33,7 +36,12 @@ export class NavbarComponent implements OnInit {
   }
 
   public logOut(): void {
-    this.router.navigate(['/login']);
+    this.loginService.logout().subscribe(response => {
+      this.toaster.info(response.data.message, environment.MESSAGES.SERVICE_OK)
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 500);
+    });
     localStorage.clear();
   }
 

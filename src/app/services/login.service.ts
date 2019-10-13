@@ -17,4 +17,11 @@ export class LoginService {
         return data;
       }));
   }
+
+  public logout() {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('logout'), {})
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }
