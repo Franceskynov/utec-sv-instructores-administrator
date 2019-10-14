@@ -6,43 +6,48 @@ import { RewardsComponent } from './rewards/rewards.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from 'app/guards/auth.guard';
+import { RoleGuard } from 'app/guards/role.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [AuthGuard],
         data: {
-          title: 'Dashboard'
+          title: 'Dashboard',
+          role: 'Instructor'
         }
       },
       {
         path: 'instructoria',
         component: InstructoriaComponent,
-        canActivate: [AuthGuard],
         data: {
-          title: 'Instructoria'
-        }
+          title: 'Instructoria',
+          role: 'Instructor'
+        },
+        canActivate: [RoleGuard],
       },
       {
         path: 'horasSociales',
         component: RewardsComponent,
-        canActivate: [AuthGuard],
         data: {
-          title: 'Horas sociales'
-        }
+          title: 'Horas sociales',
+          role: 'Instructor'
+        },
+        canActivate: [RoleGuard],
       },
       {
         path: 'historial',
         component: HistorialComponent,
-        canActivate: [AuthGuard],
         data: {
-          title: 'Historial'
-        }
+          title: 'Historial',
+          role: 'Instructor'
+        },
+        canActivate: [RoleGuard],
       }
     ]
   },

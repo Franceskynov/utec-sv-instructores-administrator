@@ -26,6 +26,7 @@ import { UserIdleModule } from 'angular-user-idle';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { CredentialsComponent } from './components/credentials/credentials.component';
 import { UtilModule } from 'app/modules/util/util.module';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UtilModule } from 'app/modules/util/util.module';
       LoaderComponent,
       WelcomeComponent,
       CredentialsComponent,
+      UnauthorizedComponent,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  public token: any;
   public isShow: boolean;
   public topPosToStartShowing = 40;
   public idle: boolean;
@@ -53,6 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.userIdle.onTimeout().subscribe(() => this.logout());
+    this.refreshToken();
   }
 
   public logout(): void {
@@ -82,8 +84,15 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  public refreshToken(): void{
-    
+  public refreshToken(): void {
+    const expires = localStorage.getItem('expires');
+    if (expires) {
+      setInterval(() => {
+        console.log(
+          expires
+        );
+      }, 3 * 1000);
+    }
   }
 
   ngOnDestroy(): void {}

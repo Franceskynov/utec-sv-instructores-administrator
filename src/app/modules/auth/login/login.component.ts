@@ -94,9 +94,10 @@ export class LoginComponent implements OnInit {
       'email': this.f.email.value,
       'password': this.f.password.value
     }).subscribe(response => {
-      console.log(response);
+      // console.log(response);
       if (!response.error) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('expires', response.data.expires);
         this.goTo();
       } else {
         this.toastr.warning('El usuario y la clave no coinciden', 'Login iconrrecto');
