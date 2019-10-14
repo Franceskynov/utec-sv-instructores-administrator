@@ -27,6 +27,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { CredentialsComponent } from './components/credentials/credentials.component';
 import { UtilModule } from 'app/modules/util/util.module';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
       WelcomeComponent,
       CredentialsComponent,
       UnauthorizedComponent,
+      ProfileComponent,
   ],
   imports: [
     BrowserAnimationsModule,

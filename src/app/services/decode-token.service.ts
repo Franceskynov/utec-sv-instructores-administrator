@@ -28,7 +28,8 @@ export class DecodeTokenService {
         is_admin: null,
         descrpcn: null,
         username: null,
-        email: null
+        email: null,
+        people: null
       };
     }
   }

@@ -7,6 +7,7 @@ import { AuthGuard } from 'app/guards/auth.guard';
 import { RoleGuard } from 'app/guards/role.guard';
 import { CredentialsComponent } from './components/credentials/credentials.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +55,14 @@ export const routes: Routes = [
           title: 'Cambio de credenciales'
         }
       },
+      {
+        path: 'perfil',
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Perfil'
+        }
+      }
     ],
   },
   {

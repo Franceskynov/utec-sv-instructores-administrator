@@ -6,11 +6,13 @@ import { HistorialComponent } from './historial/historial.component';
 import { RewardsComponent } from './rewards/rewards.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UtilModule } from 'app/modules/util/util.module';
 
 @NgModule({
   imports: [
     CommonModule,
     routing,
+    UtilModule,
   ],
   declarations: [
     IndexComponent,
