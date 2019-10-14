@@ -88,19 +88,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public refreshToken(): void {
     const expires = localStorage.getItem('expires');
-    console.log((Number(expires) * 1000) - 30);
     if (expires) {
       setInterval(() => {
-        this.loginService.refreshToken().subscribe(response => {
-          if (!response.error) {
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('expires', response.data.expires);
-          }
-        });
-        console.log(
-          'new token',
-          expires
-        );
+        if (localStorage.getItem('token')) {
+          this.loginService.refreshToken().subscribe(response => {
+            if (!response.error) {
+              localStorage.setItem('token', response.data.token);
+              localStorage.setItem('expires', response.data.expires);
+            }
+          });
+
+          console.log(
+            'new token',
+            expires
+          );
+        }
       }, (
           (Number(expires) * 1000) - 30
         )

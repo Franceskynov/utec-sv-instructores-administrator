@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PermissionsService } from 'app/services/permissions.service';
@@ -68,7 +67,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public retrieve(): void {
     this.service.retrieve().subscribe(response => {
-      console.log('instructores', response);
+      // console.log('instructores', response);
       this.instructores = response.data;
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');
@@ -76,7 +75,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
   public retrieceExpediente(): void {
     this.expedienteService.retrieve({carnet: this.f.carnet.value}).subscribe( response => {
-      console.log(response);
+      // console.log(response);
       this.row = response.data;
       this.f.nombre.setValue(this.row.nombre);
       this.f.carrera.setValue(this.row.carrera);
