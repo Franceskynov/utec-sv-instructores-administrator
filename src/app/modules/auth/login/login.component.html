@@ -18,7 +18,11 @@
           </div>
           <form [formGroup]="checkUserFrm" class="form-horizontal form-simple">
             <fieldset class="form-group position-relative has-icon-left mb-2">
-              <input type="text" class="form-control form-control-lg" id="email" placeholder="Email" formControlName="email" required autocomplete="email">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="email"
+                     placeholder="Email"
+                     formControlName="email" required autocomplete="email" (keydown.enter)="checkUserByEmail()">
               <div class="form-control-position">
                 <i class="ft-user"></i>
               </div>
@@ -33,13 +37,22 @@
         <div *ngIf="emailChecked">
           <form class="form-horizontal form-simple" action="index.html" novalidate [formGroup]="frm">
             <fieldset class="form-group position-relative has-icon-left mb-2">
-              <input type="text" class="form-control form-control-lg" id="user-name" placeholder="Email" formControlName="email" required autocomplete="off">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="user-name"
+                     placeholder="Email"
+                     formControlName="email" required autocomplete="off">
               <div class="form-control-position">
                 <i class="ft-user"></i>
               </div>
             </fieldset>
             <fieldset class="form-group position-relative has-icon-left">
-              <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" autocomplete="current-password" required (keydown.enter)="authenticate()">
+              <input type="password"
+                     class="form-control form-control-lg"
+                     id="user-password"
+                     placeholder=" Contrase&ntilde;a"
+                     formControlName="password"
+                     autocomplete="current-password" required (keydown.enter)="authenticate()">
               <div class="form-control-position">
                 <i class="fa fa-key"></i>
               </div>

@@ -1,11 +1,12 @@
-import { Component, OnInit,  HostListener, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit,  HostListener, ElementRef, OnDestroy, ViewChild,  } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { UserIdleService } from 'angular-user-idle';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-
+import { LoaderService } from 'app/services/loader.service';
+import {LoginService} from 'app/services/login.service';
 
 @Component({
     selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private userIdle: UserIdleService,
               private toastr: ToastrService,
+              private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
@@ -58,9 +60,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public logout(): void {
-    if (this.router.url !== '/login' && this.router.url !== '/forgotPassword') {
+    this.clean();
+    if (this.router.url !== '/login') {
       this.idle = true;
-      this.clean();
       location.href = '/#/login';
       this.toastr.warning('Por motivos de seguridad se cerro la sesion', 'Inactividad');
     }
@@ -86,14 +88,46 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public refreshToken(): void {
     const expires = localStorage.getItem('expires');
+    console.log((Number(expires) * 1000) - 30);
     if (expires) {
       setInterval(() => {
+        this.loginService.refreshToken().subscribe(response => {
+          if (!response.error) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('expires', response.data.expires);
+          }
+        });
         console.log(
+          'new token',
           expires
         );
-      }, 3 * 1000);
+      }, (
+          (Number(expires) * 1000) - 30
+        )
+      );
     }
   }
 
+  public restart(): void {
+    this.userIdle.resetTimer();
+  }
+
+  @HostListener('click', ['$event']) onClick() {
+    this.restart();
+  }
+
+  @HostListener('mouseover', ['$event']) onHover() {
+    this.restart();
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    this.refreshToken();
+  }
+
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event) {
+    this.refreshToken();
+  }
   ngOnDestroy(): void {}
 }

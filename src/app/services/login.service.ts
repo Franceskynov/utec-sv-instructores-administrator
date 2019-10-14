@@ -24,4 +24,11 @@ export class LoginService {
         return data;
       }));
   }
+
+  public refreshToken() {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('refresh'))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

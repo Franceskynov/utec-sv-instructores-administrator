@@ -40,7 +40,7 @@ export class SidebarComponent implements OnInit {
 
     public buildMenu(): void {
       this.token = this.decodeToken.decodePayload();
-      console.log('from sidebar', this.token);
+      // console.log('from sidebar', this.token);
       $.getScript('./assets/app/js/core/app-menu.js');
       $.getScript('./assets/app/js/core/app.js');
 
