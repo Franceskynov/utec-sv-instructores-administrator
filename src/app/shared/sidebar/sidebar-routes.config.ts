@@ -79,7 +79,7 @@ const ADMIN_ROUTES: RouteInfo[] = [
       },
       {
         path: '/admin/reporting/asistencia',
-        title: 'Asistencia a materias',
+        title: 'Instructorias',
         icon: '',
         class: '',
         badge: '',
@@ -201,8 +201,30 @@ const DOCENTE_ROUTES: RouteInfo[] = [
     isExternalLink: false, isNavHeader: false,
     submenu: [
       {
+        path: '/docente/dashboard',
+        title: 'Dashboard',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
         path: '/docente/instructoria',
-        title: 'Catalogo',
+        title: 'Instructoria',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
+        path: '/docente/materias',
+        title: 'Materias impartidas',
         icon: '',
         class: 'menu-item',
         badge: '',

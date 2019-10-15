@@ -4,6 +4,8 @@ import { IndexComponent } from './index/index.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { RoleGuard } from 'app/guards/role.guard';
 import { AuthGuard } from 'app/guards/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MateriasComponent } from './materias/materias.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +18,24 @@ export const routes: Routes = [
         component: InstructoriaComponent,
         data: {
           title: 'Instructoria',
+          role: 'Docente'
+        },
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: {
+          title: 'Dashboard',
+          role: 'Docente'
+        },
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'materias',
+        component: MateriasComponent,
+        data: {
+          title: 'Materias',
           role: 'Docente'
         },
         canActivate: [RoleGuard]

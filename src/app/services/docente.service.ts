@@ -43,4 +43,18 @@ export class DocenteService {
         return data;
       }));
   }
+
+  public addMateria(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('docente/materia'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public removeMateria(item, frmData) {
+    return this.http.patch<any>(environment.CONTROL_URL_API.concat(`docente/materia/${ item }`), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

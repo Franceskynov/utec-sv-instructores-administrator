@@ -51,8 +51,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       carnet: new FormControl({value: '', disabled: false}, Validators.required),
       carrera: new FormControl({value: '', disabled: true}, Validators.required),
       cum: new FormControl({value: '', disabled: true}, Validators.required),
-      phone: new FormControl({value: '', disabled: false}, Validators.required),
-      personalEmail: new FormControl({value: '', disabled: false}, [ Validators.required, Validators.email])
+      phone: new FormControl({value: '', disabled: false}, ),
+      personalEmail: new FormControl({value: '', disabled: false}, [  Validators.email])
     });
     this.searchColums = ['nombre', 'descripcion'];
     this.retrieve();
@@ -97,7 +97,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       telefono: this.f.phone.value,
       email: carnet.concat('@mail.utec.edu.sv'),
       emailPersonal: pEmail,
-      username: pEmail.split('@')[0],
+      username: carnet, // pEmail.split('@')[0],
       notas: this.trimmingNotas(this.row.notas)
     };
     this.service.make(frmData).subscribe(result => {
@@ -105,7 +105,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       if (!result.error) {
         this.retrieve();
         this.frm.reset();
-        this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+        this.f.carnet.setValue('00-0000-0000');
+        this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
       } else {
         this.toastr.error('No se pudo procesar', 'Error');
       }
@@ -122,7 +123,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public openModal(content, row): void {
-    this.modalService.open(content);
+    this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false
+    });
   }
 
   public paintError(form, input): any {

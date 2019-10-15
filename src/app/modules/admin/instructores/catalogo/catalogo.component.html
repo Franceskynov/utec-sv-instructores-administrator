@@ -29,6 +29,7 @@
           <h4 class="card-title"> {{ instructor.nombre }} </h4>
           <ul class="list-inline">
             <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
+            <li>{{ instructor.carrera | lowercase }}</li>
           </ul>
 <!--          <h6 class="card-subtitle text-muted">Instructor</h6>-->
           <p>CUM: {{ instructor.cum }}</p>
