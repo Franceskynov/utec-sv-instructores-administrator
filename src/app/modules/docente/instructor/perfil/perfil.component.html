@@ -1,0 +1,214 @@
+<div id="user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card profile-with-cover">
+        <div class="card-img-top img-fluid bg-cover height-350" style="background: url('/assets/img/bgperfi_newl.png') 50%;"></div>
+        <div class="media profil-cover-details w-100">
+          <div class="media-left pl-2 pt-2">
+            <a href="#" class="profile-image">
+              <img src="/assets/img/product-preview.png" class="rounded-circle img-border height-100" alt="Card image">
+            </a>
+          </div>
+          <div class="media-body pt-3 px-2">
+            <div class="row">
+              <div class="col">
+                <h3 class="text-white"> {{ row.nombre }} </h3>
+                <h3 class="text-white"> {{ formatCarnet(row.carnet) }} </h3>
+                <h3 class="text-white"> {{ row.cum }} </h3>
+              </div>
+              <div class="col text-right">
+<!--                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Follow</button>-->
+<!--                <div class="btn-group d-none d-md-block float-right ml-2" role="group" aria-label="Basic example">-->
+<!--                  <button type="button" class="btn btn-success"><i class="fa fa-dashcube"></i> Message</button>-->
+<!--                  <button type="button" class="btn btn-success"><i class="fa fa-cog"></i></button>-->
+<!--                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="navbar navbar-light navbar-profile align-self-end">
+          <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation"></button>
+
+        </nav>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<section id="card-headings">
+  <div class="row">
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksc">
+          <h4 class="card-title">Instructoria</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <div *ngIf="row.instructoria.length > 0">
+            <h4 class="card-title"></h4>
+            <p> <b>Nombre</b>: {{ row.instructoria[0].nombre }}</p>
+            <p> <b>Ciclo</b>: {{ row.instructoria[0].ciclo.nombre }}</p>
+            <p> <b>Aula</b>: {{ row.instructoria[0].aula.codigo }}</p>
+            <p> <b>Docente</b> :
+              <span>  <b>Nombre</b> : {{ row.instructoria[0].docente.nombre }}</span> &nbsp;
+              <span> <b>Apellido</b>: {{ row.instructoria[0].docente.apellido }} </span>
+            </p>
+            <p> <b>Materia</b> : {{ row.instructoria[0].materia.nombre }}</p>
+            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ row.instructoria[0].horario.nombre_dia }} {{ row.instructoria[0].horario.fin }} - {{ row.instructoria[0].horario.fin }}  </span></p>
+
+          </div>
+          <div>
+            <div class="alert alert-warning" role="alert" *ngIf="row.instructoria.length === 0">
+              Por el momento no tiene asignada una instructoria.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linksa">
+          <h4 class="card-title">Usuario</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <p> <b>Nombre de usuario</b> : {{ row.user.username }} </p>
+          <p> <b>Email</b>: {{ row.user.email }} </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-links">
+          <h4 class="card-title">Notas</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <form>
+            <div class="form-group">
+              <label for="searchBox">Busquedas:</label>
+              <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
+            </div>
+          </form>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.notas | filter:searchBox:searchColumns'>
+            <ngx-datatable-column name="Codigo" prop="mat_codigo"></ngx-datatable-column>
+            <ngx-datatable-column name="Materia" prop="mat_nombre"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Estado" prop="estado"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linksb">
+          <h4 class="card-title">Historia</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+
+          </div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.historial'>
+            <ngx-datatable-column name="Comentarios" prop="comentarios"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
+            <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+            <ngx-datatable-column name="Docente" prop="docente.nombre"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-header" id="heading-linkss">
+          <h4 class="card-title">Capacitaciones</h4>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <ngx-datatable class='material'
+                         [columnMode]="'force'"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [limit]="5"
+                         [rowHeight]="'auto'"
+                         [rows]='row.capacitaciones'>
+            <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
+            <ngx-datatable-column name="Tipo" prop="tipo"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="pivot.nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Estado" prop="pivot.estado"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<ng-template #Capacitaciones let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Agregar una capacitacion</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="capacitacion">Capacitacion:</label>
+        <ng-select
+          id="capacitacion"
+          name="capacitacion"
+          [items]="capacitaciones"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione el dia" formControlName="capacitacion">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="capacitacion" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="nota">Nota:</label>
+        <input type="text"
+               name="nota"
+               id="nota"
+               formControlName="nota"
+               class="form-control"
+               autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="nota" [dataValidation]="permissions"></input-error-messages>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" [disabled]="frm.invalid" (click)="postData(c);" ></button>
+  </div>
+</ng-template>

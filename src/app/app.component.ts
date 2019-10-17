@@ -61,10 +61,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public logout(): void {
     this.clean();
+    this.toastr.warning('Por motivos de seguridad se cerro la sesion', 'Inactividad');
     if (this.router.url !== '/login') {
       this.idle = true;
       location.href = '/#/login';
-      this.toastr.warning('Por motivos de seguridad se cerro la sesion', 'Inactividad');
     }
   }
 

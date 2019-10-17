@@ -6,6 +6,7 @@ import { RoleGuard } from 'app/guards/role.guard';
 import { AuthGuard } from 'app/guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MateriasComponent } from './materias/materias.component';
+import { PerfilComponent } from './instructor/perfil/perfil.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,15 @@ export const routes: Routes = [
         data: {
           title: 'Materias',
           role: 'Docente'
+        },
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'perfil/instructor/:id',
+        component: PerfilComponent,
+        data: {
+          title: 'Perfil del instructor',
+          role: 'Docente',
         },
         canActivate: [RoleGuard]
       }

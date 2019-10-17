@@ -19,6 +19,9 @@ import { Subscription } from 'rxjs';
 })
 export class CatalogoComponent implements OnInit, OnDestroy {
 
+  public config: any;
+  public searchBox: string;
+  public searchColumns: Array<any>;
   public subscription: Subscription;
   public instructores: Array<any>;
   public frm: FormGroup;
@@ -45,7 +48,15 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.searchBox = '';
     this.instructores = [];
+    this.searchColumns = ['nombre', 'carnet', 'carrera', 'cum'];
+    this.config = {
+      itemsPerPage: 0,
+      currentPage: 0,
+      totalItems: 0,
+      id: 'catalogoInstructores'
+    };
     this.frm = new FormGroup({
       nombre: new FormControl({value: '', disabled: true}, Validators.required),
       carnet: new FormControl({value: '', disabled: false}, Validators.required),
@@ -67,7 +78,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public retrieve(): void {
     this.service.retrieve().subscribe(response => {
-      // console.log('instructores', response);
+      this.config = {
+        itemsPerPage: 6,
+        currentPage: 0,
+        totalItems: response.data.length,
+        id: 'catalogoInstructores'
+      };
       this.instructores = response.data;
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');
@@ -113,14 +129,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
-    // console.log(frmData);
-    // console.log('notas', this.row.notas);
   }
   public patchData(): void {}
-
-  goPlaces() {
-    this.router.navigate(['/', 'admin', 'instructores', 'perfil', 1]);
-  }
 
   public openModal(content, row): void {
     this.modalService.open(content, {
@@ -161,6 +171,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public changeStatusElement(index): void {
     this.instructores[index].is_selected =  (this.instructores[index].is_selected === '0') ? '1' : '0';
+    this.instructores[index].is_asignated = false;
   }
 
   public trimWhiteSpaces(str): string {
@@ -178,6 +189,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       };
     });
   }
+
+  public pageChanged(event): void {
+    this.config.currentPage = event;
+    console.log(event);
+  }
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

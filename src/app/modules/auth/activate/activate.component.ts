@@ -14,6 +14,8 @@ import { CredentialService } from 'app/services/credential.service';
 })
 export class ActivateComponent implements OnInit {
 
+  public existEmailForActivate: boolean;
+  public emailForActivate: string;
   public email: string;
   public copy: string;
   public emailChecked: boolean;
@@ -27,6 +29,7 @@ export class ActivateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.existEmailForActivate = false;
     this.emailChecked = false;
     this.copy = environment.copy;
     this.checkUserFrm = new FormGroup({
@@ -44,14 +47,30 @@ export class ActivateComponent implements OnInit {
         Validators.required,
       ])
     });
+    this.emailForActivate = localStorage.getItem('emailForActivate');
+    this.checkifActivate();
+  }
+
+  public checkifActivate(): void {
+    if (this.emailForActivate) {
+      this.existEmailForActivate = true;
+      this.checkUserFrm.controls.email.disable();
+      this.checkUserFrm.controls.email.patchValue(this.emailForActivate);
+    } else {
+      this.existEmailForActivate = false;
+    }
   }
 
   public checkUserByEmail(): void {
     this.email = this.checkUserFrm.controls.email.value;
     this.credentialService.check({email: this.email}).subscribe(response => {
       if (!response.error) {
-        this.emailChecked = true;
-        this.activateUserFrm.controls.email.patchValue(this.email);
+        if (response.data.is_activated) {
+          this.emailChecked = true;
+          this.activateUserFrm.controls.email.patchValue(this.email);
+        } else {
+          this.toastr.warning('El ', environment.MESSAGES.WARN);
+        }
       } else {
         this.emailChecked = false;
       }
@@ -67,6 +86,7 @@ export class ActivateComponent implements OnInit {
     };
     this.credentialService.activate(frmData).subscribe(response => {
       if (!response.error) {
+        localStorage.removeItem('emailForActivate');
         this.toastr.success(response.message, environment.MESSAGES.OK);
         setTimeout(() => {
           this.router.navigate(['/', 'login']);

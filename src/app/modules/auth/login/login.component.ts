@@ -112,9 +112,9 @@ export class LoginComponent implements OnInit {
     if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
       this.router.navigate(['/', 'admin']);
     } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
-      this.router.navigate(['/', 'docente']);
+      this.router.navigate(['/', 'docente', 'dashboard']);
     } else {
-      this.router.navigate(['/', 'instructor']);
+      this.router.navigate(['/', 'instructor', 'dashboard']);
     }
   }
 
@@ -130,6 +130,7 @@ export class LoginComponent implements OnInit {
           } else {
             this.accountChecked = false;
             setTimeout(() => {
+              localStorage.setItem('emailForActivate', this.email);
               this.router.navigate(['/login/activate']);
             }, 2 * 1000);
           }

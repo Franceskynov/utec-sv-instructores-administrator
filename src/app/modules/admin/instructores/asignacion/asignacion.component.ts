@@ -22,6 +22,8 @@ import * as uuid from 'uuid';
 })
 export class AsignacionComponent implements OnInit {
 
+  public ref: any;
+  public idForDestroy: any;
   public searchColumns: Array<any>;
   public searchBox: any;
   public filtered: any;
@@ -107,16 +109,20 @@ export class AsignacionComponent implements OnInit {
     });
   }
 
-  public openModal(content, row): void {
+  public openModal(content, row, ref?): void {
     this.modalService.open(content, {
       backdrop: 'static',
       keyboard: false
     });
     this.row = row;
+    this.idForDestroy = row.id;
     this.f.nombre.setValue(
       this.makeAssignationName(row)
     );
     this.retrieveInstructorData(row.id);
+    if (ref) {
+      this.ref = ref;
+    }
   }
 
   public loadFromStorage(): void {
@@ -124,9 +130,23 @@ export class AsignacionComponent implements OnInit {
       this.rows = JSON.parse(
         localStorage.getItem('instructores')
       );
+      if (this.rows.length === 0) {
+        setTimeout(() => {
+          this.toaster.info('No hay mas instructores por asignar', environment.MESSAGES.OK);
+          this.router.navigate(['/admin/instructores/instructoria']);
+        }, 3000);
+      }
     } else {
       this.rows = [];
       this.router.navigate(['/admin/instructores/catalogo']);
+    }
+  }
+
+  public removeElement(): void {
+    for ( let i = 0; i < this.rows.length; i++) {
+      if ( this.rows[i].id === this.idForDestroy) {
+        this.rows.splice(i, 1);
+      }
     }
   }
 
@@ -144,7 +164,13 @@ export class AsignacionComponent implements OnInit {
       console.log('response', response);
       if (!response.error) {
         fn();
-        this.frm.reset();
+        // this.frm.reset();
+        this.removeElement();
+        if (this.ref) {
+          this.ref();
+        }
+        localStorage.setItem('instructores', JSON.stringify(this.rows));
+        this.loadFromStorage();
         this.toaster.success(environment.MESSAGES.CREATED_OK, environment.MESSAGES.OK);
       } else {
         this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);

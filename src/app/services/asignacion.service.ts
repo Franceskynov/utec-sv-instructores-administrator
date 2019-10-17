@@ -36,4 +36,11 @@ export class AsignacionService {
         return data;
       }));
   }
+
+  public removeAsignation(item, frmData) {
+    return this.http.patch<any>(environment.CONTROL_URL_API.concat(`asignacion/docente/${ item }`), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

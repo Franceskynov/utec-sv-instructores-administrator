@@ -6,6 +6,7 @@ import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MateriasComponent } from './materias/materias.component';
 import { UtilModule } from 'app/modules/util/util.module';
+import { PerfilComponent } from './instructor/perfil/perfil.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { UtilModule } from 'app/modules/util/util.module';
     InstructoriaComponent,
     DashboardComponent,
     MateriasComponent,
+    PerfilComponent,
   ]
 })
 export class DocenteModule { }

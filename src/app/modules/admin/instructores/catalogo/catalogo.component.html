@@ -17,8 +17,14 @@
 
 <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null);"></button>
 <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieve()"></button>
+<form class="pt-2">
+  <div class="form-group">
+    <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
+  </div>
+</form>
+
 <div class="row mt-2">
-  <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores">
+  <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores | filter: searchBox: searchColumns | paginate: config">
     <div class="card profile-card-with-stats">
       <div class="text-center">
         <div class="card-body">
@@ -48,6 +54,9 @@
     </div>
   </div>
 </div>
+
+<pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
+
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">

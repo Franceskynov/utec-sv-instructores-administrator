@@ -46,7 +46,8 @@ export class DirectorioComponent implements OnInit {
     this.config = {
       itemsPerPage: 0,
       currentPage: 0,
-      totalItems: 0
+      totalItems: 0,
+      id: 'directorioDocentes'
     };
     this.docentes = [];
     this.especialidades = [];
@@ -113,7 +114,8 @@ export class DirectorioComponent implements OnInit {
       this.config = {
         itemsPerPage: 6,
         currentPage: 1,
-        totalItems: this.docentes.length
+        totalItems: this.docentes.length,
+        id: 'directorioDocentes'
       };
       console.log(response);
     }, error => {

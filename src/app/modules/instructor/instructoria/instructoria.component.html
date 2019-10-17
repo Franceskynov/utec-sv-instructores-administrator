@@ -14,36 +14,44 @@
     </div>
   </div>
 </div>
+<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw mb-2" type="button" placement="top" ngbTooltip="Recargar" (click)="getInstructorInstructory()"></button>
+
 
 <section id="card-headings">
   <div class="row">
-    <div class="col-md-6 col-sm-12" >
+
+    <div class="col-md-6 col-sm-12" *ngFor="let i of row.instructoria" >
       <div class="card">
         <div class="card-header" id="heading-linksc">
           <h4 class="card-title">Instructoria</h4>
           <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
         </div>
         <div class="card-body">
-          <div *ngIf="row.instructoria.length > 0">
+          <div>
             <h4 class="card-title"></h4>
-            <p> <b>Nombre</b>: {{ row.instructoria[0].nombre }}</p>
-            <p> <b>Ciclo</b>: {{ row.instructoria[0].ciclo.nombre }}</p>
-            <p> <b>Aula</b>: {{ row.instructoria[0].aula.codigo }}</p>
+            <p> <b>Nombre</b>: {{ i.nombre }}</p>
+            <p> <b>Ciclo</b>: {{ i.ciclo.nombre }}</p>
+            <p> <b>Aula</b>: {{ i.aula.codigo }}</p>
             <p> <b>Docente</b> :
-              <span>  <b>Nombre</b> : {{ row.instructoria[0].docente.nombre }}</span> &nbsp;
-              <span> <b>Apellido</b>: {{ row.instructoria[0].docente.apellido }} </span>
+              <span>  <b>Nombre</b> : {{ i.docente.nombre }}</span> &nbsp;
+              <span> <b>Apellido</b>: {{ i.docente.apellido }} </span>
             </p>
-            <p> <b>Materia</b> : {{ row.instructoria[0].materia.nombre }}</p>
-            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ row.instructoria[0].horario.nombre_dia }} {{ row.instructoria[0].horario.fin }} - {{ row.instructoria[0].horario.fin }}  </span></p>
+            <p> <b>Materia</b> : {{ i.materia.nombre }}</p>
+            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 "> {{ i.horario.nombre_dia }} {{ i.horario.fin }} - {{ i.horario.fin }}  </span></p>
+            <p> <b>Estatus</b> :
+              <span *ngIf="i.is_enabled === '1'" class="badge badge-pill badge-secondary text-light ml-1 ">Habilitado</span>
+              <span *ngIf="i.is_enabled === '0'" class="badge badge-pill badge-primary text-light ml-1">Deshabilitado</span>
+            </p>
 
           </div>
-          <div>
-            <div class="alert alert-warning" role="alert" *ngIf="row.instructoria.length === 0">
-              Por el momento no tiene asignada una instructoria.
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
+
+    <div class="alert alert-warning" role="alert" *ngIf="row.instructoria.length === 0">
+      Por el momento no tiene asignada una instructoria.
+    </div>
+
   </div>
 </section>
