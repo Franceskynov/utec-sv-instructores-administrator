@@ -14,6 +14,7 @@ import { environment } from 'environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FilterPipe } from 'app/pipes/filter.pipe';
+import { SafePipe } from 'app/pipes/safe.pipe';
 import { OnlynumberDirective } from './directives/onlynumber.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -40,6 +41,7 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
     UploadComponent,
     OnlynumberDirective,
     CartComponent,
+    SafePipe,
   ],
   exports: [
     InputErrorMessagesComponent,
@@ -57,6 +59,7 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
     NgxPaginationModule,
     CartComponent,
     PasswordStrengthMeterModule,
+    SafePipe,
   ]
 })
 export class UtilModule { }

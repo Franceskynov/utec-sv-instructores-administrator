@@ -46,7 +46,7 @@ export const routes: Routes = [
         component: PerfilComponent,
         data: {
           title: 'Perfil del instructor',
-          role: 'Docente',
+          role: 'Docente'
         },
         canActivate: [RoleGuard]
       }

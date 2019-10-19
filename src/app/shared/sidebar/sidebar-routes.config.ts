@@ -188,6 +188,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         isNavHeader: false,
         submenu: []
       },
+      {
+        path: '/admin/configuraciones/usuarios',
+        title: 'Usuarios',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
     ]
   }];
 const DOCENTE_ROUTES: RouteInfo[] = [

@@ -34,7 +34,7 @@
                <br> <span class="ml-2" >Nombre completo: {{ i.instructor.nombre }}</span>
                <br> <span class="ml-2" >Carnet: {{ i.instructor.carnet }} </span>
                <br>
-              <button type="button" class="btn btn-outline-primary btn-md ml-2" routerLink="/admin/instructores/perfil/{{ i.instructor.id }}">
+              <button type="button" class="btn btn-outline-primary btn-md ml-2" routerLink="/docente/perfil/instructor/{{ i.instructor.id }}">
                 <i class="ft-user" ></i> Perfil
               </button>
             </p>
@@ -99,6 +99,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
-    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(c); " [disabled]="frm.invalid"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(c); "></button>
   </div>
 </ng-template>
