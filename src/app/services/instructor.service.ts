@@ -16,6 +16,13 @@ export class InstructorService {
       }));
   }
 
+  public carreras() {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('carrera'))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   public retrieveById(id) {
     return this.http.get<any>(environment.CONTROL_URL_API.concat('instructor/', id))
       .pipe(map(data => {

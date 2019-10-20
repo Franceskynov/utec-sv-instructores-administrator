@@ -29,7 +29,7 @@ export class AssistsComponent implements OnInit {
 
   ngOnInit() {
     this.retrieve();
-    this.isFiltered = false
+    this.isFiltered = false;
     this.ctrls = ['ciclo'];
     this.permissions = {
       ciclo: {
