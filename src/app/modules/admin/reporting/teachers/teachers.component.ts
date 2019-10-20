@@ -5,6 +5,7 @@ import { PermissionsService } from 'app/services/permissions.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MateriasService } from 'app/services/materias.service';
 import { environment } from 'environments/environment';
+import { ReportingService } from 'app/services/reporting.service';
 
 @Component({
   selector: 'app-teachers',
@@ -24,7 +25,8 @@ export class TeachersComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
-    private service: MateriasService
+    private service: MateriasService,
+    private reporting: ReportingService,
   ) { }
 
   ngOnInit() {
@@ -50,10 +52,21 @@ export class TeachersComponent implements OnInit {
   public filterData(fn): void {
     const materia = this.frm.controls.materia.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/docentes');
-    this.isFiltered = true;
+    // this.isFiltered = true;
     uri = uri.concat('?materia=', materia.id);
-    this.url = uri;
-    fn();
+    this.reporting.downloadReport(uri).subscribe( result => {
+      const newBlob = new Blob([result], { type: 'application/pdf' });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      this.url = window.URL.createObjectURL(newBlob);
+      this.isFiltered = true;
+      fn();
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public openModal(content): void {

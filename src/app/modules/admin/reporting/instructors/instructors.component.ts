@@ -5,6 +5,7 @@ import { PermissionsService } from 'app/services/permissions.service';
 import { FormGroup } from '@angular/forms';
 import { InstructorService } from 'app/services/instructor.service';
 import { environment } from 'environments/environment';
+import { ReportingService } from 'app/services/reporting.service';
 
 @Component({
   selector: 'app-instructors',
@@ -25,6 +26,7 @@ export class InstructorsComponent implements OnInit {
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private service: InstructorService,
+    private reporting: ReportingService,
   ) { }
 
   ngOnInit() {
@@ -48,12 +50,24 @@ export class InstructorsComponent implements OnInit {
     });
   }
   public filterData(fn): void {
+    this.isFiltered = false;
     const carrera = this.frm.controls.carrera.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/instructores');
     uri = uri.concat('?carrera=', carrera.carrera);
-    this.isFiltered = true;
-    this.url = uri;
-    fn();
+
+    this.reporting.downloadReport(uri).subscribe( result => {
+      const newBlob = new Blob([result], { type: 'application/pdf' });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      this.url = window.URL.createObjectURL(newBlob);
+      this.isFiltered = true;
+      fn();
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public openModal(content): void {

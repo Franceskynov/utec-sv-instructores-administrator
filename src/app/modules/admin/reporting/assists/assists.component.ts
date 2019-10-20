@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup } from '@angular/forms';
 import { PermissionsService } from 'app/services/permissions.service';
+import { ReportingService } from 'app/services/reporting.service';
 
 @Component({
   selector: 'app-assists',
@@ -25,6 +26,7 @@ export class AssistsComponent implements OnInit {
     private service: CicloService,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
+    private reporting: ReportingService,
   ) { }
 
   ngOnInit() {
@@ -48,11 +50,23 @@ export class AssistsComponent implements OnInit {
   }
 
   public filterData(fn): void {
+    this.isFiltered = false;
     const ciclo = this.frm.controls.ciclo.value;
-    console.log(ciclo);
-    this.isFiltered = true;
-    this.url = environment.CONTROL_URL_API.concat('reporte/asignacion', '?ciclo=', ciclo.id);
-    fn();
+    const uri = environment.CONTROL_URL_API.concat('reporte/asignacion', '?ciclo=', ciclo.id);
+
+    this.reporting.downloadReport(uri).subscribe( result => {
+      const newBlob = new Blob([result], { type: 'application/pdf' });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      this.url = window.URL.createObjectURL(newBlob);
+      this.isFiltered = true;
+      fn();
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public openModal(content): void {
