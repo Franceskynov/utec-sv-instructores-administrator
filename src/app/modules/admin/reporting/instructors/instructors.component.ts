@@ -53,7 +53,7 @@ export class InstructorsComponent implements OnInit {
     this.isFiltered = false;
     const carrera = this.frm.controls.carrera.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/instructores');
-    uri = uri.concat('?carrera=', carrera.carrera);
+    uri = uri.concat('?carrera=', carrera.carrera).concat('&capacitaciones=todas');
 
     this.reporting.downloadReport(uri).subscribe( result => {
       const newBlob = new Blob([result], { type: 'application/pdf' });
