@@ -1,0 +1,55 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Preferencias del sistema</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Configuraciones
+        </li>
+
+        <li class="breadcrumb-item active">
+          Preferencias del sistema
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<section id="card-headings">
+  <div class="row">
+
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksc">
+          <h4 class="card-title">Ciclo actual</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="frm">
+            <div class="form-group">
+              <label for="ciclo">Ciclo:</label>
+
+              <ng-select
+                id="ciclo"
+                name="ciclo"
+                [items]="ciclos"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                bindLabel="nombre"
+                placeholder="Seleccione el ciclo" formControlName="ciclo">
+                <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+                  {{ item.nombre }}
+                </ng-template>
+              </ng-select>
+              <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>

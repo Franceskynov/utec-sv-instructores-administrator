@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PermissionsService } from 'app/services/permissions.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { HorarioService } from 'app/services/horario.service';
+import { CicloService } from 'app/services/ciclo.service';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-horario',
@@ -15,6 +17,7 @@ import { HorarioService } from 'app/services/horario.service';
 })
 export class HorarioComponent implements OnInit {
 
+  public token: any;
   public inicio: any;
   public fin: any;
   public meridian: boolean;
@@ -31,14 +34,19 @@ export class HorarioComponent implements OnInit {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public ciclos: Array<any>;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private service: HorarioService,
+    private cicloService: CicloService,
+    private decodeToken: DecodeTokenService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.token = this.decodeToken.decodePayload();
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.meridian = true;
     this.day = '';
@@ -56,8 +64,8 @@ export class HorarioComponent implements OnInit {
     ];
     this.searchColums = ['nombre_dia', 'inicio', 'fin'];
     this.retrieveData();
-
-    this.ctrls = ['dia', 'inicio', 'fin'];
+    console.log('token', this.token);
+    this.ctrls = ['dia', 'inicio', 'fin', 'ciclo'];
     this.permissions = {
       dia: {
         required: true
@@ -67,7 +75,10 @@ export class HorarioComponent implements OnInit {
       },
       fin: {
         required: true,
-      }
+      },
+      ciclo: {
+        required: true
+      },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
   }
@@ -81,6 +92,11 @@ export class HorarioComponent implements OnInit {
       // this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
       this.toastr.error(error.headers.get('service-description'), 'Error');
     });
+    this.cicloService.retrieve().subscribe(response => {
+      this.ciclos = response.data;
+      }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public postData(): void {
@@ -88,13 +104,17 @@ export class HorarioComponent implements OnInit {
       dia:          this.f.dia.value.id,
       nombre_dia:   this.f.dia.value.nombre,
       inicio:       this.mapTime(this.f.inicio.value),
-      fin:          this.mapTime(this.f.fin.value)
+      fin:          this.mapTime(this.f.fin.value),
+      ciclo_id:     this.f.ciclo.value.id
     };
-    this.service.make(frmData).subscribe(
-      data => {
-        this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
-        this.frm.reset();
-        this.retrieveData();
+    this.service.make(frmData).subscribe(data => {
+        if (!data.error) {
+          this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
+          this.frm.reset();
+          this.retrieveData();
+        } else {
+          this.toastr.warning(data.message, environment.MESSAGES.WARN);
+        }
       },
       error => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
@@ -109,15 +129,19 @@ export class HorarioComponent implements OnInit {
       dia:          this.day,
       nombre_dia:   this.f.dia.value,
       inicio:       this.mapTime(this.f.inicio.value),
-      fin:          this.mapTime(this.f.fin.value)
+      fin:          this.mapTime(this.f.fin.value),
+      ciclo_id:     this.f.ciclo.value.id
     };
 
     console.log('pathdata', frmData);
-    this.service.modify(this.idForEdit, frmData).subscribe(
-      data => {
-        this.retrieveData();
-        this.frm.reset();
-        this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+    this.service.modify(this.idForEdit, frmData).subscribe(data => {
+        if (!data.error) {
+          this.retrieveData();
+          this.frm.reset();
+          this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+        } else {
+          this.toastr.warning(data.message, environment.MESSAGES.WARN);
+        }
       },
       error => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
@@ -131,6 +155,7 @@ export class HorarioComponent implements OnInit {
     });
     if (this.editMode) {
       this.idForEdit = row.id;
+      this.f.ciclo.patchValue(row.ciclo);
       this.f.dia.patchValue(row.nombre_dia);
       this.inicio = this.decomposeTime(row.inicio);
       this.fin = this.decomposeTime(row.fin);
@@ -141,6 +166,7 @@ export class HorarioComponent implements OnInit {
       this.meridian = true;
       this.inicio = {hour: 6, minute: 30};
       this.fin = { hour: 21, minute: 30};
+      this.f.ciclo.patchValue(this.token.people.settings.ciclo);
     }
   }
 
@@ -164,6 +190,18 @@ export class HorarioComponent implements OnInit {
       hour: parseInt(time, 10),
       minute: parseInt(time.substring(3, 5), 10)
     };
+  }
+
+  public deleteData(): void {
+    this.service.destroy(this.idForDestroy).subscribe(
+      data => {
+        this.toastr.success(environment.MESSAGES.DELETION_OK, 'Ok');
+        this.retrieveData();
+      },
+      error => {
+        this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
+      }
+    );
   }
 
 }

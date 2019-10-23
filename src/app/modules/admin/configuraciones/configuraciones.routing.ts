@@ -11,6 +11,7 @@ import { RoleGuard } from 'app/guards/role.guard';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
 import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { PreferenciasComponent } from './preferencias/preferencias.component';
 
 export const routes: Routes = [
   {
@@ -86,6 +87,15 @@ export const routes: Routes = [
     component: UsuariosComponent,
     data: {
       title: 'Usuarios',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'preferencias',
+    component: PreferenciasComponent,
+    data: {
+      title: 'Preferencias del sistema',
       role: 'Administrador'
     },
     canActivate: [RoleGuard],

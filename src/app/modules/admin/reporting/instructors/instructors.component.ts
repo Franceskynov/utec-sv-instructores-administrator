@@ -31,7 +31,7 @@ export class InstructorsComponent implements OnInit {
 
   ngOnInit() {
     this.isFiltered = false;
-    this.ctrls = ['carrera'];
+    this.ctrls = ['carrera', 'capacitaciones'];
     this.permissions = {
       carrera: {
         required: true
@@ -50,10 +50,11 @@ export class InstructorsComponent implements OnInit {
     });
   }
   public filterData(fn): void {
+    const capaciataciones = this.frm.controls.capacitaciones.value;
     this.isFiltered = false;
     const carrera = this.frm.controls.carrera.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/instructores');
-    uri = uri.concat('?carrera=', carrera.carrera).concat('&capacitaciones=todas');
+    uri = uri.concat('?carrera=', carrera.carrera).concat(`&capacitaciones=${ capaciataciones ? 'todas' : 'ninguna' }`);
 
     this.reporting.downloadReport(uri).subscribe( result => {
       const newBlob = new Blob([result], { type: 'application/pdf' });

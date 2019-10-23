@@ -11,6 +11,7 @@ import { AulaComponent } from './aula/aula.component';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
 import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { PreferenciasComponent } from './preferencias/preferencias.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
     AulaComponent,
     EspecialidadesComponent,
     CapacitacionComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    PreferenciasComponent,
   ]
 })
 export class ConfiguracionesModule { }

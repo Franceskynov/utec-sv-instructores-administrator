@@ -55,7 +55,11 @@
                 <ngx-datatable-column name="Dia" prop="nombre_dia"></ngx-datatable-column>
                 <ngx-datatable-column name="Inicio" prop="inicio"></ngx-datatable-column>
                 <ngx-datatable-column name="Fin" prop="fin"></ngx-datatable-column>
+                <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Creacion" prop="created_at"></ngx-datatable-column>
+                <ngx-datatable-column name="Modificacion" prop="updated_at"></ngx-datatable-column>
                 <ngx-datatable-column name="Acciones" prop="actions">
+
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
                     <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
                                         <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-edit-2" placement="top" ngbTooltip="Editar" (click)="editMode=true; openModal(content, row)"></button>
@@ -82,6 +86,25 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="frm">
+
+      <div class="form-group">
+        <label for="ciclo">Ciclo:</label>
+
+        <ng-select
+          id="ciclo"
+          name="ciclo"
+          [items]="ciclos"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+
+          placeholder="Seleccione el ciclo" formControlName="ciclo">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+      </div>
       <div class="form-group">
         <label for="dia">Dia:</label>
 
