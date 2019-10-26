@@ -65,7 +65,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       carrera: new FormControl({value: '', disabled: true}, Validators.required),
       cum: new FormControl({value: '', disabled: true}, Validators.required),
       phone: new FormControl({value: '', disabled: false}, ),
-      personalEmail: new FormControl({value: '', disabled: false}, [  Validators.email])
+      personalEmail: new FormControl({value: '', disabled: false}, [  Validators.email]),
+      scholarshipped: new FormControl('', [])
     });
     this.searchColums = ['nombre', 'descripcion'];
     this.retrieve();
@@ -94,12 +95,21 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     });
   }
   public retrieceExpediente(): void {
-    this.expedienteService.retrieve({carnet: this.f.carnet.value}).subscribe( response => {
-      // console.log(response);
-      this.row = response.data;
-      this.f.nombre.setValue(this.row.nombre);
-      this.f.carrera.setValue(this.row.carrera);
-      this.f.cum.setValue(this.row.cum);
+    const carnet = this.f.carnet.value;
+    this.service.checkByCarnet(carnet).subscribe(result => {
+      if (result.data.length === 0) {
+        this.expedienteService.retrieve({carnet}).subscribe( response => {
+          // console.log(response);
+          this.row = response.data;
+          this.f.nombre.setValue(this.row.nombre);
+          this.f.carrera.setValue(this.row.carrera);
+          this.f.cum.setValue(this.row.cum);
+        }, error => {
+          this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+        });
+      } else {
+        this.toastr.warning('El instructor ya esta registrado');
+      }
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
@@ -108,27 +118,38 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public postData(): void {
     const carnet = this.f.carnet.value;
     const pEmail = this.f.personalEmail.value;
-    const frmData = {
 
-      nombre: this.f.nombre.value,
-      carnet: carnet,
-      carrera: this.f.carrera.value,
-      cum: this.f.cum.value,
-      telefono: this.f.phone.value,
-      email: carnet.concat('@mail.utec.edu.sv'),
-      emailPersonal: pEmail,
-      username: carnet, // pEmail.split('@')[0],
-      notas: this.trimmingNotas(this.row.notas)
-    };
-    this.service.make(frmData).subscribe(result => {
-      console.log(result);
-      if (!result.error) {
-        this.retrieve();
-        this.frm.reset();
-        this.f.carnet.setValue('00-0000-0000');
-        this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
+    this.service.checkByCarnet(carnet).subscribe(response => {
+      if (response.data.length === 0) {
+        const frmData = {
+
+          nombre: this.f.nombre.value,
+          carnet: carnet,
+          carrera: this.f.carrera.value,
+          cum: this.f.cum.value,
+          telefono: this.f.phone.value,
+          email: carnet.concat('@mail.utec.edu.sv'),
+          emailPersonal: pEmail,
+          username: carnet, // pEmail.split('@')[0],
+          notas: this.trimmingNotas(this.row.notas),
+          is_scholarshipped: this.f.scholarshipped.value
+        };
+        console.log(frmData);
+        this.service.make(frmData).subscribe(result => {
+          console.log(result);
+          if (!result.error) {
+            this.retrieve();
+            this.frm.reset();
+            this.f.carnet.setValue('00-0000-0000');
+            this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
+          } else {
+            this.toastr.error('No se pudo procesar', 'Error');
+          }
+        }, error => {
+          this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+        });
       } else {
-        this.toastr.error('No se pudo procesar', 'Error');
+        this.toastr.warning('El instructor ya esta registrado');
       }
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
