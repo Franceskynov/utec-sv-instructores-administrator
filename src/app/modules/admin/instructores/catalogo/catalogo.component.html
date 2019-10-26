@@ -15,47 +15,8 @@
   </div>
 </div>
 
-<button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null);"></button>
-<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieve()"></button>
-<form class="pt-2">
-  <div class="form-group">
-    <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
-  </div>
-</form>
-
-<div class="row mt-2">
-  <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores | filter: searchBox: searchColumns | paginate: config">
-    <div class="card profile-card-with-stats">
-      <div class="text-center">
-        <div class="card-body">
-          <img src="/assets/img/product-preview.png" class="  height-150"
-               alt="Card image">
-        </div>
-        <div class="card-body">
-          <h4 class="card-title"> {{ instructor.nombre }} </h4>
-          <ul class="list-inline">
-            <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
-            <li>{{ instructor.carrera | lowercase }}</li>
-          </ul>
-<!--          <h6 class="card-subtitle text-muted">Instructor</h6>-->
-          <p>CUM: {{ instructor.cum }}</p>
-          <p>Capacitaciones: {{ instructor.capacitaciones.length }} </p>
-        </div>
-        <div class="card-body">
-
-          <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="instructor.is_selected === '1'">
-            <i class="fa fa-plus"></i> Seleccionar
-          </button>
-          <button type="button" class="btn btn-outline-primary btn-md mr-1" routerLink="/admin/instructores/perfil/{{ instructor.id }}">
-            <i class="ft-user" ></i> Perfil
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
+<button class="btn btn-outline-secondary mr-1 ft-plus mb-2" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null);"></button>
+<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw mb-2" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieve()"></button>
 
 
 <ng-template #content let-c="close" let-d="dismiss">
@@ -147,17 +108,97 @@
 </ng-template>
 
 
-<!--<ngb-tabset>-->
-<!--  <ngb-tab title="Sin asignar">-->
-<!--    <ng-template ngbTabContent>-->
+<ngb-tabset class="mt-2 mb-2">
+  <ngb-tab title="Sin asignar">
 
-<!--    </ng-template>-->
-<!--  </ngb-tab>-->
-<!--  <ngb-tab title="Asignados">-->
-<!--    <ng-template ngbTabContent>-->
 
-<!--    </ng-template>-->
-<!--  </ngb-tab>-->
-<!--</ngb-tabset>-->
+    <ng-template ngbTabContent>
+
+      <form class="pt-2">
+        <div class="form-group">
+          <input type="text" class="form-control" id="searchBox" name="searchBox" autocomplete="off" [(ngModel)]="searchBox">
+        </div>
+      </form>
+
+      <div class="row mt-2">
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructores | filter: searchBox: searchColumns | paginate: config">
+          <div class="card profile-card-with-stats">
+            <div class="text-center">
+              <div class="card-body">
+                <img src="/assets/img/product-preview.png" class="  height-150"
+                     alt="Card image">
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> {{ instructor.nombre }} </h4>
+                <ul class="list-inline">
+                  <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
+                  <li>{{ instructor.carrera | lowercase }}</li>
+                </ul>
+                <!--          <h6 class="card-subtitle text-muted">Instructor</h6>-->
+                <p *ngIf="instructor.is_scholarshipped === '1'"> Es becado </p>
+                <p>CUM: {{ instructor.cum }}</p>
+                <p>Capacitaciones: {{ instructor.capacitaciones.length }} </p>
+              </div>
+              <div class="card-body">
+
+                <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="instructor.is_selected === '1'">
+                  <i class="fa fa-plus"></i> &nbsp; Seleccionar
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-md mr-1" routerLink="/admin/instructores/perfil/{{ instructor.id }}">
+                  <i class="ft-user" ></i> &nbsp; Perfil
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
+
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Asignados">
+    <ng-template ngbTabContent>
+
+      <form class="pt-2">
+        <div class="form-group">
+          <input type="text" class="form-control" id="searchBoxAsignated" name="searchBoxAsignated" autocomplete="off" [(ngModel)]="searchBoxAsignated">
+        </div>
+      </form>
+      <div class="row mt-2">
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresAssignated | filter: searchBoxAsignated: searchColumns ">
+          <div class="card profile-card-with-stats">
+            <div class="text-center">
+              <div class="card-body">
+                <img src="/assets/img/product-preview.png" class="  height-150"
+                     alt="Card image">
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> {{ instructor.nombre }} </h4>
+                <ul class="list-inline">
+                  <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
+                  <li>{{ instructor.carrera | lowercase }}</li>
+                </ul>
+                <!--          <h6 class="card-subtitle text-muted">Instructor</h6>-->
+                <p *ngIf="instructor.is_scholarshipped === '1'"> Es becado </p>
+                <p>CUM: {{ instructor.cum }}</p>
+                <p>Capacitaciones: {{ instructor.capacitaciones.length }} </p>
+              </div>
+              <div class="card-body">
+
+                <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="instructor.is_selected === '1'">
+                  <i class="fa fa-plus"></i>&nbsp; Seleccionar
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-md mr-1" routerLink="/admin/instructores/perfil/{{ instructor.id }}">
+                  <i class="ft-user" ></i>  &nbsp; Perfil
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
 
 <app-cart></app-cart>

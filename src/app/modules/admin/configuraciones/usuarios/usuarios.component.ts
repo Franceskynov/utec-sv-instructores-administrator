@@ -14,6 +14,7 @@ import { UsuarioService } from 'app/services/usuario.service';
 })
 export class UsuariosComponent implements OnInit {
 
+  public filterValue: string;
   public rows: Array<any>;
   public limit: Number;
   constructor(

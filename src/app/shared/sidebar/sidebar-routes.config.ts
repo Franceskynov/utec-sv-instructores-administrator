@@ -201,7 +201,7 @@ const ADMIN_ROUTES: RouteInfo[] = [
       },
       {
         path: '/admin/configuraciones/preferencias',
-        title: 'Preferncias del sistema',
+        title: 'Preferencias del sistema',
         icon: '',
         class: 'menu-item',
         badge: '',

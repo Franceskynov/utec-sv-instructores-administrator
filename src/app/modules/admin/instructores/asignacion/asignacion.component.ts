@@ -13,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as uuid from 'uuid';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-asignacion',
@@ -22,6 +23,8 @@ import * as uuid from 'uuid';
 })
 export class AsignacionComponent implements OnInit {
 
+  public filteredHorarios: Array<any>;
+  public token: any;
   public ref: any;
   public idForDestroy: any;
   public searchColumns: Array<any>;
@@ -54,9 +57,11 @@ export class AsignacionComponent implements OnInit {
     private asignacionService: AsignacionService,
     private docenteService: DocenteService,
     private instructorService: InstructorService,
+    private decodeToken: DecodeTokenService,
   ) { }
 
   ngOnInit() {
+    this.token = this.decodeToken.decodePayload();
     this.instructorId = 0;
     this.row = {};
     this.instructor = {
@@ -87,6 +92,7 @@ export class AsignacionComponent implements OnInit {
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
+    this.f.ciclo.patchValue(this.token.people.settings.ciclo);
     this.loadFromStorage();
     this.retrieve();
   }
@@ -210,8 +216,15 @@ export class AsignacionComponent implements OnInit {
   public filterData(rows): void {
     if ( rows.length !== 0) {
       this.filtered = rows.filter(row =>  row.pivot.is_used === '0');
+      console.log(this.row);
     } else  {
       this.filtered = [];
+    }
+  }
+
+  public validateHorario(): void {
+    if (this.f.horario.value.ciclo.nombre !== this.f.ciclo.value.nombre) {
+      this.toaster.warning('El ciclo y el horario seleccionados no coinciden', environment.MESSAGES.WARN);
     }
   }
 }

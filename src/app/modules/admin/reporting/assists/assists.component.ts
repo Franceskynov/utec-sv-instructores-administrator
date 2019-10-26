@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup } from '@angular/forms';
 import { PermissionsService } from 'app/services/permissions.service';
 import { ReportingService } from 'app/services/reporting.service';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-assists',
@@ -21,15 +22,18 @@ export class AssistsComponent implements OnInit {
   public ciclos: Array<any>;
   public permissions: any;
   public ctrls: Array<any>;
+  public token: any;
   constructor(
     private modalService: NgbModal,
     private service: CicloService,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private reporting: ReportingService,
+    private decodeToken: DecodeTokenService,
   ) { }
 
   ngOnInit() {
+    this.token = this.decodeToken.decodePayload();
     this.retrieve();
     this.isFiltered = false;
     this.ctrls = ['ciclo'];
@@ -39,6 +43,7 @@ export class AssistsComponent implements OnInit {
       },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
+    this.frm.controls.ciclo.patchValue(this.token.people.settings.ciclo);
   }
 
   public retrieve(): void {

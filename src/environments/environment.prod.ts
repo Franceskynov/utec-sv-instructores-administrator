@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  // CONTROL_URL_API: window.location.protocol + '//' + window.location.host + '/api/v1/',
-  CONTROL_URL_API: 'http://192.168.68.163:8000/api/v1/',
+  CONTROL_URL_API: window.location.protocol + '//' + window.location.host + '/api/v1/',
   MESSAGES: {
     SERVICE_ERROR: 'Error al conectarse al servicio',
     SERVICE_WARN: '',

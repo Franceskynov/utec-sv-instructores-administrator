@@ -21,9 +21,11 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public config: any;
   public searchBox: string;
+  public searchBoxAsignated: string;
   public searchColumns: Array<any>;
   public subscription: Subscription;
   public instructores: Array<any>;
+  public instructoresAssignated: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -84,7 +86,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         totalItems: response.data.length,
         id: 'catalogoInstructores'
       };
-      this.instructores = response.data;
+      // this.instructores = response.data;
+      this.instructores = response.data.filter(row =>  row.is_selected === '0');
+      this.instructoresAssignated = response.data.filter(row =>  row.is_selected === '1');
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');
     });

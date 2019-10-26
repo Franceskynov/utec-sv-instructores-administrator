@@ -99,7 +99,6 @@
           [multiple]="false"
           [closeOnSelect]="true"
           bindLabel="nombre"
-
           placeholder="Seleccione el ciclo" formControlName="ciclo">
           <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
             {{ item.nombre }}
@@ -137,9 +136,11 @@
           [multiple]="false"
           [closeOnSelect]="true"
           bindLabel="nombre_dia"
+          (change)="validateHorario()"
           placeholder="Seleccione el horario" formControlName="horario">
           <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
-            {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }}
+            <b>Horario:</b> {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }} <br>
+            <b>Ciclo:</b> {{ item.ciclo.nombre }}
           </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="horario" [dataValidation]="permissions"></input-error-messages>

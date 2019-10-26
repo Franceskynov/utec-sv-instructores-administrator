@@ -5,8 +5,8 @@
 
 export const environment = {
   production: true,
-  CONTROL_URL_API: 'http://localhost:8000/api/v1/',
-  // CONTROL_URL_API: window.location.protocol + "//" + window.location.host + "/",
+  CONTROL_URL_API: 'http://localhost/api/v1/',
+  // CONTROL_URL_API: window.location.protocol + '//' + window.location.host + '/',
   MESSAGES: {
     SERVICE_ERROR: 'Error al conectarse al servicio',
     SERVICE_WARN: '',
