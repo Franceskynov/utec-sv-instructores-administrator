@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PermissionsService } from 'app/services/permissions.service';
 import { CapacitacionService } from 'app/services/capacitacion.service';
+import { CicloService } from 'app/services/ciclo.service';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-perfil',
@@ -16,6 +18,8 @@ import { CapacitacionService } from 'app/services/capacitacion.service';
 })
 export class PerfilComponent implements OnInit {
 
+  public token: any;
+  public ciclos: Array<any>;
   public instructorId: any;
   public capacitaciones: any;
   public frm: FormGroup;
@@ -31,12 +35,17 @@ export class PerfilComponent implements OnInit {
     private modalService: NgbModal,
     private permissionsService: PermissionsService,
     private capacitacionService: CapacitacionService,
+    private cicloService: CicloService,
+    private decodeToken: DecodeTokenService,
   ) { }
 
   ngOnInit() {
     this.instructorId = this.route.snapshot.paramMap.get('id');
-    this.ctrls = ['capacitacion', 'nota'];
+    this.ctrls = ['capacitacion', 'nota', 'ciclo'];
     this.permissions = {
+      ciclo: {
+        required: true
+      },
       capacitacion: {
         required: true
       },
@@ -88,6 +97,9 @@ export class PerfilComponent implements OnInit {
     };
     this.retrieveProfile();
     this.retrieveCapacitaciones();
+    this.retrieveCiclos();
+    this.token = this.decodeToken.decodePayload();
+    this.f.ciclo.patchValue(this.token.people.settings.ciclo);
   }
 
   get f() { return this.frm.controls; }
@@ -109,6 +121,14 @@ export class PerfilComponent implements OnInit {
      }, error => {
        this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
      });
+  }
+
+  public retrieveCiclos(): void {
+    this.cicloService.retrieve().subscribe(response => {
+      this.ciclos = response.data;
+      }, error => {
+      this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public formatCarnet(carnet): string {
@@ -133,8 +153,11 @@ export class PerfilComponent implements OnInit {
     const formData = {
       instructorId: Number(this.instructorId),
       trainingId: this.f.capacitacion.value.id,
-      nota: this.f.nota.value
+      nota: this.f.nota.value,
+      cicloId: this.f.ciclo.value.id,
     };
+
+    console.log(formData)
 
     this.service.instructorTraining(formData).subscribe(response => {
       if (!response.error) {
