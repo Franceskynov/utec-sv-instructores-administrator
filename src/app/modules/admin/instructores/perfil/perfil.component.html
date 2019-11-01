@@ -126,7 +126,12 @@
                          [rows]='row.notas | filter:searchBox:searchColumns'>
             <ngx-datatable-column name="Codigo" prop="mat_codigo"></ngx-datatable-column>
             <ngx-datatable-column name="Materia" prop="mat_nombre"></ngx-datatable-column>
-            <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+            <ngx-datatable-column name="Nota" prop="nota">
+              <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                <span *ngIf="validateNota(row.nota)" class="highlight"> {{ row.nota }}</span>
+                <span *ngIf="!validateNota(row.nota)"> {{ row.nota }} </span>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Estado" prop="estado"></ngx-datatable-column>
           </ngx-datatable>
         </div>

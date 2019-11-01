@@ -20,7 +20,7 @@ export const environment = {
     OK: 'Ok'
   },
   MAX_RESULTS_PER_PAGE: 6,
-  TOASTER_TIMEOUT: 2000,
+  TOASTER_TIMEOUT: 3400,
   PREVENT_DUPLICATES: true,
   MAX_ROWS_PER_PAGE: 10,
   IDLE_SETTINGS: {

@@ -172,4 +172,8 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  public validateNota(n): boolean {
+    return Number(n) >= 8;
+  }
+
 }

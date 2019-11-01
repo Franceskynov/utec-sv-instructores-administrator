@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 })
 export class CatalogoComponent implements OnInit, OnDestroy {
 
+  public cumIsValid: boolean;
   public config: any;
   public searchBox: string;
   public searchBoxAsignated: string;
@@ -50,6 +51,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.cumIsValid = false;
     this.searchBox = '';
     this.instructores = [];
     this.searchColumns = ['nombre', 'carnet', 'carrera', 'cum'];
@@ -101,9 +103,14 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         this.expedienteService.retrieve({carnet}).subscribe( response => {
           // console.log(response);
           this.row = response.data;
-          this.f.nombre.setValue(this.row.nombre);
-          this.f.carrera.setValue(this.row.carrera);
-          this.f.cum.setValue(this.row.cum);
+
+          if (this.row.cum === '') {
+            this.toastr.warning('El estudiante es de nuevo ingreso', 'Aviso');
+          } else {
+            this.f.nombre.setValue(this.row.nombre);
+            this.f.carrera.setValue(this.row.carrera);
+            this.f.cum.setValue(this.row.cum);
+          }
         }, error => {
           this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
         });
@@ -121,33 +128,47 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
     this.service.checkByCarnet(carnet).subscribe(response => {
       if (response.data.length === 0) {
+        const notas = (this.row.notas) ? this.trimmingNotas(this.row.notas) : [];
+        const cum = this.f.cum.value;
         const frmData = {
 
           nombre: this.f.nombre.value,
           carnet: carnet,
           carrera: this.f.carrera.value,
-          cum: this.f.cum.value,
+          cum: cum,
           telefono: this.f.phone.value,
           email: carnet.concat('@mail.utec.edu.sv'),
           emailPersonal: pEmail,
           username: carnet, // pEmail.split('@')[0],
-          notas: this.trimmingNotas(this.row.notas),
+          notas: notas,
           is_scholarshipped: this.f.scholarshipped.value
         };
         console.log(frmData);
-        this.service.make(frmData).subscribe(result => {
-          console.log(result);
-          if (!result.error) {
-            this.retrieve();
-            this.frm.reset();
-            this.f.carnet.setValue('00-0000-0000');
-            this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
-          } else {
-            this.toastr.error('No se pudo procesar', 'Error');
-          }
-        }, error => {
-          this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
-        });
+
+        this.cumIsValid = (this.validateCUM(cum));
+        if (!this.cumIsValid) {
+          this.toastr.info('El CUM del estudiante es inferior al requerido', 'Informacion');
+        } else {
+          this.toastr.info('El CUM del estudiante se encuentra en el rango', 'Informacion');
+        }
+
+        if (this.evaluateNotas(notas).length > 2) {
+          this.service.make(frmData).subscribe(result => {
+            console.log(result);
+            if (!result.error) {
+              this.retrieve();
+              this.frm.reset();
+              this.f.carnet.setValue('00-0000-0000');
+              this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
+            } else {
+              this.toastr.error('No se pudo procesar', 'Error');
+            }
+          }, error => {
+            this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+          });
+        } else {
+          this.toastr.warning('El estudiante no posee notas que lo respalden', 'Aviso');
+        }
       } else {
         this.toastr.warning('El instructor ya esta registrado');
       }
@@ -218,6 +239,14 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public pageChanged(event): void {
     this.config.currentPage = event;
     console.log(event);
+  }
+
+  public validateCUM(c): boolean {
+    return Number(c) >= 7.5;
+  }
+
+  public evaluateNotas(notas): Array<any> {
+    return notas.filter(item => Number(item.nota) >= 8);
   }
 
 
