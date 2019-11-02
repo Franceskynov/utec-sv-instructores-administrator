@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MateriasService } from 'app/services/materias.service';
 import { environment } from 'environments/environment';
 import { ReportingService } from 'app/services/reporting.service';
+import { EscuelaService } from 'app/services/escuela.service';
 
 @Component({
   selector: 'app-teachers',
@@ -15,6 +16,7 @@ import { ReportingService } from 'app/services/reporting.service';
 })
 export class TeachersComponent implements OnInit {
 
+  public schools: Array<any>;
   public isFiltered: boolean;
   public frm: FormGroup;
   public url: string;
@@ -25,15 +27,15 @@ export class TeachersComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
-    private service: MateriasService,
+    private service: EscuelaService,
     private reporting: ReportingService,
   ) { }
 
   ngOnInit() {
     this.isFiltered = false;
-    this.ctrls = ['materia'];
+    this.ctrls = ['school'];
     this.permissions = {
-      materia: {
+      school: {
         required: true
       }
     };
@@ -43,17 +45,17 @@ export class TeachersComponent implements OnInit {
 
   public retrieve(): void {
     this.service.retrieve().subscribe(response => {
-      this.materias = response.data;
+      this.schools = response.data;
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
 
   public filterData(fn): void {
-    const materia = this.frm.controls.materia.value;
+    const school = this.frm.controls.school.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/docentes');
     // this.isFiltered = true;
-    uri = uri.concat('?materia=', materia.id);
+    uri = uri.concat('?school=', school.id);
     this.reporting.downloadReport(uri).subscribe( result => {
       const newBlob = new Blob([result], { type: 'application/pdf' });
 

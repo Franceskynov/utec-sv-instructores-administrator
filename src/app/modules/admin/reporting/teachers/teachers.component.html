@@ -61,21 +61,21 @@
   <div class="modal-body">
     <form [formGroup]="frm">
       <div class="form-group">
-        <label for="materia">Materia:</label>
+        <label for="school">Escuela:</label>
 
         <ng-select
-          id="materia"
-          name="materia"
-          [items]="materias"
+          id="school"
+          name="school"
+          [items]="schools"
           [multiple]="false"
           [closeOnSelect]="true"
-          bindLabel="nombre"
-          placeholder="Seleccione el ciclo" formControlName="materia">
+          bindLabel="name"
+          placeholder="Seleccione el ciclo" formControlName="school">
           <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
-            {{ item.nombre }}
+            {{ item.name }}
           </ng-template>
         </ng-select>
-        <input-error-messages [frmName]="frm" ipName="materia" [dataValidation]="permissions"></input-error-messages>
+        <input-error-messages [frmName]="frm" ipName="school" [dataValidation]="permissions"></input-error-messages>
       </div>
     </form>
   </div>
