@@ -12,6 +12,7 @@ import { EspecialidadesComponent } from './especialidades/especialidades.compone
 import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
+import { EscuelaComponent } from './escuela/escuela.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { PreferenciasComponent } from './preferencias/preferencias.component';
     CapacitacionComponent,
     UsuariosComponent,
     PreferenciasComponent,
+    EscuelaComponent,
   ]
 })
 export class ConfiguracionesModule { }

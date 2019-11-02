@@ -123,6 +123,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
+        path: '/admin/configuraciones/escuelas',
+        title: 'Escuelas',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
         path: '/admin/configuraciones/ciclo',
         title: 'Ciclos',
         icon: '',

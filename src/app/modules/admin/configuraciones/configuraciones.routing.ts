@@ -12,12 +12,22 @@ import { EspecialidadesComponent } from './especialidades/especialidades.compone
 import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
+import { EscuelaComponent } from './escuela/escuela.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'escuelas',
+    component: EscuelaComponent,
+    data: {
+      title: 'Escuelas',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'materias',
