@@ -77,6 +77,26 @@
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
       </div>
+
+
+      <div class="form-group">
+        <label for="school">Escuela:</label>
+
+        <ng-select
+          id="school"
+          name="school"
+          [items]="schools"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="name"
+
+          placeholder="Seleccione la escuela" formControlName="school">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.name }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="school" [dataValidation]="permissions"></input-error-messages>
+      </div>
     </form>
   </div>
   <div class="modal-footer">

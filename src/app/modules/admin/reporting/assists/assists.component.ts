@@ -7,6 +7,7 @@ import { FormGroup } from '@angular/forms';
 import { PermissionsService } from 'app/services/permissions.service';
 import { ReportingService } from 'app/services/reporting.service';
 import { DecodeTokenService } from 'app/services/decode-token.service';
+import { EscuelaService } from 'app/services/escuela.service';
 
 @Component({
   selector: 'app-assists',
@@ -16,6 +17,7 @@ import { DecodeTokenService } from 'app/services/decode-token.service';
 })
 export class AssistsComponent implements OnInit {
 
+  public schools: Array<any>;
   public isFiltered: boolean;
   public frm: FormGroup;
   public url: string;
@@ -30,17 +32,21 @@ export class AssistsComponent implements OnInit {
     private permissionsService: PermissionsService,
     private reporting: ReportingService,
     private decodeToken: DecodeTokenService,
+    private escuelaService: EscuelaService,
   ) { }
 
   ngOnInit() {
     this.token = this.decodeToken.decodePayload();
     this.retrieve();
     this.isFiltered = false;
-    this.ctrls = ['ciclo'];
+    this.ctrls = ['ciclo', 'school'];
     this.permissions = {
       ciclo: {
         required: true
       },
+      school: {
+        required: true
+      }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.frm.controls.ciclo.patchValue(this.token.people.settings.ciclo);
@@ -52,12 +58,18 @@ export class AssistsComponent implements OnInit {
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
+    this.escuelaService.retrieve().subscribe(response => {
+      this.schools = response.data;
+    }, error => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public filterData(fn): void {
     this.isFiltered = false;
     const ciclo = this.frm.controls.ciclo.value;
-    const uri = environment.CONTROL_URL_API.concat('reporte/asignacion', '?ciclo=', ciclo.id);
+    const escuela = this.frm.controls.school.value;
+    const uri = environment.CONTROL_URL_API.concat('reporte/asignacion', '?ciclo=', ciclo.id, '&escuela=', escuela.id);
 
     this.reporting.downloadReport(uri).subscribe( result => {
       const newBlob = new Blob([result], { type: 'application/pdf' });
