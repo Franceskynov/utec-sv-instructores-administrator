@@ -40,6 +40,7 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.gotoTop();
     this.instructorId = this.route.snapshot.paramMap.get('id');
     this.ctrls = ['capacitacion', 'nota', 'ciclo'];
     this.permissions = {
@@ -174,6 +175,14 @@ export class PerfilComponent implements OnInit {
 
   public validateNota(n): boolean {
     return Number(n) >= 8;
+  }
+
+  public gotoTop(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
 }

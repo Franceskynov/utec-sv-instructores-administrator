@@ -10,13 +10,19 @@
         <div id="checkUserByEmailFrm" [ngClass]="{ 'hidden': emailChecked }">
           <form [formGroup]="checkUserFrm" class="form-horizontal form-simple">
             <fieldset class="form-group position-relative has-icon-left mb-2">
-              <input type="text" class="form-control form-control-lg" id="email" placeholder="Email" formControlName="email" required autocomplete="email">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="email"
+                     placeholder="Email"
+                     formControlName="email"
+                     required
+                     autocomplete="email" tabindex="1">
               <div class="form-control-position">
                 <i class="ft-user"></i>
               </div>
             </fieldset>
 
-            <button type="button" class="btn btn-primary btn-lg btn-block" [disabled]="checkUserFrm.invalid" (click)="recoverCredentials()">
+            <button type="button" class="btn btn-primary btn-lg btn-block" [disabled]="checkUserFrm.invalid" (click)="recoverCredentials()" tabindex="0">
               <i class="ft-check"></i> Recuperar credenciales
             </button>
           </form>

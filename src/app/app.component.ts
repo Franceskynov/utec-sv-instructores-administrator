@@ -110,6 +110,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  public cleanFromPrevius(): void {
+    if (localStorage.getItem('token')) {
+      localStorage.clear();
+    }
+  }
+
   public restart(): void {
     this.userIdle.resetTimer();
   }
@@ -124,12 +130,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload', ['$event'])
   beforeunloadHandler(event) {
-    this.refreshToken();
+    // this.cleanFromPrevius();
   }
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
-    this.refreshToken();
+    // this.cleanFromPrevius();
   }
+
+  @HostListener('window:onbeforeunload', ['$event'])
+  onbeforeunloadHandler(event) {}
   ngOnDestroy(): void {}
 }

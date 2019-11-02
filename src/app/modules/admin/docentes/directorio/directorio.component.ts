@@ -43,6 +43,7 @@ export class DirectorioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.gotoTop();
     this.config = {
       itemsPerPage: 0,
       currentPage: 0,
@@ -165,4 +166,11 @@ export class DirectorioComponent implements OnInit {
     this.config.currentPage = event;
   }
 
+  public gotoTop(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 }

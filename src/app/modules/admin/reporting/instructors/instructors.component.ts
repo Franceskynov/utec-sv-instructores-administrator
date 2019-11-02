@@ -31,11 +31,13 @@ export class InstructorsComponent implements OnInit {
 
   ngOnInit() {
     this.isFiltered = false;
-    this.ctrls = ['carrera', 'capacitaciones'];
+    this.ctrls = ['carrera', 'capacitaciones', 'scholarshipped'];
     this.permissions = {
       carrera: {
         required: true
-      }
+      },
+      scholarshipped: {},
+      capacitaciones: {}
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.retrieve();
@@ -53,8 +55,10 @@ export class InstructorsComponent implements OnInit {
     const capaciataciones = this.frm.controls.capacitaciones.value;
     this.isFiltered = false;
     const carrera = this.frm.controls.carrera.value;
+    const isScholarshipped = this.frm.controls.scholarshipped.value;
     let uri = environment.CONTROL_URL_API.concat('reporte/instructores');
-    uri = uri.concat('?carrera=', carrera.carrera).concat(`&capacitaciones=${ capaciataciones ? 'todas' : 'ninguna' }`);
+    uri = uri.concat('?carrera=', carrera.carrera).concat(`&capacitaciones=${ capaciataciones ? 'todas' : 'ninguna' }`,
+      `&scholarshipped=${isScholarshipped}`);
 
     this.reporting.downloadReport(uri).subscribe( result => {
       const newBlob = new Blob([result], { type: 'application/pdf' });
