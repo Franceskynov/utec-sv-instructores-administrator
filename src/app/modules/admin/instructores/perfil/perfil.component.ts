@@ -18,11 +18,13 @@ import { DecodeTokenService } from 'app/services/decode-token.service';
 })
 export class PerfilComponent implements OnInit {
 
+  public scholarshipped: any;
   public token: any;
   public ciclos: Array<any>;
   public instructorId: any;
   public capacitaciones: any;
   public frm: FormGroup;
+  public frmInstructor: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
   public searchColumns: Array<any>;
@@ -40,6 +42,7 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.scholarshipped = false;
     this.gotoTop();
     this.instructorId = this.route.snapshot.paramMap.get('id');
     this.ctrls = ['capacitacion', 'nota', 'ciclo'];
@@ -55,6 +58,7 @@ export class PerfilComponent implements OnInit {
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
+    // this.frmInstructor =
     this.searchColumns = ['mat_codigo', 'mat_nombre', 'nota', 'estado'];
     this.row = {
       nombre: null,
@@ -108,7 +112,6 @@ export class PerfilComponent implements OnInit {
   public retrieveCapacitaciones(): void {
     this.capacitacionService.retrieve().subscribe(result => {
       this.capacitaciones = result.data;
-      console.log(result);
     }, error => {
       this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
@@ -118,6 +121,8 @@ export class PerfilComponent implements OnInit {
      this.service.retrieveById(this.instructorId).subscribe(result => {
        if (!result.error) {
          this.row = result.data;
+         this.scholarshipped = this.row.is_scholarshipped !== '0';
+         console.log(result.data);
        }
      }, error => {
        this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
@@ -158,7 +163,7 @@ export class PerfilComponent implements OnInit {
       cicloId: this.f.ciclo.value.id,
     };
 
-    console.log(formData)
+    console.log(formData);
 
     this.service.instructorTraining(formData).subscribe(response => {
       if (!response.error) {
@@ -177,6 +182,17 @@ export class PerfilComponent implements OnInit {
     return Number(n) >= 8;
   }
 
+  public changeStatus(): void {
+    const formData = {
+      isScholarshipped: !this.scholarshipped
+    };
+    this.service.modify(this.row.id, formData).subscribe(response => {
+      if (response.error) {
+      }
+    }, error => {
+      this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
+  }
   public gotoTop(): void {
     window.scroll({
       top: 0,
