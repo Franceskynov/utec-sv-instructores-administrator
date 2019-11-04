@@ -171,7 +171,8 @@ export class PerfilComponent implements OnInit {
         if (!response.error) {
           this.retrieveProfile();
           fn();
-          this.frm.reset();
+          this.f.nota.patchValue(0);
+          this.f.capacitacion.patchValue(' ');
         } else {
           this.toaster.warning(response.message, environment.MESSAGES.WARN);
         }

@@ -45,6 +45,11 @@ export class AsignacionComponent implements OnInit {
   public row: any;
   public searchColums: Array<String>;
   public filterValue: any;
+  public inicio: any;
+  public fin: any;
+  public meridian: boolean;
+  public days: Array<any>;
+  public day: number;
   constructor(
     private modalService: NgbModal,
     private router: Router,
@@ -67,18 +72,30 @@ export class AsignacionComponent implements OnInit {
     this.instructor = {
       notas: []
     };
+
+    this.meridian = true;
+    this.day = 0;
+    this.inicio = {hour: 6, minute: 30};
+    this.fin = { hour: 21, minute: 30};
+    this.days = [
+      { id: 1, nombre: 'Lunes' },
+      { id: 2, nombre: 'Martes' },
+      { id: 3, nombre: 'Miercoles' },
+      { id: 4, nombre: 'Jueves' },
+      { id: 5, nombre: 'Viernes' },
+      { id: 6, nombre: 'Sabado' },
+      { id: 7, nombre: 'Domingo' },
+
+    ];
     this.searchColumns = ['mat_codigo', 'mat_nombre', 'nota', 'estado'];
     this.limit = environment.MAX_ROWS_PER_PAGE;
-    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia', 'docente'];
+    this.ctrls = ['nombre', 'ciclo', , 'aula', 'materia', 'docente', 'dia', 'inicio', 'fin', 'ciclo'];
     this.permissions = {
       nombre: {
         required: true,
         minLength: 5
       },
       ciclo: {
-        required: true
-      },
-      horario: {
         required: true
       },
       aula: {
@@ -89,7 +106,16 @@ export class AsignacionComponent implements OnInit {
       },
       docente: {
         required: true
-      }
+      },
+      dia: {
+        required: true
+      },
+      inicio: {
+        required: true,
+      },
+      fin: {
+        required: true,
+      },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.f.ciclo.patchValue(this.token.people.settings.ciclo);
@@ -117,6 +143,7 @@ export class AsignacionComponent implements OnInit {
 
   public openModal(content, row, ref?): void {
     this.modalService.open(content, {
+      size: 'lg',
       backdrop: 'static',
       keyboard: false
     });
@@ -158,19 +185,24 @@ export class AsignacionComponent implements OnInit {
 
   public postData(fn): void {
     const formData = {
-      nombre: this.f.nombre.value,
-      ciclo_id: this.f.ciclo.value.id,
-      horario_id: this.f.horario.value.id,
-      aula_id: this.f.aula.value.id,
+      nombre:        this.f.nombre.value,
+      ciclo_id:      this.f.ciclo.value.id,
+      // horario_id:    this.f.horario.value.id,
+      aula_id:       this.f.aula.value.id,
       instructor_id: this.row.id,
-      materia_id: this.f.materia.value.id,
-      docente_id : this.f.docente.value.id
+      materia_id:    this.f.materia.value.id,
+      docente_id :   this.f.docente.value.id,
+      dia:           this.day,
+      nombre_dia:    this.f.dia.value.nombre,
+      inicio:        this.mapTime(this.f.inicio.value),
+      fin:           this.mapTime(this.f.fin.value),
     };
     this.asignacionService.make(formData).subscribe(response => {
       console.log('response', response);
       if (!response.error) {
         fn();
         // this.frm.reset();
+        debugger;
         this.removeElement();
         if (this.ref) {
           this.ref();
@@ -226,5 +258,13 @@ export class AsignacionComponent implements OnInit {
     if (this.f.horario.value.ciclo.nombre !== this.f.ciclo.value.nombre) {
       this.toaster.warning('El ciclo y el horario seleccionados no coinciden', environment.MESSAGES.WARN);
     }
+  }
+
+  public mapTime(row): string {
+    return row.hour.toString().concat(':').concat(row.minute);
+  }
+
+  public evaluateNotas(notas): Array<any> {
+    return notas.filter(item => Number(item.nota) >= 8);
   }
 }

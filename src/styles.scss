@@ -5,8 +5,9 @@
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 //@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700'); // custom font
-@import "~ngx-toastr/toastr.css";
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~ngx-toastr/toastr.css';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import '~angular-archwizard/archwizard.css';
 
 .profile-card-with-stats .btn-float {
   padding: 8px 14px 4px 14px; }

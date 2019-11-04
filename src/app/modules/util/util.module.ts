@@ -20,6 +20,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ArchwizardModule } from 'angular-archwizard';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     // NgbModule.forRoot(),
     PasswordStrengthMeterModule,
     PerfectScrollbarModule,
+    ArchwizardModule,
   ],
   declarations: [
     InputErrorMessagesComponent,
@@ -62,6 +64,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     CartComponent,
     PasswordStrengthMeterModule,
     SafePipe,
+    ArchwizardModule,
   ]
 })
 export class UtilModule { }

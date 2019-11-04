@@ -104,7 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
           );
         }
       }, (
-          (Number(expires) * 1000) - 30
+          (Number(expires) * 1000) - (Number(expires) * 0.30)
         )
       );
     }

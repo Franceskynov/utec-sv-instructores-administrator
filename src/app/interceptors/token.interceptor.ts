@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     } else {
       errorMsg = `Backend returned code ${err.status}, body was: ${err.error}`;
     }
-    if (err.status === 401 || err.status === 400 || err.status === 403) {
+    if (err.status === 401 || err.status === 403) {
       localStorage.clear();
       this.router.navigate(['/', 'login']);
     }
