@@ -156,26 +156,31 @@ export class PerfilComponent implements OnInit {
   }
 
   public postData(fn): void {
+    const nota = this.f.nota.value;
     const formData = {
       instructorId: Number(this.instructorId),
       trainingId: this.f.capacitacion.value.id,
-      nota: this.f.nota.value,
+      nota: nota,
       cicloId: this.f.ciclo.value.id,
     };
 
     console.log(formData);
 
-    this.service.instructorTraining(formData).subscribe(response => {
-      if (!response.error) {
-        this.retrieveProfile();
-        fn();
-        this.frm.reset();
-      } else {
-        this.toaster.warning(response.message, environment.MESSAGES.WARN);
-      }
-    }, error => {
-      this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
-    });
+    if (this.validateScore(Number(nota))) {
+      this.service.instructorTraining(formData).subscribe(response => {
+        if (!response.error) {
+          this.retrieveProfile();
+          fn();
+          this.frm.reset();
+        } else {
+          this.toaster.warning(response.message, environment.MESSAGES.WARN);
+        }
+      }, error => {
+        this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+      });
+    } else {
+      this.toaster.warning(environment.MESSAGES.INVALID_SCORE, environment.MESSAGES.WARN);
+    }
   }
 
   public validateNota(n): boolean {
@@ -193,6 +198,11 @@ export class PerfilComponent implements OnInit {
       this.toaster.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
+
+  public validateScore(score): boolean {
+    return score <= 10 && score > 0;
+  }
+
   public gotoTop(): void {
     window.scroll({
       top: 0,

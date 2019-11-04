@@ -22,6 +22,7 @@ export const environment = {
     MULTIPLE_FILES_ERROR: 'At the moment multiple files can not be processed',
     FILES_ERROR: 'Ningun archivo ha sido cargado para procesar',
     DOCUMENT_FORMAT_ERROR : 'La tabla no cumple con el formato de columnas establecido',
+    INVALID_SCORE: 'La nota ingresada es invalida porfavor revise',
     ERROR: 'Error',
     OK: 'Ok'
   },
