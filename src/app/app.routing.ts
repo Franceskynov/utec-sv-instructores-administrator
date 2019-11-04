@@ -8,6 +8,7 @@ import { RoleGuard } from 'app/guards/role.guard';
 import { CredentialsComponent } from './components/credentials/credentials.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SelfAppraisalComponent } from './components/self-appraisal/self-appraisal.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,15 @@ export const routes: Routes = [
         }
       }
     ],
+  },
+  {
+    path: 'autoEvaluacion/:nombre',
+    component: SelfAppraisalComponent,
+    data: {
+      title: 'Auto evaluacion',
+      role: 'Instructor'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'login',

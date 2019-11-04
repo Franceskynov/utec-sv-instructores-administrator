@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { DecodeTokenService } from 'app/services/decode-token.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'app/services/login.service';
@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 
 export class NavbarComponent implements OnInit {
 
+  @Input() public Sidebar: string;
   public decode: any;
   public userName: string;
   constructor(

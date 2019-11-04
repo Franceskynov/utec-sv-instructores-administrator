@@ -28,6 +28,7 @@ import { CredentialsComponent } from './components/credentials/credentials.compo
 import { UtilModule } from 'app/modules/util/util.module';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SelfAppraisalComponent } from './components/self-appraisal/self-appraisal.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ProfileComponent } from './components/profile/profile.component';
       CredentialsComponent,
       UnauthorizedComponent,
       ProfileComponent,
+      SelfAppraisalComponent,
   ],
   imports: [
     BrowserAnimationsModule,
