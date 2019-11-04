@@ -94,6 +94,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         this.identifyElement(result)
       );
     });
+
+    localStorage.setItem('changed', 'false');
   }
 
   public get f() { return this.frm.controls; }
@@ -217,7 +219,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public selectForAssign(row): void {
-    console.log('selected', row);
     if (row.capacitaciones.length > 0 ) {
       if (row.capacitaciones.length === 3) {
         if (row.notas.length > 0) {
@@ -236,16 +237,34 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     }
   }
 
-  public identifyElement(row): number {
-    return (row.is_scholarshipped === '1') ?
-      this.instructoresScholarshipped.indexOf(row) :
-      this.instructores.indexOf(row);
+  public identifyElement(row): any {
+    if (row.is_scholarshipped === '1') {
+      return {
+        index: this.instructoresScholarshipped.indexOf(row),
+        type: 'scholarshipped'
+      };
+    } else {
+     return  {
+       index: this.instructores.indexOf(row),
+       type: 'normal'
+     };
+    }
   }
 
-  public changeStatusElement(index): void {
-    console.log('change status', this.instructores[index]);
-    this.instructores[index].is_selected =  (this.instructores[index].is_selected === '0') ? '1' : '0';
-    this.instructores[index].is_asignated = false;
+  public changeStatusElement(result): void {
+
+    if (result.type === 'scholarshipped') {
+      const changed = localStorage.getItem('changed');
+      if (changed === 'false') {
+        localStorage.setItem('changed', 'true');
+      } else {
+        localStorage.setItem('changed', 'false');
+      }
+      this.instructoresScholarshipped[result.index].is_asignated = false;
+    } else {
+      this.instructores[result.index].is_selected =  (this.instructores[result.index].is_selected === '0') ? '1' : '0';
+      this.instructores[result.index].is_asignated = false;
+    }
   }
 
   public trimWhiteSpaces(str): string {
@@ -284,7 +303,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public scoolarshippedInstructorValidator(instructor) {
-    return this.scoolarshippedAssignations(instructor).length >= 3;
+    if (this.scoolarshippedAssignations(instructor).length >= 3) {
+      return true;
+    } else {
+      const changed = localStorage.getItem('changed');
+      return changed !== 'false';
+    }
   }
 
   ngOnDestroy(): void {

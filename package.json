@@ -27,6 +27,7 @@
     "@ng-select/ng-select": "2.3.1",
     "@swimlane/ngx-datatable": "13.0.1",
     "@types/jquery": "^3.3.1",
+    "angular-archwizard": "^5.0.0",
     "angular-password-strength-meter": "0.0.4",
     "angular-user-idle": "^2.2.1",
     "bourbon": "^5.0.0",
