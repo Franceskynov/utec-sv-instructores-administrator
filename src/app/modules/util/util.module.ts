@@ -19,6 +19,7 @@ import { OnlynumberDirective } from './directives/onlynumber.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
     NgxMaskModule.forRoot(),
     NgxPaginationModule,
     // NgbModule.forRoot(),
-    PasswordStrengthMeterModule
+    PasswordStrengthMeterModule,
+    PerfectScrollbarModule,
   ],
   declarations: [
     InputErrorMessagesComponent,

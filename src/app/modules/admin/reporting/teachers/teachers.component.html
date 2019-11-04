@@ -36,7 +36,7 @@
             <div class="card-text">
 
               <div class="alert alert-secondary" role="alert" *ngIf="!isFiltered">
-                Filtre la materia para generar un reporte.
+                Filtre por escuela para generar un reporte.
               </div>
 
               <iframe [src]="url | safe" frameborder="0" width="100%" height="500px" *ngIf="isFiltered"></iframe>

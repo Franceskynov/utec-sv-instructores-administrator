@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChildren, Directive, QueryList, ElementRe
 import { InstructorSharingService } from 'app/services/instructor-sharing.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'app-cart',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit, OnDestroy {
 
+  public config: PerfectScrollbarConfigInterface = {};
   public subscription: Subscription;
   public element: any;
   public elements: Array<any>;

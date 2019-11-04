@@ -10,6 +10,7 @@ import { ExpedienteService } from 'app/services/expediente.service';
 import { InstructorService } from 'app/services/instructor.service';
 import { InstructorSharingService } from 'app/services/instructor-sharing.service';
 import { Subscription } from 'rxjs';
+import { DecodeTokenService } from 'app/services/decode-token.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -19,14 +20,18 @@ import { Subscription } from 'rxjs';
 })
 export class CatalogoComponent implements OnInit, OnDestroy {
 
+  public token: any;
   public cumIsValid: boolean;
   public config: any;
+  public configScoolarshipped: any;
   public searchBox: string;
+  public searchBoxForScoolarshipped: string;
   public searchBoxAsignated: string;
   public searchColumns: Array<any>;
   public subscription: Subscription;
   public instructores: Array<any>;
   public instructoresAssignated: Array<any>;
+  public instructoresScholarshipped: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
   public permissions: any;
@@ -39,6 +44,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public currentPageA: number;
+  public currentPageB: number;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -48,18 +55,28 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     private expedienteService: ExpedienteService,
     private service: InstructorService,
     private instructorSharingService: InstructorSharingService,
+    private decodeToken: DecodeTokenService,
     ) { }
 
   ngOnInit() {
+    this.token = this.decodeToken.decodePayload();
+    this.currentPageA = 0;
+    this.currentPageB = 0;
     this.cumIsValid = false;
     this.searchBox = '';
     this.instructores = [];
     this.searchColumns = ['nombre', 'carnet', 'carrera', 'cum'];
     this.config = {
-      itemsPerPage: 0,
+      itemsPerPage: this.currentPageA,
       currentPage: 0,
       totalItems: 0,
       id: 'catalogoInstructores'
+    };
+    this.configScoolarshipped = {
+      itemsPerPage: 0,
+      currentPage: this.currentPageB,
+      totalItems: 0,
+      id: 'catalogoInstructoresScoolarshipped'
     };
     this.frm = new FormGroup({
       nombre: new FormControl({value: '', disabled: true}, Validators.required),
@@ -85,13 +102,20 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.service.retrieve().subscribe(response => {
       this.config = {
         itemsPerPage: 6,
-        currentPage: 0,
+        currentPage: this.currentPageA,
         totalItems: response.data.length,
         id: 'catalogoInstructores'
       };
+      this.configScoolarshipped = {
+        itemsPerPage: 6,
+        currentPage: this.currentPageB,
+        totalItems: response.data.length,
+        id: 'catalogoInstructoresScoolarshipped'
+      };
       // this.instructores = response.data;
-      this.instructores = response.data.filter(row =>  row.is_selected === '0');
-      this.instructoresAssignated = response.data.filter(row =>  row.is_selected === '1');
+      this.instructores = response.data.filter(row =>  row.is_selected === '0' && row.is_scholarshipped === '0' );
+      this.instructoresAssignated = response.data.filter(row =>  row.is_selected === '1' && row.is_scholarshipped === '0');
+      this.instructoresScholarshipped = response.data.filter(row => row.is_scholarshipped === '1');
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');
     });
@@ -193,6 +217,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public selectForAssign(row): void {
+    console.log('selected', row);
     if (row.capacitaciones.length > 0 ) {
       if (row.capacitaciones.length === 3) {
         if (row.notas.length > 0) {
@@ -212,10 +237,13 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   public identifyElement(row): number {
-    return  this.instructores.indexOf(row);
+    return (row.is_scholarshipped === '1') ?
+      this.instructoresScholarshipped.indexOf(row) :
+      this.instructores.indexOf(row);
   }
 
   public changeStatusElement(index): void {
+    console.log('change status', this.instructores[index]);
     this.instructores[index].is_selected =  (this.instructores[index].is_selected === '0') ? '1' : '0';
     this.instructores[index].is_asignated = false;
   }
@@ -249,6 +277,15 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     return notas.filter(item => Number(item.nota) >= 8);
   }
 
+  public scoolarshippedAssignations(instructor): Array<any> {
+    const instructorias = instructor.instructoria;
+    const ciclo = this.token.people.settings.ciclo.nombre;
+    return instructorias.filter(row => row.ciclo.nombre === ciclo && row.is_enabled === '1');
+  }
+
+  public scoolarshippedInstructorValidator(instructor) {
+    return this.scoolarshippedAssignations(instructor).length >= 3;
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

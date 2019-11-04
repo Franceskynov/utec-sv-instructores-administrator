@@ -6,5 +6,6 @@ interface NodeModule {
 declare module 'quill';
 declare module 'leaflet';
 declare module 'perfect-scrollbar';
+declare module 'PerfectScrollbar';
 declare module 'screenfull';
 declare module 'd3-shape';

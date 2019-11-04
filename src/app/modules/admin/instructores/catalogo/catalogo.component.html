@@ -158,7 +158,7 @@
         </div>
       </div>
 
-      <pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
+      <pagination-controls (pageChange)="currentPageA = $event" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
 
     </ng-template>
   </ngb-tab>
@@ -202,6 +202,55 @@
           </div>
         </div>
       </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Becados">
+    <ng-template ngbTabContent>
+      <form class="pt-2">
+        <div class="form-group">
+          <input type="text" class="form-control" id="searchBoxForScoolarshipped" name="searchBoxForScoolarshipped" autocomplete="off" [(ngModel)]="searchBoxForScoolarshipped">
+        </div>
+      </form>
+
+
+      <div class="row mt-2">
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresScholarshipped | filter: searchBox: searchColumns | paginate: configScoolarshipped">
+          <div class="card profile-card-with-stats">
+            <div class="text-center">
+              <div class="card-body">
+                <img src="/assets/img/product-preview.png" class="  height-150"
+                     alt="Card image">
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> {{ instructor.nombre }} </h4>
+                <ul class="list-inline">
+                  <li>{{ instructor.carnet }}@mail.utec.edu.sv</li>
+                  <li>{{ instructor.carrera | lowercase }}</li>
+                </ul>
+                <p *ngIf="instructor.is_scholarshipped === '1'"> Es becado </p>
+                <p>CUM: {{ instructor.cum }}</p>
+                <p>Capacitaciones: {{ instructor.capacitaciones.length }} </p>
+                <p>Instructorias: {{ scoolarshippedAssignations(instructor).length }} </p>
+                <div class="alert alert-secondary" role="alert" *ngIf="scoolarshippedAssignations(instructor).length === 1" >
+                  Falta una instructoria m&aacute;s que asignar.
+                </div>
+              </div>
+              <div class="card-body">
+
+                <button type="button" class="btn btn-outline-danger btn-md mr-1" (click)="selectForAssign(instructor)" [disabled]="scoolarshippedInstructorValidator(instructor)">
+                  <i class="fa fa-plus"></i> &nbsp; Seleccionar
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-md mr-1" routerLink="/admin/instructores/perfil/{{ instructor.id }}">
+                  <i class="ft-user" ></i> &nbsp; Perfil
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <pagination-controls (pageChange)="currentPageB = $event" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructoresScoolarshipped"></pagination-controls>
+
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
