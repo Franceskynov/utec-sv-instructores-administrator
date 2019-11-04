@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -36,7 +36,9 @@ export class LoginComponent implements OnInit {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public returnUrl: string;
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -86,6 +88,7 @@ export class LoginComponent implements OnInit {
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.frm.controls.email.disable();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   get f() { return this.frm.controls; }
@@ -109,12 +112,17 @@ export class LoginComponent implements OnInit {
 
   public goTo(): void {
     this.token = this.decodeToken.decodePayload();
-    if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
-      this.router.navigate(['/', 'admin']);
-    } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
-      this.router.navigate(['/', 'docente', 'dashboard']);
+
+    if (this.returnUrl === '/') {
+      if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
+        this.router.navigate(['/', 'admin']);
+      } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
+        this.router.navigate(['/', 'docente', 'dashboard']);
+      } else {
+        this.router.navigate(['/', 'instructor', 'dashboard']);
+      }
     } else {
-      this.router.navigate(['/', 'instructor', 'dashboard']);
+      this.router.navigateByUrl(this.returnUrl);
     }
   }
 

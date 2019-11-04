@@ -37,9 +37,9 @@ export class NavbarComponent implements OnInit {
 
   public logOut(): void {
     this.loginService.logout().subscribe(response => {
-      this.toaster.info(response.data.message, environment.MESSAGES.SERVICE_OK)
+      this.toaster.info(response.data.message, environment.MESSAGES.SERVICE_OK);
       setTimeout(() => {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
       }, 500);
     });
     localStorage.clear();

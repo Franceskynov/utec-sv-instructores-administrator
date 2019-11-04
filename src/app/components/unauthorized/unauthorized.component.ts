@@ -15,6 +15,7 @@ export class UnauthorizedComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
+      localStorage.clear();
       this.router.navigate(['/', 'login']);
     }, 4000);
   }
