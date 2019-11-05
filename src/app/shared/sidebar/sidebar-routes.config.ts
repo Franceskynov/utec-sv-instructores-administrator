@@ -99,6 +99,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         isNavHeader: false,
         submenu: []
       },
+      {
+        path: '/admin/reporting/notas',
+        title: 'Notas',
+        icon: '',
+        class: '',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
     ]
   },
   {

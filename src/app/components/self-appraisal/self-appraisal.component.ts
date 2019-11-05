@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DecodeTokenService } from 'app/services/decode-token.service';
 import { EvaluationService } from 'app/services/evaluation.service';
 import { environment } from 'environments/environment';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-self-appraisal',
@@ -59,6 +60,22 @@ export class SelfAppraisalComponent implements OnInit {
     const score = this.calcScore();
     console.log(score);
     console.log(this.nombre);
+    this.evaluationService.evaluateSelfAppraisal({
+      instructorId: this.token.people.id,
+      asignacionName: this.nombre,
+      score: this.calcScore()
+    }).subscribe(response => {
+      if (!response.error) {
+        this.toaster.success('La autoevaluacion se envio correctamente');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1000 * 2);
+      } else {
+        this.toaster.warning('No se pudo procesar');
+      }
+    }, error => {
+      this.toaster.warning(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.SERVICE_WARN);
+    });
   }
 
   public calcScore(): number {

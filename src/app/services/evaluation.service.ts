@@ -17,4 +17,11 @@ export class EvaluationService {
         return data;
       }));
   }
+
+  public evaluateSelfAppraisal(formData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('evaluation/evaluateSelfAppraisal'), formData)
+      .pipe(map(data => {
+      return data;
+    }));
+  }
 }

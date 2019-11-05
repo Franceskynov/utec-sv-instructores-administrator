@@ -47,11 +47,11 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'historial',
+    path: 'notas',
     component: HistoryComponent,
     canActivate: [AuthGuard],
     data: {
-      title: 'Historial'
+      title: 'Notas'
     }
   }
 
