@@ -111,6 +111,7 @@ export class InstructoriaComponent implements OnInit {
       { id: 7, nombre: 'Domingo' },
 
     ];
+    this.f.nombre.disable();
   }
 
   get f () { return  this.frm.controls; }
@@ -142,15 +143,19 @@ export class InstructoriaComponent implements OnInit {
       materia_id: this.f.materia.value.id,
       docente_id: this.f.docente.value.id,
       dia:          this.day,
-      nombre_dia:   this.f.dia.value,
+      nombre_dia:   this.f.dia.value.nombre,
       inicio:       this.mapTime(this.f.inicio.value),
       fin:          this.mapTime(this.f.fin.value),
     };
+    console.log('formData', formData);
     this.asignacionService.modify(this.idForEdit, formData).subscribe(response => {
       console.log('response', response);
       if (!response.error) {
         fn();
         this.retrieveData();
+        this.toastr.success(environment.MESSAGES.MODIFIED_OK, environment.MESSAGES.OK);
+      } else {
+        this.toastr.warning(response.message);
       }
     }, error => {
       this.errorResponse();
@@ -172,7 +177,7 @@ export class InstructoriaComponent implements OnInit {
       this.f.materia.setValue(row.materia);
       this.f.docente.setValue(row.docente);
       this.f.ciclo.patchValue(row.ciclo);
-      this.f.dia.patchValue(row.nombre_dia);
+      this.f.dia.patchValue({ nombre: row.nombre_dia });
       this.inicio = this.decomposeTime(row.inicio);
       this.fin = this.decomposeTime(row.fin);
     }

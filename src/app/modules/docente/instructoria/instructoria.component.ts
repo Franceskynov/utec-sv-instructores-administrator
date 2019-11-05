@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { FormGroup } from '@angular/forms';
+import {not} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-instructoria',
@@ -99,24 +100,29 @@ export class InstructoriaComponent implements OnInit {
 
   get f() { return this.frm.controls; }
   public postData(fn): void {
+    const nota = Number(this.f.nota.value);
     const formData = {
-      nota: Number(this.f.nota.value),
+      nota: nota,
       comentarios: this.f.comentarios.value,
       instructorId: this.instructorData.instructor.id
     };
     console.log(formData, this.docenteId);
-    this.asignacionService.removeAsignation(this.docenteId, formData).subscribe(response =>  {
-      if (!response.error ) {
-        this.toaster.success(response.message, environment.MESSAGES.OK);
-        fn();
-        this.frm.reset();
-        this.retrieveData();
-      } else {
-        this.toaster.warning(response.message, environment.MESSAGES.WARN);
-      }
-    }, error => {
-      this.errorResponse(error);
-    });
+    if (this.validateScore(nota)) {
+      this.asignacionService.removeAsignation(this.docenteId, formData).subscribe(response =>  {
+        if (!response.error ) {
+          this.toaster.success(response.message, environment.MESSAGES.OK);
+          fn();
+          this.frm.reset();
+          this.retrieveData();
+        } else {
+          this.toaster.warning(response.message, environment.MESSAGES.WARN);
+        }
+      }, error => {
+        this.errorResponse(error);
+      });
+    } else {
+      this.toaster.warning(environment.MESSAGES.INVALID_SCORE, environment.MESSAGES.WARN);
+    }
   }
 
   public openModal(content, row): void {
@@ -125,5 +131,9 @@ export class InstructoriaComponent implements OnInit {
       keyboard: false
     });
     this.instructorData = row;
+  }
+
+  public validateScore(score): boolean {
+    return score <= 10 && score > 0;
   }
 }

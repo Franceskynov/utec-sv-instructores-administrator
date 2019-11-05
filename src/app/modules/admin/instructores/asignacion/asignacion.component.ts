@@ -119,6 +119,7 @@ export class AsignacionComponent implements OnInit {
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.f.ciclo.patchValue(this.token.people.settings.ciclo);
+    this.f.nombre.disable();
     this.loadFromStorage();
     this.retrieve();
   }

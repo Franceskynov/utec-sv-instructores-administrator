@@ -47,7 +47,7 @@ export class SelfAppraisalComponent implements OnInit {
         if (response.data) {
           console.log('data');
         } else {
-          this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
       }
     }, error => {

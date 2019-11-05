@@ -37,7 +37,7 @@
               <span> <b>Apellido</b>: {{ i.docente.apellido }} </span>
             </p>
             <p> <b>Materia</b> : {{ i.materia.nombre }}</p>
-            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 "> {{ i.horario.nombre_dia }} {{ i.horario.fin }} - {{ i.horario.fin }}  </span></p>
+            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 "> {{ i.nombre_dia }} {{ i.fin }} - {{ i.fin }}  </span></p>
             <p> <b>Estatus</b> :
               <span *ngIf="i.is_enabled === '1'" class="badge badge-pill badge-secondary text-light ml-1 ">Habilitado</span>
               <span *ngIf="i.is_enabled === '0'" class="badge badge-pill badge-primary text-light ml-1">Deshabilitado</span>

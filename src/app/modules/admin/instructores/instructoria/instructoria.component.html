@@ -97,7 +97,7 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Modificar una instructorias</h4>
+    <h4 class="modal-title">Modificar una instructor&iacute;a</h4>
     <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
     <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -111,7 +111,7 @@
           <div class="row">
             <div class="col-md-10 mx-auto">
               <div class="form-group">
-                <label for="nombre">Nombre de la asignacion</label>
+                <label for="nombre">Nombre de la asignaci&oacute;n:</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" [ngClass]="paintError(frm, 'nombre')" autocomplete="off">
                 <input-error-messages [frmName]="frm" ipName="nombre" [dataValidation]="permissions"></input-error-messages>
               </div>
