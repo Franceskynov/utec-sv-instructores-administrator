@@ -40,6 +40,11 @@ export class InstructoriaComponent implements OnInit {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public inicio: any;
+  public fin: any;
+  public meridian: boolean;
+  public days: Array<any>;
+  public day: number;
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
@@ -61,16 +66,13 @@ export class InstructoriaComponent implements OnInit {
     this.edificios = [];
     this.row = {};
     this.searchColums = ['nombre', 'carrera', 'cum', 'docente'];
-    this.ctrls = ['nombre', 'ciclo', 'horario', 'aula', 'materia', 'docente'];
+    this.ctrls = ['nombre', 'ciclo', 'aula', 'materia', 'docente', 'dia', 'inicio', 'fin'];
     this.permissions = {
       nombre: {
         required: true,
         minLength: 5
       },
       ciclo: {
-        required: true
-      },
-      horario: {
         required: true
       },
       aula: {
@@ -81,11 +83,34 @@ export class InstructoriaComponent implements OnInit {
       },
       docente: {
         required: true
-      }
+      },
+      dia: {
+        required: true
+      },
+      inicio: {
+        required: true,
+      },
+      fin: {
+        required: true,
+      },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.retrieveData();
     this.retrieve();
+    this.meridian = true;
+    this.day = 0;
+    this.inicio = {hour: 6, minute: 30};
+    this.fin = { hour: 21, minute: 30};
+    this.days = [
+      { id: 1, nombre: 'Lunes' },
+      { id: 2, nombre: 'Martes' },
+      { id: 3, nombre: 'Miercoles' },
+      { id: 4, nombre: 'Jueves' },
+      { id: 5, nombre: 'Viernes' },
+      { id: 6, nombre: 'Sabado' },
+      { id: 7, nombre: 'Domingo' },
+
+    ];
   }
 
   get f () { return  this.frm.controls; }
@@ -112,11 +137,14 @@ export class InstructoriaComponent implements OnInit {
     const formData = {
       nombre: this.f.nombre.value,
       ciclo_id: this.f.ciclo.value.id,
-      horario_id: this.f.horario.value.id,
       aula_id: this.f.aula.value.id,
       instructor_id: Number(this.row.instructor_id),
       materia_id: this.f.materia.value.id,
-      docente_id: this.f.docente.value.id
+      docente_id: this.f.docente.value.id,
+      dia:          this.day,
+      nombre_dia:   this.f.dia.value,
+      inicio:       this.mapTime(this.f.inicio.value),
+      fin:          this.mapTime(this.f.fin.value),
     };
     this.asignacionService.modify(this.idForEdit, formData).subscribe(response => {
       console.log('response', response);
@@ -131,6 +159,7 @@ export class InstructoriaComponent implements OnInit {
 
   public openModal(content, row): void {
     this.modalService.open(content, {
+      size: 'lg',
       backdrop: 'static',
       keyboard: false
     });
@@ -139,10 +168,13 @@ export class InstructoriaComponent implements OnInit {
     if (this.editMode) {
       this.f.nombre.setValue(row.nombre);
       this.f.ciclo.setValue(row.ciclo);
-      this.f.horario.setValue(row.horario);
       this.f.aula.setValue(row.aula);
       this.f.materia.setValue(row.materia);
       this.f.docente.setValue(row.docente);
+      this.f.ciclo.patchValue(row.ciclo);
+      this.f.dia.patchValue(row.nombre_dia);
+      this.inicio = this.decomposeTime(row.inicio);
+      this.fin = this.decomposeTime(row.fin);
     }
   }
 
@@ -180,6 +212,17 @@ export class InstructoriaComponent implements OnInit {
   public filterData(rows): void {
     console.log(rows);
     this.filtered =  rows.filter(row =>  row.pivot.is_used === '0');
+  }
+
+  public mapTime(row): string {
+    return row.hour.toString().concat(':').concat(row.minute);
+  }
+
+  public decomposeTime(time): any {
+    return {
+      hour: parseInt(time, 10),
+      minute: parseInt(time.substring(3, 5), 10)
+    };
   }
 
 }

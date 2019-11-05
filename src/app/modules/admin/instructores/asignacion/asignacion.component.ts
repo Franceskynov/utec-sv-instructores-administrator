@@ -89,7 +89,7 @@ export class AsignacionComponent implements OnInit {
     ];
     this.searchColumns = ['mat_codigo', 'mat_nombre', 'nota', 'estado'];
     this.limit = environment.MAX_ROWS_PER_PAGE;
-    this.ctrls = ['nombre', 'ciclo', , 'aula', 'materia', 'docente', 'dia', 'inicio', 'fin', 'ciclo'];
+    this.ctrls = ['nombre', 'ciclo', 'aula', 'materia', 'docente', 'dia', 'inicio', 'fin'];
     this.permissions = {
       nombre: {
         required: true,
@@ -202,7 +202,6 @@ export class AsignacionComponent implements OnInit {
       if (!response.error) {
         fn();
         // this.frm.reset();
-        debugger;
         this.removeElement();
         if (this.ref) {
           this.ref();
