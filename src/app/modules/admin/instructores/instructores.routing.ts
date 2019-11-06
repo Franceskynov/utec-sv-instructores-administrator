@@ -6,6 +6,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AsignacionComponent } from './asignacion/asignacion.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { AuthGuard } from 'app/guards/auth.guard';
+import { HistorialComponent } from './historial/historial.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Instructorias asignadas'
+    }
+  },
+  {
+    path: 'historial',
+    component: HistorialComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Historial de asistencia'
     }
   }
 

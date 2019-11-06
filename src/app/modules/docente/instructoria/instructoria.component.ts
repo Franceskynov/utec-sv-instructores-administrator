@@ -71,8 +71,8 @@ export class InstructoriaComponent implements OnInit {
       ]
     };
     this.retrieveData();
-    this.ctrls = ['nota', 'comentarios'];
     this.rows = [];
+    this.ctrls = ['nota', 'comentarios'];
     this.permissions = {
       nota: {
         required: true,

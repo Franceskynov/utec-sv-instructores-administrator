@@ -7,6 +7,7 @@ import { CatalogoComponent } from './catalogo/catalogo.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AsignacionComponent } from './asignacion/asignacion.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
+import { HistorialComponent } from './historial/historial.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { InstructoriaComponent } from './instructoria/instructoria.component';
     routing,
     UtilModule,
   ],
-  declarations: [IndexComponent, CatalogoComponent, PerfilComponent, AsignacionComponent, InstructoriaComponent]
+  declarations: [IndexComponent, CatalogoComponent, PerfilComponent, AsignacionComponent, InstructoriaComponent, HistorialComponent]
 })
 export class InstructoresModule { }

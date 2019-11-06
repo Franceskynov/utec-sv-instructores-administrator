@@ -32,6 +32,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
       isNavHeader: false,
       submenu: []
     },
+    {
+      path: '/admin/instructores/historial',
+      title: 'Historial de asistencia',
+      icon: '',
+      class: 'menu-item',
+      badge: '',
+      badgeClass: '',
+      isExternalLink: false,
+      isNavHeader: false,
+      submenu: []
+    },
   ]
 },
   {

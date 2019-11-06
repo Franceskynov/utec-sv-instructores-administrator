@@ -24,4 +24,11 @@ export class EvaluationService {
       return data;
     }));
   }
+
+  public evaluateHumanResources(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('evaluation/humanResources'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }
