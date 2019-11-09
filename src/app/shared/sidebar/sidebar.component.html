@@ -1,12 +1,14 @@
 <!-- Sidebar Content starts -->
-<div id="stackMenu" data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow">
+<div id="stackMenu" data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" (mouseover)="adjustNavOver()"
+     (mouseleave)="adjustNavLeave()"
+>
     <!-- main menu content-->
     <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
             <!-- First level menu -->
 
-            <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]" [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
-                [routerLinkActiveOptions]="{exact: true}">
+            <li *ngFor="let menuItem of menuItems; let mi = index;" [ngClass]="[menuItem.class]" [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
+                [routerLinkActiveOptions]="{exact: true}" (click)="menuItemOption(mi)" id="mi-{{mi}}">
                 <a [routerLink]="menuItem.class === 'nav-item' ? [menuItem.path] : null" *ngIf="!menuItem.isExternalLink && !menuItem.isNavHeader">
                     <i [ngClass]="[menuItem.icon]"></i>
                     <span class="menu-title">{{menuItem.title}}</span>
@@ -24,7 +26,7 @@
                 <!-- Second level menu -->
                 <ul class="menu-content" *ngIf="menuItem.submenu.length > 0">
                     <li *ngFor="let menuSubItem of menuItem.submenu" [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'" [ngClass]="[menuSubItem.class]">
-                        <a [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]" *ngIf="!menuSubItem.isExternalLink && !menuItem.isNavHeader; else externalSubLinkBlock">
+                        <a [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]" *ngIf="!menuSubItem.isExternalLink && !menuItem.isNavHeader; else externalSubLinkBlock" (click)="subMenuActived(mi)">
                             <i [ngClass]="[menuSubItem.icon]"></i>
                             <span class="menu-title">{{menuSubItem.title}}</span>
                             <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>

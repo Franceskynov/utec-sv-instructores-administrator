@@ -32,7 +32,7 @@ export class HistorialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.searchColums = [];
+    this.searchColums = ['instructor', 'materia'];
     this.limit = environment.MAX_ROWS_PER_PAGE;
     this.retrieveData();
     this.ctrls = ['nota'];
