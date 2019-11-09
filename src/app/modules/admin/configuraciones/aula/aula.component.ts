@@ -52,7 +52,7 @@ export class AulaComponent implements OnInit {
     this.edificios = [];
     this.filteredHorarios = [];
     this.searchColums = ['nombre', 'descripcion'];
-    this.ctrls = ['edificio', 'codigo', 'capacidad', 'horarios', 'ciclo'];
+    this.ctrls = ['edificio', 'codigo', 'capacidad'];
     this.permissions = {
       edificio: {
         required: true
@@ -63,18 +63,12 @@ export class AulaComponent implements OnInit {
       capacidad: {
         required: true
       },
-      horarios: {
-        required: true
-      },
-      ciclo: {
-        required: true
-      }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
-    this.f.ciclo.patchValue(this.token.people.settings.ciclo);
+   // this.f.ciclo.patchValue(this.token.people.settings.ciclo);
     this.retrieveData();
     this.retrieveEdificios();
-    this.retrieveHorarios();
+   // this.retrieveHorarios();
   }
 
   get f () { return  this.frm.controls; }
@@ -114,7 +108,7 @@ export class AulaComponent implements OnInit {
       codigo: this.f.codigo.value,
       capacidad: parseInt(this.f.capacidad.value, 10),
       edificio_id: this.f.edificio.value.id,
-      horarios: this.mapHorarios(this.f.horarios.value)
+      horarios: [] // this.mapHorarios(this.f.horarios.value)
     };
     this.service.make(frmData).subscribe(data => {
         if (!data.error) {
@@ -134,7 +128,7 @@ export class AulaComponent implements OnInit {
       codigo: this.f.codigo.value,
       capacidad: parseInt(this.f.capacidad.value, 10),
       edificio_id: this.f.edificio.value.id,
-      horarios: this.mapHorarios(this.f.horarios.value)
+      horarios: [] // this.mapHorarios(this.f.horarios.value)
     };
     this.service.modify(this.idForEdit, frmData).subscribe(data => {
         if (!data.error) {
@@ -162,8 +156,8 @@ export class AulaComponent implements OnInit {
       this.f.edificio.setValue(row.edificio);
       this.f.codigo.setValue(row.codigo);
       this.f.capacidad.setValue(row.capacidad);
-      this.f.horarios.setValue(row.horarios);
-      this.f.ciclo.setValue(row.horarios[0].ciclo);
+      // this.f.horarios.setValue(row.horarios);
+      // this.f.ciclo.setValue(row.horarios[0].ciclo);
       console.log(row);
     }
   }

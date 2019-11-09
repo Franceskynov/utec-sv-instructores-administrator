@@ -177,17 +177,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
         isNavHeader: false,
         submenu: []
       },
-      {
-        path: '/admin/configuraciones/horario',
-        title: 'Horarios',
-        icon: '',
-        class: 'menu-item',
-        badge: '',
-        badgeClass: '',
-        isExternalLink: false,
-        isNavHeader: false,
-        submenu: []
-      },
+      // {
+      //   path: '/admin/configuraciones/horario',
+      //   title: 'Horarios',
+      //   icon: '',
+      //   class: 'menu-item',
+      //   badge: '',
+      //   badgeClass: '',
+      //   isExternalLink: false,
+      //   isNavHeader: false,
+      //   submenu: []
+      // },
       {
         path: '/admin/configuraciones/aula',
         title: 'Aula',
