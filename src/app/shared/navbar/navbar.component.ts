@@ -97,15 +97,12 @@ export class NavbarComponent implements OnInit {
 
   menuToggleNav() {
     const tagBody = document.getElementsByTagName('body')[0];
-    const menuToggle = document.getElementById('stackMenuToggle');
-    if (menuToggle.classList.contains('is-active')) {
-      tagBody.classList.remove('menu-open');
-      tagBody.classList.add('menu-hide');
-      menuToggle.classList.remove('is-active');
-    } else {
+    if (tagBody.classList.contains('vertical-menu')) {
+      tagBody.classList.remove('vertical-menu');
       tagBody.classList.add('menu-open');
-      tagBody.classList.remove('menu-hide');
-      menuToggle.classList.add('is-active');
+    } else {
+      tagBody.classList.remove('menu-open');
+      tagBody.classList.add('vertical-menu');
     }
   }
 

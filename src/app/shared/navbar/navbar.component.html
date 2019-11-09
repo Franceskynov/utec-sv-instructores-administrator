@@ -5,7 +5,7 @@
          (mouseleave)="adjustNavLeave()">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mobile-menu d-md-none mr-auto">
-          <a class="nav-link nav-menu-main menu-toggle hidden-xs" (click)="menuToggleNav()">
+          <a class="nav-link nav-menu-main menu-toggle hidden-xs"  (click)="menuToggleNav()">
             <i class="ft-menu font-large-1"></i>
           </a>
         </li>
@@ -15,7 +15,7 @@
 <!--          </a>-->
         </li>
         <li class="nav-item d-md-none">
-          <a data-toggle="collapse" data-target="#navbar-mobile" class="nav-link open-navbar-container">
+          <a data-toggle="collapse" aria-expanded="true" data-target="#navbar-mobile" class="nav-link open-navbar-container" >
             <span class="user-name"> {{ userName }} </span> &nbsp;
             <i class="fa fa-ellipsis-v"></i>
           </a>
@@ -29,7 +29,7 @@
             <a href="javascript:;" class="nav-link nav-menu-main menu-toggle hidden-xs d-block" id="stackNavMenu" (click)="adjustMenu()" #stackNavMenu>
               <i class="ft-menu"></i>
             </a>
-            <a routerLink="/changelog" class="nav-link nav-menu-main hidden-xs font-small-3 d-none" id="stackNavBack" #stackNavBack>
+            <a routerLink="/changelog" class="nav-link nav-menu-main hidden-xs font-small-3 d-none" id="stackNavBack"  #stackNavBack>
               <i class="ft-arrow-left"></i>Back
             </a>
           </li>
