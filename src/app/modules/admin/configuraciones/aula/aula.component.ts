@@ -10,6 +10,8 @@ import { EdificioService } from 'app/services/edificio.service';
 import { HorarioService } from 'app/services/horario.service';
 import { DecodeTokenService } from 'app/services/decode-token.service';
 import { CicloService } from 'app/services/ciclo.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-aula',
@@ -19,6 +21,7 @@ import { CicloService } from 'app/services/ciclo.service';
 })
 export class AulaComponent implements OnInit {
 
+  private subscription: Subscription;
   public filteredHorarios: Array<any>;
   public ciclos: Array<any>;
   public token: any;
@@ -44,7 +47,16 @@ export class AulaComponent implements OnInit {
     private horarioService: HorarioService,
     private decodeToken: DecodeTokenService,
     private cicloService: CicloService,
-  ) { }
+    private sharedService: SharedService,
+  ) {
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+        }, 450);
+      });
+  }
 
   ngOnInit() {
     this.token = this.decodeToken.decodePayload();

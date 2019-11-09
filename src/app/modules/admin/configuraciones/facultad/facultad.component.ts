@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { FacultadService } from 'app/services/facultad.service';
 import { MateriasService } from 'app/services/materias.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-facultad',
@@ -16,6 +18,7 @@ import { MateriasService } from 'app/services/materias.service';
 })
 export class FacultadComponent implements OnInit {
 
+  private subscription: Subscription;
   public selectedMaterias: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -35,7 +38,16 @@ export class FacultadComponent implements OnInit {
     private permissionsService: PermissionsService,
     private service: FacultadService,
     private materiaService: MateriasService,
-  ) { }
+    private sharedService: SharedService,
+  ) {
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+        }, 450);
+      });
+  }
 
   ngOnInit() {
     this.limit = environment.MAX_ROWS_PER_PAGE;

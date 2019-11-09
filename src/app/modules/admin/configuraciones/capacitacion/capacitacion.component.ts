@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { CapacitacionService } from 'app/services/capacitacion.service';
 import { DocenteService } from 'app/services/docente.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-capacitacion',
@@ -16,6 +18,7 @@ import { DocenteService } from 'app/services/docente.service';
 })
 export class CapacitacionComponent implements OnInit {
 
+  private subscription: Subscription;
   public tipoTraining: Array<any>;
   public docentes: Array<any>;
   public frm: FormGroup;
@@ -35,7 +38,16 @@ export class CapacitacionComponent implements OnInit {
     private permissionsService: PermissionsService,
     private service: CapacitacionService,
     private docenteServise: DocenteService,
-  ) { }
+    private sharedService: SharedService,
+  ) {
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+        }, 450);
+      });
+  }
 
   ngOnInit() {
     this.limit = environment.MAX_ROWS_PER_PAGE;

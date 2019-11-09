@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { MateriasService } from 'app/services/materias.service';
 import { EscuelaService } from 'app/services/escuela.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-materias',
@@ -16,6 +18,7 @@ import { EscuelaService } from 'app/services/escuela.service';
 })
 export class MateriasComponent implements OnInit {
 
+  private subscription: Subscription;
   public schools: Array<any>;
   public frm: FormGroup;
   public ctrls: Array<String>;
@@ -34,7 +37,17 @@ export class MateriasComponent implements OnInit {
     private permissionsService: PermissionsService,
     private materiaService: MateriasService,
     private escuelaService: EscuelaService,
-  ) { }
+    private sharedService: SharedService,
+  ) {
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+          console.log('tjis');
+        }, 450);
+      });
+  }
 
   ngOnInit() {
     this.limit = environment.MAX_ROWS_PER_PAGE;

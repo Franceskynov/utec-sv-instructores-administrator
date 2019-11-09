@@ -8,6 +8,8 @@ import { environment } from 'environments/environment';
 import { HorarioService } from 'app/services/horario.service';
 import { CicloService } from 'app/services/ciclo.service';
 import { DecodeTokenService } from 'app/services/decode-token.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-horario',
@@ -17,6 +19,7 @@ import { DecodeTokenService } from 'app/services/decode-token.service';
 })
 export class HorarioComponent implements OnInit {
 
+  private subscription: Subscription;
   public token: any;
   public inicio: any;
   public fin: any;
@@ -43,7 +46,16 @@ export class HorarioComponent implements OnInit {
     private cicloService: CicloService,
     private decodeToken: DecodeTokenService,
     private fb: FormBuilder,
-  ) { }
+    private sharedService: SharedService,
+  ) {
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+        }, 450);
+      });
+  }
 
   ngOnInit() {
     this.token = this.decodeToken.decodePayload();

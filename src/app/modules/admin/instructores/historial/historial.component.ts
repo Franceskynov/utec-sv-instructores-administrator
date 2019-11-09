@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PermissionsService } from 'app/services/permissions.service';
 import { FormGroup } from '@angular/forms';
 import { EvaluationService } from 'app/services/evaluation.service';
+import { SharedService } from 'app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-historial',
