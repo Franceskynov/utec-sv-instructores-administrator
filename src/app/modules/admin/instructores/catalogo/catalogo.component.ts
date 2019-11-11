@@ -47,6 +47,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public filterValue: any;
   public currentPageA: number;
   public currentPageB: number;
+  public currentPageC: number;
   public existInstructor: boolean;
   constructor(
     private router: Router,
@@ -66,6 +67,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.token = this.decodeToken.decodePayload();
     this.currentPageA = 0;
     this.currentPageB = 0;
+    this.currentPageC = 0;
     this.cumIsValid = false;
     this.searchBox = '';
     this.instructores = [];
@@ -84,7 +86,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     };
     this.configAssignated  = {
       itemsPerPage: 0,
-      currentPage: this.currentPageB,
+      currentPage: this.currentPageC,
       totalItems: 0,
       id: 'catalogoInstructoresAssignated'
     };
@@ -133,6 +135,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         currentPage: this.currentPageB,
         totalItems: this.instructoresScholarshipped.length,
         id: 'catalogoInstructoresScoolarshipped'
+      };
+      this.configAssignated  = {
+        itemsPerPage: 6,
+        currentPage: this.currentPageC,
+        totalItems: this.instructoresAssignated.length,
+        id: 'catalogoInstructoresAssignated'
       };
       this.scollarshipedV(this.instructoresScholarshipped);
     }, error => {

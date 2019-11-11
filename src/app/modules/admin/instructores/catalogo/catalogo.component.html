@@ -164,14 +164,17 @@
   </ngb-tab>
   <ngb-tab title="Asignados">
     <ng-template ngbTabContent>
-
+      <small>
+        <b>Nota:</b>
+        Aqui solo se mostraran los instructores que no tengan beca pero que estan asignados.
+      </small>
       <form class="pt-2">
         <div class="form-group">
           <input type="text" class="form-control" id="searchBoxAsignated" name="searchBoxAsignated" autocomplete="off" [(ngModel)]="searchBoxAsignated">
         </div>
       </form>
       <div class="row mt-2">
-        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresAssignated | filter: searchBoxAsignated: searchColumns ">
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresAssignated | filter: searchBoxAsignated: searchColumns | paginate: configAssignated ">
           <div class="card profile-card-with-stats">
             <div class="text-center">
               <div class="card-body">
@@ -202,10 +205,17 @@
           </div>
         </div>
       </div>
+      <pagination-controls (pageChange)="pageChanged($event, 'instructoresAssignated')" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructoresAssignated"></pagination-controls>
+
+
     </ng-template>
   </ngb-tab>
   <ngb-tab title="Becados">
     <ng-template ngbTabContent>
+      <small>
+        <b>Nota:</b>
+        Aqui solo se mostraran los instructores que tengan beca y tengan o no instructorias asignadas.
+      </small>
       <form class="pt-2">
         <div class="form-group">
           <input type="text" class="form-control" id="searchBoxForScoolarshipped" name="searchBoxForScoolarshipped" autocomplete="off" [(ngModel)]="searchBoxForScoolarshipped">
