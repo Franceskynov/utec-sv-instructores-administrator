@@ -15,4 +15,11 @@ export class ExpedienteService {
         return data;
       }));
   }
+
+  public getPensum(frmData) {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat(`pensum?carnet=${frmData.carnet}`))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

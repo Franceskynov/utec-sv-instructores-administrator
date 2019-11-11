@@ -24,6 +24,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public cumIsValid: boolean;
   public config: any;
   public configScoolarshipped: any;
+  public configAssignated: any;
   public searchBox: string;
   public searchBoxForScoolarshipped: string;
   public searchBoxAsignated: string;
@@ -46,6 +47,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public filterValue: any;
   public currentPageA: number;
   public currentPageB: number;
+  public existInstructor: boolean;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -59,6 +61,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.row = false;
+    this.existInstructor = false;
     this.token = this.decodeToken.decodePayload();
     this.currentPageA = 0;
     this.currentPageB = 0;
@@ -78,15 +82,13 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       totalItems: 0,
       id: 'catalogoInstructoresScoolarshipped'
     };
-    this.frm = new FormGroup({
-      nombre: new FormControl({value: '', disabled: true}, Validators.required),
-      carnet: new FormControl({value: '', disabled: false}, Validators.required),
-      carrera: new FormControl({value: '', disabled: true}, Validators.required),
-      cum: new FormControl({value: '', disabled: true}, Validators.required),
-      phone: new FormControl({value: '', disabled: false}, ),
-      personalEmail: new FormControl({value: '', disabled: false}, [  Validators.email]),
-      scholarshipped: new FormControl('', [])
-    });
+    this.configAssignated  = {
+      itemsPerPage: 0,
+      currentPage: this.currentPageB,
+      totalItems: 0,
+      id: 'catalogoInstructoresAssignated'
+    };
+    this.initForm();
     this.searchColums = ['nombre', 'descripcion'];
     this.retrieve();
     this.subscription = this.instructorSharingService.getStatus().subscribe(result => {
@@ -95,29 +97,44 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       );
     });
 
-    localStorage.setItem('changed', 'false');
+    // localStorage.setItem('changed', 'false');
+    console.log(localStorage);
+  }
+
+  public initForm(): void {
+    this.frm = new FormGroup({
+      nombre: new FormControl({value: '', disabled: true}, Validators.required),
+      carnet: new FormControl({value: '', disabled: false}, Validators.required),
+      carrera: new FormControl({value: '', disabled: true}, Validators.required),
+      cum: new FormControl({value: '', disabled: true}, Validators.required),
+      phone: new FormControl({value: '', disabled: false}, ),
+      personalEmail: new FormControl({value: '', disabled: false}, [  Validators.email]),
+      scholarshipped: new FormControl({value: false, disabled: false}, [])
+    });
   }
 
   public get f() { return this.frm.controls; }
 
   public retrieve(): void {
     this.service.retrieve().subscribe(response => {
+      // this.instructores = response.data;
+      this.instructores = response.data.filter(row =>  row.is_selected === '0' && row.is_scholarshipped === '0' );
+      this.instructoresAssignated = response.data.filter(row =>  row.is_selected === '1' && row.is_scholarshipped === '0');
+      this.instructoresScholarshipped = response.data.filter(row => row.is_scholarshipped === '1');
+
       this.config = {
         itemsPerPage: 6,
         currentPage: this.currentPageA,
-        totalItems: response.data.length,
+        totalItems: this.instructores.length,
         id: 'catalogoInstructores'
       };
       this.configScoolarshipped = {
         itemsPerPage: 6,
         currentPage: this.currentPageB,
-        totalItems: response.data.length,
+        totalItems: this.instructoresScholarshipped.length,
         id: 'catalogoInstructoresScoolarshipped'
       };
-      // this.instructores = response.data;
-      this.instructores = response.data.filter(row =>  row.is_selected === '0' && row.is_scholarshipped === '0' );
-      this.instructoresAssignated = response.data.filter(row =>  row.is_selected === '1' && row.is_scholarshipped === '0');
-      this.instructoresScholarshipped = response.data.filter(row => row.is_scholarshipped === '1');
+      this.scollarshipedV(this.instructoresScholarshipped);
     }, error => {
       this.toastr.error('No se pudo conectar a el servidor', 'Error');
     });
@@ -126,7 +143,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     const carnet = this.f.carnet.value;
     this.service.checkByCarnet(carnet).subscribe(result => {
       if (result.data.length === 0) {
-        this.expedienteService.retrieve({carnet}).subscribe( response => {
+        this.existInstructor = false;
+        this.expedienteService.getPensum({carnet}).subscribe( response => {
           // console.log(response);
           this.row = response.data;
 
@@ -142,6 +160,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         });
       } else {
         this.toastr.warning('El instructor ya esta registrado');
+        this.existInstructor = true;
       }
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
@@ -152,55 +171,65 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     const carnet = this.f.carnet.value;
     const pEmail = this.f.personalEmail.value;
 
-    this.service.checkByCarnet(carnet).subscribe(response => {
-      if (response.data.length === 0) {
-        const notas = (this.row.notas) ? this.trimmingNotas(this.row.notas) : [];
-        const cum = this.f.cum.value;
-        const frmData = {
+    // this.service.checkByCarnet(carnet).subscribe(response => {
+       if (!this.existInstructor) {
 
-          nombre: this.f.nombre.value,
-          carnet: carnet,
-          carrera: this.f.carrera.value,
-          cum: cum,
-          telefono: this.f.phone.value,
-          email: carnet.concat('@mail.utec.edu.sv'),
-          emailPersonal: pEmail,
-          username: carnet, // pEmail.split('@')[0],
-          notas: notas,
-          is_scholarshipped: this.f.scholarshipped.value
-        };
-        console.log(frmData);
+         if (this.row) {
+           const notas = this.evaluateNotas(
+             this.mapNotas(this.row.pensum)
+           ); // (this.row.notas) ? this.trimmingNotas(this.row.notas) : [];
+           const cum = this.f.cum.value;
+           const frmData = {
 
-        this.cumIsValid = (this.validateCUM(cum));
-        if (!this.cumIsValid) {
-          this.toastr.info('El CUM del estudiante es inferior al requerido', 'Informacion');
-        } else {
-          this.toastr.info('El CUM del estudiante se encuentra en el rango', 'Informacion');
-        }
+             nombre: this.f.nombre.value,
+             carnet: carnet,
+             carrera: this.f.carrera.value,
+             cum: cum,
+             telefono: this.f.phone.value,
+             email: carnet.concat('@mail.utec.edu.sv'),
+             emailPersonal: pEmail,
+             username: carnet, // pEmail.split('@')[0],
+             notas: notas,
+             is_scholarshipped: this.f.scholarshipped.value
+           };
+           console.log(frmData);
 
-        if (this.evaluateNotas(notas).length > 2) {
-          this.service.make(frmData).subscribe(result => {
-            console.log(result);
-            if (!result.error) {
-              this.retrieve();
-              this.frm.reset();
-              this.f.carnet.setValue('00-0000-0000');
-              this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
-            } else {
-              this.toastr.error('No se pudo procesar', 'Error');
-            }
-          }, error => {
-            this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
-          });
-        } else {
-          this.toastr.warning('El estudiante no posee notas que lo respalden', 'Aviso');
-        }
+           this.cumIsValid = (this.validateCUM(cum));
+           if (!this.cumIsValid) {
+             this.toastr.info('El CUM del estudiante es inferior al requerido', 'Informacion');
+           } else {
+             this.toastr.info('El CUM del estudiante se encuentra en el rango', 'Informacion');
+           }
+
+           if (this.evaluateNotas(notas).length > 2) {
+             this.service.make(frmData).subscribe(result => {
+               console.log(result);
+               if (!result.error) {
+                 this.retrieve();
+                 this.frm.reset();
+                 this.initForm();
+                 this.row = false;
+                 this.f.carnet.setValue('00-0000-0000');
+                 this.toastr.success(environment.MESSAGES.CREATED_OK, 'Ok');
+               } else {
+                 this.toastr.error('No se pudo procesar', 'Error');
+               }
+             }, error => {
+               this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+             });
+           } else {
+             this.toastr.warning('El estudiante no posee notas que lo respalden', 'Aviso');
+           }
+         } else {
+           this.toastr.warning('Falto la recuperacion de datos del instructor');
+         }
       } else {
         this.toastr.warning('El instructor ya esta registrado');
+         this.f.carnet.setValue('00-0000-0000');
       }
-    }, error => {
-      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
-    });
+    // }, error => {
+    //   this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    // });
   }
   public patchData(): void {}
 
@@ -241,12 +270,14 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     if (row.is_scholarshipped === '1') {
       return {
         index: this.instructoresScholarshipped.indexOf(row),
-        type: 'scholarshipped'
+        type: 'scholarshipped',
+        id: row.id
       };
     } else {
      return  {
        index: this.instructores.indexOf(row),
-       type: 'normal'
+       type: 'normal',
+       id: row.id
      };
     }
   }
@@ -254,11 +285,11 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public changeStatusElement(result): void {
 
     if (result.type === 'scholarshipped') {
-      const changed = localStorage.getItem('changed');
+      const changed = localStorage.getItem(`changed-${ result.id }`);
       if (changed === 'false') {
-        localStorage.setItem('changed', 'true');
+        localStorage.setItem(`changed-${ result.id }`, 'true');
       } else {
-        localStorage.setItem('changed', 'false');
+        localStorage.setItem(`changed-${ result.id }`, 'false');
       }
       this.instructoresScholarshipped[result.index].is_asignated = false;
     } else {
@@ -283,8 +314,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     });
   }
 
-  public pageChanged(event): void {
-    this.config.currentPage = event;
+  public pageChanged(event, cnf): void {
+    this[cnf].currentPage = event;
     console.log(event);
   }
 
@@ -306,9 +337,34 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     if (this.scoolarshippedAssignations(instructor).length >= 3) {
       return true;
     } else {
-      const changed = localStorage.getItem('changed');
+      const changed = localStorage.getItem(`changed-${ instructor.id }`);
       return changed !== 'false';
     }
+  }
+
+  public mapNotas(pensum): Array<any> {
+    const m = [];
+    pensum.forEach((row) => {
+      const materias = row.materias;
+      const q = materias.map((i) => {
+        return {
+          mat_codigo: this.trimWhiteSpaces(i.mai_codmat),
+          mat_nombre: this.trimWhiteSpaces(i.matnom),
+          estado: (i.nf >= 6) ? 'Aprobada' : 'Desaprobada',
+          nota: i.nf,
+          ciclo: row.ciclo
+        };
+      });
+
+      m.push(q);
+    });
+    return  m.reduce((acc, it) => [...acc, ...it]);
+  }
+
+  public scollarshipedV(instructors): void {
+    instructors.forEach((row) => {
+      localStorage.setItem(`changed-${ row.id }`, 'false');
+    });
   }
 
   ngOnDestroy(): void {

@@ -89,6 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public refreshToken(): void {
     const expires = localStorage.getItem('expires');
     if (expires) {
+
       setInterval(() => {
         if (localStorage.getItem('token')) {
           this.loginService.refreshToken().subscribe(response => {
@@ -104,7 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
           );
         }
       }, (
-          (Number(expires) * 1000) - (Number(expires) * 0.30)
+        ((Number(expires)  - (Number(expires) * 0.40) ) * 1000)
         )
       );
     }

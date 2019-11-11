@@ -49,13 +49,13 @@ export class AulaComponent implements OnInit {
     private cicloService: CicloService,
     private sharedService: SharedService,
   ) {
-    const thisComponent = this;
-    this.subscription = this.sharedService.getFixWidthTable().subscribe(
-      result => {
-        setInterval((e) => {
-          thisComponent.rows = [...thisComponent.rows];
-        }, 450);
-      });
+    // const thisComponent = this;
+    // this.subscription = this.sharedService.getFixWidthTable().subscribe(
+    //   result => {
+    //     setInterval((e) => {
+    //       thisComponent.rows = [...thisComponent.rows];
+    //     }, 450);
+    //   });
   }
 
   ngOnInit() {

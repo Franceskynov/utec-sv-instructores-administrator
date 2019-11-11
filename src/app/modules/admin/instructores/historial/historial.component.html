@@ -104,7 +104,8 @@
             No ha realizado la autoevaluaci&oacute;n.
           </span>
           <span *ngIf="row.is_autoevaluado === '1'">
-            {{ row.autoevaluacion }}
+            {{ row.autoevaluacion }} <br>
+            Equivale al {{ settings.autoevaluacion_percentage * 100 }} %
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -114,7 +115,8 @@
            No ha sido evaluado por recursos humanos.
           </span>
           <span *ngIf="row.is_rrhh_evaluado === '1'">
-           {{ row.evaluacion_rrhh }}
+           {{ row.evaluacion_rrhh }} <br>
+            Equivale al {{ settings.evaluacion_rrhh_percentage * 100 }} %
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -125,11 +127,17 @@
           </span>
 
           <span *ngIf="row.is_docente_evaluado === '1'">
-            {{ row.evaluacion_docente }}
+            {{ row.evaluacion_docente }} <br>
+            Equivale al {{ settings.evaluacion_docente_percentage * 100 }} %
           </span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Nota de desempeño" prop="nota"></ngx-datatable-column>
+      <ngx-datatable-column name="Nota de desempeño" prop="nota">
+        <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+          Nota final {{ row.nota }} <br>
+          Equivale al {{ (settings.autoevaluacion_percentage + settings.evaluacion_rrhh_percentage + settings.evaluacion_docente_percentage) * 100 }} %
+        </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable>
   </div>
   <div class="modal-footer">

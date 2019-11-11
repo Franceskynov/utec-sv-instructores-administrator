@@ -35,7 +35,7 @@
         <div class="input-group">
           <input type="text" class="form-control" id="carnet" name="carnet" formControlName="carnet" [ngClass]="paintError(frm, 'carnet')" autocomplete="off" mask="00-0000-0000">
           <div class="input-group-append">
-            <button class="btn btn-primary ft-search" (click)="retrieceExpediente()"  [disabled]="frm.get('carnet').value.toString().length !== 10"></button>
+            <button class="btn btn-primary ft-search" (click)="retrieceExpediente()" ngbTooltip="Recuperar datos del instructor" [disabled]="frm.get('carnet').value.toString().length !== 10"></button>
           </div>
         </div>
         <input-error-messages [frmName]="frm" ipName="carnet" [dataValidation]="permissions"></input-error-messages>
@@ -81,7 +81,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
-    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(); c('Close click')" [disabled]="frm.invalid"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(); c('Close click')" [disabled]="!row"></button>
     <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" (click)="patchData(); c('Close click')" [disabled]="frm.invalid"></button>
   </div>
 </ng-template>
@@ -158,7 +158,7 @@
         </div>
       </div>
 
-      <pagination-controls (pageChange)="currentPageA = $event" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
+      <pagination-controls (pageChange)="pageChanged($event, 'config')" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructores"></pagination-controls>
 
     </ng-template>
   </ngb-tab>
@@ -214,7 +214,7 @@
 
 
       <div class="row mt-2">
-        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresScholarshipped | filter: searchBox: searchColumns | paginate: configScoolarshipped">
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let instructor of instructoresScholarshipped | filter: searchBoxForScoolarshipped: searchColumns | paginate: configScoolarshipped">
           <div class="card profile-card-with-stats">
             <div class="text-center">
               <div class="card-body">
@@ -249,7 +249,7 @@
         </div>
       </div>
 
-      <pagination-controls (pageChange)="currentPageB = $event" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructoresScoolarshipped"></pagination-controls>
+      <pagination-controls (pageChange)="pageChanged($event, 'configScoolarshipped')" [nextLabel]="'Siguiente'" [previousLabel]="'Anterior'" id="catalogoInstructoresScoolarshipped"></pagination-controls>
 
     </ng-template>
   </ngb-tab>

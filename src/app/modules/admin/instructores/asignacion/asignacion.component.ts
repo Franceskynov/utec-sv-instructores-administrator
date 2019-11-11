@@ -72,7 +72,12 @@ export class AsignacionComponent implements OnInit {
     this.instructor = {
       notas: []
     };
+    this.initForm();
+    this.loadFromStorage();
+    this.retrieve();
+  }
 
+  public initForm(): void {
     this.meridian = true;
     this.day = 0;
     this.inicio = {hour: 6, minute: 30};
@@ -120,10 +125,7 @@ export class AsignacionComponent implements OnInit {
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
     this.f.ciclo.patchValue(this.token.people.settings.ciclo);
     this.f.nombre.disable();
-    this.loadFromStorage();
-    this.retrieve();
   }
-
   get f() { return this.frm.controls; }
   public retrieve(): void {
     this.cicloService.retrieve().subscribe(response => { this.ciclos = response.data; }, error => { this.errorResponse(); });
@@ -202,8 +204,9 @@ export class AsignacionComponent implements OnInit {
       console.log('response', response);
       if (!response.error) {
         fn();
-        // this.frm.reset();
+        this.frm.reset();
         this.removeElement();
+        this.initForm();
         if (this.ref) {
           this.ref();
         }

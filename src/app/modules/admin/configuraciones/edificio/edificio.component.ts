@@ -1,20 +1,22 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PermissionsService } from 'app/services/permissions.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
-import { EscuelaService } from 'app/services/escuela.service';
+import { CicloService } from 'app/services/ciclo.service';
 import { SharedService } from 'app/services/shared.service';
 import { Subscription } from 'rxjs';
+import { EdificioService } from 'app/services/edificio.service';
 
 @Component({
-  selector: 'app-escuela',
-  templateUrl: './escuela.component.html',
-  styleUrls: ['./escuela.component.scss'],
+  selector: 'app-edificio',
+  templateUrl: './edificio.component.html',
+  styleUrls: ['./edificio.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EscuelaComponent implements OnInit {
+export class EdificioComponent implements OnInit {
 
   private subscription: Subscription;
   public frm: FormGroup;
@@ -32,7 +34,7 @@ export class EscuelaComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
-    private service: EscuelaService,
+    private service: EdificioService,
     private sharedService: SharedService,
   ) {
     // const thisComponent = this;
@@ -46,9 +48,9 @@ export class EscuelaComponent implements OnInit {
 
   ngOnInit() {
     this.limit = environment.MAX_ROWS_PER_PAGE;
-    this.ctrls = ['name', 'description'];
+    this.ctrls = ['nombre', 'descripcion', 'direccion', 'abreviacion', 'pisos'];
     this.permissions = {
-      name: {
+      nombre: {
         required: true,
         minLength: 5,
         maxLength: 50
@@ -57,10 +59,23 @@ export class EscuelaComponent implements OnInit {
         required: true,
         minLength: 5,
         maxLength: 50
+      },
+      direccion: {
+        required: true,
+        minLength: 5,
+        maxLength: 50
+      },
+      pisos: {
+        required: true,
+      },
+      abreviacion: {
+        required: true,
+        minLength: 5,
+        maxLength: 50
       }
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
-    this.searchColums = ['name', 'description'];
+    this.searchColums = ['nombre', 'descripcion'];
     this.retrieveData();
   }
 
@@ -68,18 +83,15 @@ export class EscuelaComponent implements OnInit {
 
   public retrieveData(): void {
     this.service.retrieve().subscribe(response => {
-      this.rows = response.data;
+      const tmp = response.data;
+      this.rows = tmp.filter(row =>  row.is_enabled === '1');
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
 
   public postData(): void {
-    const frmData = {
-      name: this.f.name.value,
-      description: this.f.description.value
-    };
-    this.service.make(frmData).subscribe(
+    this.service.make(this.frm.getRawValue()).subscribe(
       data => {
         this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
         this.frm.reset();
@@ -90,8 +102,7 @@ export class EscuelaComponent implements OnInit {
       });
   }
   public patchData(): void {
-    const frmData = { name: this.f.name.value,  description: this.f.description.value };
-    this.service.modify(this.idForEdit, frmData).subscribe(
+    this.service.modify(this.idForEdit, this.frm.getRawValue()).subscribe(
       data => {
         this.retrieveData();
         this.frm.reset();
@@ -109,8 +120,9 @@ export class EscuelaComponent implements OnInit {
     });
     if (this.editMode) {
       this.idForEdit = row.id;
-      this.f.name.patchValue(row.name);
-      this.f.description.patchValue(row.description);
+      // this.f.name.patchValue(row.nombre);
+      // this.f.description.patchValue(row.descripcion);
+      this.frm.patchValue(row);
     }
   }
 
@@ -125,5 +137,18 @@ export class EscuelaComponent implements OnInit {
     this.modalService.open(content);
     this.idForDestroy = row.id;
   }
+
+  public deleteData(): void {
+    this.service.destroy(this.idForDestroy).subscribe(
+      data => {
+        this.toastr.success(environment.MESSAGES.DELETION_OK, 'Ok');
+        this.retrieveData();
+      },
+      error => {
+        this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
+      }
+    );
+  }
+
 
 }

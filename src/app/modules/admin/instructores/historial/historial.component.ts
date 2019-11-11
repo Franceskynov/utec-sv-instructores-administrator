@@ -6,8 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PermissionsService } from 'app/services/permissions.service';
 import { FormGroup } from '@angular/forms';
 import { EvaluationService } from 'app/services/evaluation.service';
-import { SharedService } from 'app/services/shared.service';
-import { Subscription } from 'rxjs';
+import { SettingService } from 'app/services/setting.service';
 
 @Component({
   selector: 'app-historial',
@@ -17,6 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class HistorialComponent implements OnInit {
 
+  public settings: any;
   public ctrls: Array<String>;
   public permissions: any;
   public frm: FormGroup;
@@ -31,6 +31,7 @@ export class HistorialComponent implements OnInit {
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private evaluationService: EvaluationService,
+    private settingService: SettingService,
   ) { }
 
   ngOnInit() {
@@ -43,15 +44,22 @@ export class HistorialComponent implements OnInit {
         required: true,
       },
     };
+    this.settings = {
+      evaluacion_rrhh_percentage: null,
+      evaluacion_docente_percentage: null,
+      autoevaluacion_percentage: null
+    };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
   }
 
   public retrieveData(): void {
     this.historialService.retrieve().subscribe(response => {
       this.rows = response.data;
-    }, error => {
-
-    });
+    }, () => {});
+    this.settingService.retrieve().subscribe(response => {
+      this.settings = response.data;
+      console.log(this.settings);
+    }, () => {});
   }
 
   public openModal(content, row, opt?): void {

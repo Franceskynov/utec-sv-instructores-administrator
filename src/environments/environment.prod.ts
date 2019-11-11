@@ -25,7 +25,7 @@ export const environment = {
   PREVENT_DUPLICATES: true,
   MAX_ROWS_PER_PAGE: 10,
   IDLE_SETTINGS: {
-    IDLE: 3 * 60,
+    IDLE: 30 * 60,
     TIMEOUT: 10,
     PING: 5,
   },

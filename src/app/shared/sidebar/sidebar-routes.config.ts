@@ -78,6 +78,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
     isNavHeader: false,
     submenu: [
       {
+        path: '/admin/reporting/dashboard',
+        title: 'Dashboard',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
+      {
         path: '/admin/reporting/instructores',
         title: 'Instructores inscritos',
         icon: '',
@@ -188,6 +199,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
       //   isNavHeader: false,
       //   submenu: []
       // },
+      {
+        path: '/admin/configuraciones/edificio',
+        title: 'Edificios',
+        icon: '',
+        class: 'menu-item',
+        badge: '',
+        badgeClass: '',
+        isExternalLink: false,
+        isNavHeader: false,
+        submenu: []
+      },
       {
         path: '/admin/configuraciones/aula',
         title: 'Aula',

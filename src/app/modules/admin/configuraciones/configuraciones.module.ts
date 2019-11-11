@@ -13,6 +13,7 @@ import { CapacitacionComponent } from './capacitacion/capacitacion.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
 import { EscuelaComponent } from './escuela/escuela.component';
+import { EdificioComponent } from './edificio/edificio.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { EscuelaComponent } from './escuela/escuela.component';
     UsuariosComponent,
     PreferenciasComponent,
     EscuelaComponent,
+    EdificioComponent,
   ]
 })
 export class ConfiguracionesModule { }
