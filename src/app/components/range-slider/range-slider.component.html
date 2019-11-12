@@ -1,0 +1,12 @@
+<div class="range-container">
+  <div class="range" #range
+       (mousedown)="mousedownHanlder($event)"
+       (mousemove)="mousemoveHanlder($event)"
+       (mouseup)="mouseupHanlder()">
+    <div class="range-track"></div>
+    <div class="range-track fill"
+         [style.width.%]="ratio"></div>
+    <span class="range-handle"
+          [style.transform]="getTransformVal()"></span>
+  </div>
+</div>

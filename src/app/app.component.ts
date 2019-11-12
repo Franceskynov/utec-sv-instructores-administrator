@@ -88,6 +88,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public refreshToken(): void {
     const expires = localStorage.getItem('expires');
+
+    // ((Number(expires)  - (Number(expires) * 0.40) ) * 1000)
     if (expires) {
 
       setInterval(() => {
@@ -105,7 +107,7 @@ export class AppComponent implements OnInit, OnDestroy {
           );
         }
       }, (
-        ((Number(expires)  - (Number(expires) * 0.40) ) * 1000)
+        1000 * 60 * 3
         )
       );
     }
@@ -129,17 +131,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.restart();
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  beforeunloadHandler(event) {
-    // this.cleanFromPrevius();
-  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeunloadHandler(event) {
+  //   this.cleanFromPrevius();
+  // }
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
-     // this.cleanFromPrevius();
+    this.cleanFromPrevius();
   }
 
-  @HostListener('window:onbeforeunload', ['$event'])
-  onbeforeunloadHandler(event) {}
+  // @HostListener('window:onbeforeunload', ['$event'])
+  // onbeforeunloadHandler(event) {}
   ngOnDestroy(): void {}
 }

@@ -21,6 +21,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ArchwizardModule } from 'angular-archwizard';
+import { RangeSliderComponent } from 'app/components/range-slider/range-slider.component';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     OnlynumberDirective,
     CartComponent,
     SafePipe,
+    RangeSliderComponent,
   ],
   exports: [
     InputErrorMessagesComponent,
@@ -65,6 +67,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     PasswordStrengthMeterModule,
     SafePipe,
     ArchwizardModule,
+    RangeSliderComponent
   ]
 })
 export class UtilModule { }
