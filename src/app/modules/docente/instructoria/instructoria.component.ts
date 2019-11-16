@@ -95,7 +95,7 @@ export class InstructoriaComponent implements OnInit {
   }
 
   public errorResponse(error): void {
-    this.toaster.warning(error.error.message, environment.MESSAGES.WARN);
+    this.toaster.warning('', environment.MESSAGES.WARN);
   }
 
   get f() { return this.frm.controls; }
