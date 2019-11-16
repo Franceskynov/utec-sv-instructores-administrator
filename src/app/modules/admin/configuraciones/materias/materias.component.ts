@@ -44,7 +44,6 @@ export class MateriasComponent implements OnInit {
       result => {
         setInterval(() => {
           thisComponent.rows = [...thisComponent.rows];
-          console.log('tjis');
         }, 450);
       });
   }

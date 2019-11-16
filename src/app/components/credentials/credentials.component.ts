@@ -5,6 +5,7 @@ import { DecodeTokenService } from 'app/services/decode-token.service';
 import { CredentialService } from 'app/services/credential.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-credentials',
@@ -23,10 +24,11 @@ export class CredentialsComponent implements OnInit {
     private decodeToken: DecodeTokenService,
     private credentialService: CredentialService,
     private toaster: ToastrService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.ctrls = ['email', 'oldPassword', 'password'];
+    this.ctrls = ['email', 'oldPassword', 'password', 'confirmPassword'];
     this.permissions = {
       email: {
         required: true,
@@ -36,6 +38,9 @@ export class CredentialsComponent implements OnInit {
         required: true
       },
       password: {
+        required: true,
+      },
+      confirmPassword: {
         required: true
       }
     };
@@ -67,16 +72,25 @@ export class CredentialsComponent implements OnInit {
       password: this.f.password.value,
       email: this.f.email.value
     };
-     this.credentialService.update(formData).subscribe(response => {
-       if (!response.error) {
+
+    if ( this.f.password.value === this.f.confirmPassword.value) {
+      this.credentialService.update(formData).subscribe(response => {
+        if (!response.error) {
           this.toaster.success(response.message, environment.MESSAGES.OK);
-       } else {
-        this.toaster.warning(response.message, environment.MESSAGES.WARN);
-       }
-     }, error => {
-       this.toaster.error(error.error.message, environment.MESSAGES.ERROR);
-       console.log(error);
-     });
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+            localStorage.clear();
+          }, 2 * 1000);
+        } else {
+          this.toaster.warning(response.message, environment.MESSAGES.WARN);
+        }
+      }, error => {
+        this.toaster.error(error.error.message, environment.MESSAGES.ERROR);
+        console.log(error);
+      });
+    } else {
+      this.toaster.warning('Las contraseñas no coinciden', environment.MESSAGES.WARN);
+    }
   }
 
 }
