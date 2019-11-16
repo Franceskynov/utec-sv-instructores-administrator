@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mock": "json-server --watch --port 3000 mock/data.json"
+    "mock": "json-server --watch --port 3000 mock/data.json",
+    "build:laravel": "ng build --prod --output-path administrator --base-href /app/administrator/"
   },
   "private": true,
   "dependencies": {

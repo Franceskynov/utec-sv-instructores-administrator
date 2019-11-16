@@ -43,6 +43,17 @@ const ADMIN_ROUTES: RouteInfo[] = [
       isNavHeader: false,
       submenu: []
     },
+    {
+      path: '/admin/instructores/boletin',
+      title: 'Boletin inform.',
+      icon: '',
+      class: 'menu-item',
+      badge: '',
+      badgeClass: '',
+      isExternalLink: false,
+      isNavHeader: false,
+      submenu: []
+    },
   ]
 },
   {

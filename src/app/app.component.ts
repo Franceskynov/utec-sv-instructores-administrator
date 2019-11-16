@@ -138,7 +138,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
-    // this.cleanFromPrevius();
+    this.cleanFromPrevius();
   }
 
   // @HostListener('window:onbeforeunload', ['$event'])
