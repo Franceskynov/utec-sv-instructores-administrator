@@ -8,6 +8,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AsignacionComponent } from './asignacion/asignacion.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { HistorialComponent } from './historial/historial.component';
+import { BoletinComponent } from './boletin/boletin.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,14 @@ import { HistorialComponent } from './historial/historial.component';
     routing,
     UtilModule,
   ],
-  declarations: [IndexComponent, CatalogoComponent, PerfilComponent, AsignacionComponent, InstructoriaComponent, HistorialComponent]
+  declarations: [
+    IndexComponent,
+    CatalogoComponent,
+    PerfilComponent,
+    AsignacionComponent,
+    InstructoriaComponent,
+    HistorialComponent,
+    BoletinComponent
+  ]
 })
 export class InstructoresModule { }

@@ -101,15 +101,17 @@ export class CapacitacionComponent implements OnInit {
       nombre: this.f.name.value,
       descripcion: this.f.description.value,
       docente_id: this.f.docente.value.id,
-      tipo: this.f.tipo.value.nombre
+      tipo: this.f.tipo.value
     };
     this.service.make(frmData).subscribe(
       data => {
-        this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
-        this.frm.reset();
-        this.retrieveData();
+        if (!data.error) {
+          this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
+          this.frm.reset();
+          this.retrieveData();
+        }
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
       });
   }
@@ -118,15 +120,18 @@ export class CapacitacionComponent implements OnInit {
       nombre: this.f.name.value,
       descripcion: this.f.description.value,
       docente_id: this.f.docente.value.id,
-      tipo: this.f.tipo.value.nombre
+      tipo: this.f.tipo.value
     };
-    this.service.modify(this.idForEdit, frmData).subscribe(
-      data => {
-        this.retrieveData();
-        this.frm.reset();
-        this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+    this.service.modify(this.idForEdit, frmData).subscribe(data => {
+        if (!data.error) {
+          this.retrieveData();
+          this.frm.reset();
+          this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
+        } else {
+          this.toastr.warning(data.message);
+        }
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
       });
   }
@@ -140,7 +145,7 @@ export class CapacitacionComponent implements OnInit {
       this.idForEdit = row.id;
       this.f.name.patchValue(row.nombre);
       this.f.description.patchValue(row.descripcion);
-      this.f.docente.patchValue(row.docente.nombre);
+      this.f.docente.patchValue(row.docente);
       this.f.tipo.patchValue(row.tipo);
     }
   }
@@ -159,11 +164,11 @@ export class CapacitacionComponent implements OnInit {
 
   public deleteData(): void {
     this.service.destroy(this.idForDestroy).subscribe(
-      data => {
+      () => {
         this.toastr.success(environment.MESSAGES.DELETION_OK, 'Ok');
         this.retrieveData();
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
       }
     );

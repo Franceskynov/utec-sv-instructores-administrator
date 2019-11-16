@@ -42,7 +42,7 @@ export class MateriasComponent implements OnInit {
     const thisComponent = this;
     this.subscription = this.sharedService.getFixWidthTable().subscribe(
       result => {
-        setInterval((e) => {
+        setInterval(() => {
           thisComponent.rows = [...thisComponent.rows];
           console.log('tjis');
         }, 450);
@@ -79,12 +79,12 @@ export class MateriasComponent implements OnInit {
     this.materiaService.retrieve().subscribe(response => {
       const tmp = response.data;
       this.rows = tmp.filter(row =>  row.is_enabled === '1');
-    }, error => {
+    }, () => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
     this.escuelaService.retrieve().subscribe(response => {
       this.schools = response.data;
-    }, error => {
+    }, () => {
 
     });
   }
@@ -97,11 +97,11 @@ export class MateriasComponent implements OnInit {
   public deleteData() {
 
     this.materiaService.destroy(this.idForDestroy).subscribe(
-      data => {
+      () => {
         this.toastr.success(environment.MESSAGES.DELETION_OK, 'Ok');
         this.retrieveData();
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, 'Error');
       }
     );
@@ -135,12 +135,12 @@ export class MateriasComponent implements OnInit {
   public patchData() {
     const frmData = { nombre: this.f.name.value,  descripcion: this.f.description.value, school_id: this.f.school.value.id  };
     this.materiaService.modify(this.idForEdit, frmData).subscribe(
-      data => {
+      () => {
         this.retrieveData();
         this.frm.reset();
         this.toastr.success(environment.MESSAGES.MODIFIED_OK, 'Ok');
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
       });
   }
@@ -157,7 +157,7 @@ export class MateriasComponent implements OnInit {
           this.toastr.warning(data.message);
         }
       },
-      error => {
+      () => {
         this.toastr.error(environment.MESSAGES.SERVICE_ERROR, environment.MESSAGES.ERROR);
       });
 

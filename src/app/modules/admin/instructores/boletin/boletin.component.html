@@ -1,0 +1,124 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Boletin informativo</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Instructores
+        </li>
+
+        <li class="breadcrumb-item active">
+          Boletin informativo
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+            <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>
+            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+            <!--            <button class="btn btn-outline-secondary mr-1 ft-upload" type="button" placement="top" ngbTooltip="Carga masiva"></button>-->
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50" [limit]="limit"
+                             [rowHeight]="'auto'"
+
+                             [rows]='rows|filter:filterValue:searchColums'>
+                <!---->
+                <ngx-datatable-column name="Tema" prop="subject"></ngx-datatable-column>
+                <ngx-datatable-column name="Cabecera" prop="headerMessage"></ngx-datatable-column>
+                <ngx-datatable-column name="Mensaje" prop="message"></ngx-datatable-column>
+                <ngx-datatable-column name="Pie de mensaje" prop="footerMessage"></ngx-datatable-column>
+                <ngx-datatable-column name="Fecha de envio" prop="created_at"></ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="editMode == false" class="modal-title">Registrar una mater&iacute;a</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Editar una mater&iacute;a</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+
+
+      <div class="form-group">
+        <label for="subject">Tema:</label>
+        <input type="text" class="form-control" id="subject" name="subject" formControlName="subject" [ngClass]="paintError(frm, 'subject')">
+        <input-error-messages [frmName]="frm" ipName="subject" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="headerMessage">Cabecera del mensaje:</label>
+        <textarea name="headerMessage" class="form-control" id="headerMessage" cols="5" rows="2" formControlName="headerMessage" [ngClass]="paintError(frm, 'headerMessage')"></textarea>
+        <input-error-messages [frmName]="frm" ipName="headerMessage" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Cuerpo del mensaje:</label>
+        <textarea name="message" class="form-control" id="message" cols="5" rows="3" formControlName="message" [ngClass]="paintError(frm, 'message')"></textarea>
+        <input-error-messages [frmName]="frm" ipName="message" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="footerMessage">Pie del mensaje:</label>
+        <textarea name="headerMessage" class="form-control" id="footerMessage" cols="5" rows="3" formControlName="footerMessage" [ngClass]="paintError(frm, 'footerMessage')"></textarea>
+        <input-error-messages [frmName]="frm" ipName="footerMessage" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" name="areScholarshipped" id="areScholarshipped" class="form-check-input" formControlName="areScholarshipped">
+        <label for="areScholarshipped">Becados</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" name="withouthTrainings" id="withouthTrainings" class="form-check-input" formControlName="withouthTrainings">
+        <label for="withouthTrainings">Sin capacitaciones</label>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" (click)="postData(c);" [disabled]="frm.invalid"></button>
+  </div>
+</ng-template>

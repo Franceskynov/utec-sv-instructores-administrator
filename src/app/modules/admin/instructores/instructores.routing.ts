@@ -7,6 +7,7 @@ import { AsignacionComponent } from './asignacion/asignacion.component';
 import { InstructoriaComponent } from './instructoria/instructoria.component';
 import { AuthGuard } from 'app/guards/auth.guard';
 import { HistorialComponent } from './historial/historial.component';
+import { BoletinComponent } from './boletin/boletin.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Historial de asistencia'
+    }
+  },
+  {
+    path: 'boletin',
+    component: BoletinComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Boletin'
     }
   }
 
