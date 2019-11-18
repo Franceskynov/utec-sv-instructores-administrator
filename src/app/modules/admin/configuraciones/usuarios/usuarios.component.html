@@ -1,0 +1,81 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Usuarios</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Configuraciones
+        </li>
+
+        <li class="breadcrumb-item active">
+          Usuarios
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+<!--            <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>-->
+            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+            <!--            <button class="btn btn-outline-secondary mr-1 ft-upload" type="button" placement="top" ngbTooltip="Carga masiva"></button>-->
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [limit]="limit"
+                             [rowHeight]="'auto'"
+
+                             [rows]='rows'>
+                <ngx-datatable-column name="Usuario" [width]="50" prop="username"></ngx-datatable-column>
+                <ngx-datatable-column name="Email" prop="email"></ngx-datatable-column>
+                <ngx-datatable-column name="Fecha de creacion" [width]="55" prop="created_at"></ngx-datatable-column>
+                <ngx-datatable-column name="Estado" prop="" [width]="45">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    <span class="badge badge-pill badge-success text-white ml-1" *ngIf="row.is_enabled === '1'" >Habilitado</span>
+                    <span class="badge badge-pill badge-primary text-white ml-1" *ngIf="row.is_enabled === '0'">Desabilitado</span>
+
+                    <span class="badge badge-pill badge-success text-white ml-1" *ngIf="row.is_activated === '1'">Activo</span>
+                    <span class="badge badge-pill badge-secondary text-white ml-1" *ngIf="row.is_activated === '0'" >Inactivo</span>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Rol" prop="rol" [width]="15">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    {{ row.rol.nombre }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

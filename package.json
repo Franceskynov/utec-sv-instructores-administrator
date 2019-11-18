@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mock": "json-server --watch --port 3000 mock/data.json"
+    "mock": "json-server --watch --port 3000 mock/data.json",
+    "build:laravel": "ng build --prod --output-path dist/administrator --base-href /app/administrator/"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,8 @@
     "@ng-select/ng-select": "2.3.1",
     "@swimlane/ngx-datatable": "13.0.1",
     "@types/jquery": "^3.3.1",
+    "angular-archwizard": "^5.0.0",
+    "angular-password-strength-meter": "0.0.4",
     "angular-user-idle": "^2.2.1",
     "bourbon": "^5.0.0",
     "classlist.js": "^1.1.20150312",
@@ -45,9 +48,11 @@
     "rxjs": "6.0.0",
     "rxjs-compat": "6.0.0",
     "screenfull": "^3.3.2",
+    "uuid": "^3.3.3",
     "web-animations-js": "^2.3.1",
     "xlsx": "^0.14.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "zxcvbn": "4.4.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0",

@@ -17,4 +17,18 @@ export class LoginService {
         return data;
       }));
   }
+
+  public logout() {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('logout'), {})
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public refreshToken() {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('refresh'))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

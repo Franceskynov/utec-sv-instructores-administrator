@@ -24,7 +24,7 @@
           <h4 class="card-title"></h4>
           <div>
             <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>
-            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData(); retrieveEdificios();"></button>
             <!--            <button class="btn btn-outline-secondary mr-1 ft-upload" type="button" placement="top" ngbTooltip="Carga masiva"></button>-->
           </div>
           <a class="heading-elements-toggle">
@@ -52,9 +52,16 @@
 
                              [rows]='rows|filter:filterValue:searchColums'>
                 <!---->
-                <ngx-datatable-column name="Codigo" prop="codigo"></ngx-datatable-column>
-                <ngx-datatable-column name="Capacidad" prop="capacidad"></ngx-datatable-column>
+                <ngx-datatable-column name="Codigo" prop="codigo"  [width]="20"></ngx-datatable-column>
+                <ngx-datatable-column name="Capacidad" prop="capacidad" [width]="20"></ngx-datatable-column>
                 <ngx-datatable-column name="Edificio" prop="edificio.nombre"></ngx-datatable-column>
+<!--                <ngx-datatable-column name="Horario" prop="horarios">-->
+<!--                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>-->
+<!--                   <div *ngFor="let horario of row.horarios">-->
+<!--                     <span  class="badge badge-pill badge-secondary text-light ml-1 mb-1"> {{ horario.nombre_dia }} {{ horario.fin }} - {{ horario.fin }} | {{ horario.ciclo.nombre }} </span>-->
+<!--                   </div>-->
+<!--                  </ng-template>-->
+<!--                </ngx-datatable-column>-->
                 <ngx-datatable-column name="Acciones" prop="actions">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
                     <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
@@ -94,13 +101,50 @@
           [closeOnSelect]="true"
           bindLabel="nombre"
 
-          placeholder="Seleccione el dia" formControlName="edificio">
+          placeholder="Seleccione el edificio" formControlName="edificio">
             <ng-template ng-label-tmp let-item="item">
             {{ item.nombre }}
             </ng-template>
         </ng-select>
         <input-error-messages [frmName]="frm" ipName="edificio" [dataValidation]="permissions"></input-error-messages>
       </div>
+
+<!--      <div class="form-group">-->
+<!--        <label for="ciclo">Ciclo:</label>-->
+
+<!--        <ng-select-->
+<!--          id="ciclo"-->
+<!--          name="ciclo"-->
+<!--          [items]="ciclos"-->
+<!--          [multiple]="false"-->
+<!--          [closeOnSelect]="true"-->
+<!--          bindLabel="nombre"-->
+<!--          (change)="filterByCiclo()"-->
+<!--          placeholder="Seleccione el ciclo" formControlName="ciclo">-->
+<!--          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">-->
+<!--            {{ item.nombre }}-->
+<!--          </ng-template>-->
+<!--        </ng-select>-->
+<!--        <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>-->
+<!--      </div>-->
+
+<!--      filterByCiclo(horarios, frm.get('ciclo').value)-->
+<!--      <div class="form-group">-->
+<!--        <label for="horarios">Horarios:</label>-->
+<!--        <ng-select-->
+<!--          [items]="filteredHorarios"-->
+<!--          [multiple]="true"-->
+<!--          [closeOnSelect]="true"-->
+<!--          bindLabel="nombre_dia"-->
+<!--          id="horarios"-->
+<!--          name="horarios"-->
+<!--          placeholder="Seleccione los horarios" formControlName="horarios">-->
+<!--          <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">-->
+<!--            <b>Horario:</b> {{ item.nombre_dia }} - {{ item.inicio }} - {{ item.fin }} <br>-->
+<!--            <b>Ciclo:</b> {{ item.ciclo.nombre }}-->
+<!--          </ng-template>-->
+<!--        </ng-select>-->
+<!--      </div>-->
 
       <div class="form-group">
         <label for="codigo">Codigo</label>
@@ -110,7 +154,7 @@
 
       <div class="form-group">
         <label for="capacidad">Capacidad</label>
-        <input type="text" class="form-control" id="capacidad" name="capacidad" formControlName="capacidad" [ngClass]="paintError(frm, 'capacidad')">
+        <input type="text" class="form-control" id="capacidad" appOnlynumber name="capacidad" formControlName="capacidad" [ngClass]="paintError(frm, 'capacidad')">
         <input-error-messages [frmName]="frm" ipName="capacidad" [dataValidation]="permissions"></input-error-messages>
       </div>
 

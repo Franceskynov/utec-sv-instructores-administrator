@@ -1,0 +1,58 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Historial</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Instructor
+        </li>
+
+        <li class="breadcrumb-item active">
+          Historial
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+            <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="getInstructorHistory()"></button>
+
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [limit]="5"
+                             [rowHeight]="'auto'"
+                             [rows]='rows'>
+                <ngx-datatable-column name="Comentarios" prop="comentarios"></ngx-datatable-column>
+                <ngx-datatable-column name="Nota" prop="nota"></ngx-datatable-column>
+                <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Docente" prop="docente.nombre"></ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

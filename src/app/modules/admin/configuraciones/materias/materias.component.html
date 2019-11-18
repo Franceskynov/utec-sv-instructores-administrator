@@ -55,6 +55,7 @@
 <!---->
                 <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
                 <ngx-datatable-column name="Descripcion" prop="descripcion"></ngx-datatable-column>
+                <ngx-datatable-column name="Escuela" prop="escuela.name"></ngx-datatable-column>
                 <ngx-datatable-column name="Acciones" prop="actions">
                   <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
 <!--                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver detalles"></button>-->
@@ -73,8 +74,8 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 *ngIf="editMode == false" class="modal-title">Crear una nueva asistencia</h4>
-    <h4 *ngIf="editMode == true" class="modal-title">Editar una asistencia</h4>
+    <h4 *ngIf="editMode == false" class="modal-title">Registrar una mater&iacute;a</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Editar una mater&iacute;a</h4>
     <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
     <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -82,6 +83,26 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="school">Escuela:</label>
+
+        <ng-select
+          id="school"
+          name="school"
+          [items]="schools"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="name"
+
+          placeholder="Seleccione la escuela" formControlName="school">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.name }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="school" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+
       <div class="form-group">
         <label for="name">Nombre:</label>
         <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')">

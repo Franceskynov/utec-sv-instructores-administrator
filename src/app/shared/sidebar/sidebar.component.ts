@@ -40,9 +40,9 @@ export class SidebarComponent implements OnInit {
 
     public buildMenu(): void {
       this.token = this.decodeToken.decodePayload();
-      console.log('from sidebar', this.token);
-      $.getScript('./assets/app/js/core/app-menu.js');
-      $.getScript('./assets/app/js/core/app.js');
+      // console.log('from sidebar', this.token);
+      //  $.getScript('./assets/app/js/core/app-menu.js');
+      //  $.getScript('./assets/app/js/core/app.js');
 
       if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
         this.menuItems = ADM_ROUTES.filter(menuItem => menuItem);
@@ -52,5 +52,51 @@ export class SidebarComponent implements OnInit {
         this.menuItems = INSTR_ROUTES.filter(menuItem => menuItem);
       }
     }
+
+  adjustNavOver() {
+    const tagBody = document.getElementsByTagName('body')[0];
+    const tagDivMenu = document.getElementById('stackMenu');
+    const tagNavHeader = document.getElementById('stackNavHeader');
+    if (tagBody.classList.contains('menu-expanded')) {
+
+    } else {
+      // tagDivMenu.classList.add('expanded');
+     // tagNavHeader.classList.add('expanded');
+    }
+  }
+
+  adjustNavLeave() {
+    const tagBody = document.getElementsByTagName('body')[0];
+    const tagDivMenu = document.getElementById('stackMenu');
+    const tagNavHeader = document.getElementById('stackNavHeader');
+    if (tagBody.classList.contains('menu-expanded')) {
+
+    } else {
+      // tagDivMenu.classList.remove('expanded');
+      // tagNavHeader.classList.remove('expanded');
+    }
+  }
+
+  menuItemOption(index) {
+    const AllItems = document.getElementsByClassName('has-sub');
+    const menuItem = document.getElementById('mi-' + index);
+    if (menuItem.classList.contains('open')) {
+      menuItem.classList.remove('open');
+    } else {
+
+      for (let el = 0; el < AllItems.length; el++) {
+        const idMenu = 'mi-' + index;
+        if (AllItems[el].id !== idMenu) {
+          AllItems[el].classList.remove('open');
+        }
+      }
+      menuItem.classList.add('open');
+    }
+  }
+
+  subMenuActived(index) {
+    this.menuItemOption(index);
+  }
+
 
 }

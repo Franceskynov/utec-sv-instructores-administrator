@@ -1,0 +1,176 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Historial de asistencia</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Instructores
+        </li>
+
+        <li class="breadcrumb-item active">
+          Historial de asistencia
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+
+          <div>
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [limit]="limit"
+                             [rowHeight]="'auto'"
+                             [rows]='rows|filter:filterValue:searchColums'>
+                <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Instructor" prop="instructor">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    <div *ngFor="let i of row.instructor">
+                      Nombre: {{ i.nombre }} <br>
+                      Carnet: {{ i.carnet }}
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Docente" prop="materia.docente">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    Nombre: {{ row.docente.nombre }} <br>
+                    Apellido: {{ row.docente.apellido }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Acciones" prop="actions">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-eye" placement="top" ngbTooltip="Ver mas detalles" (click)="openModal(content, row, null)"></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-check" placement="top" [disabled]="row.is_rrhh_evaluado === '1'" ngbTooltip="Evaluacion RRHH" (click)="openModal(evaluationRRHH, row, 'small')"></button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Notas obtenidas</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngx-datatable class='material'
+                   [columnMode]="'force'"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [limit]="limit"
+                   [rowHeight]="'auto'"
+                   [rows]='[row]'>
+      <ngx-datatable-column name="Autoevaluacion" prop="autoevaluacion">
+        <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+          <span *ngIf="row.is_autoevaluado === '0'">
+            No ha realizado la autoevaluaci&oacute;n.
+          </span>
+          <span *ngIf="row.is_autoevaluado === '1'">
+            {{ row.autoevaluacion }} <br>
+            Equivale al {{ settings.autoevaluacion_percentage * 100 }} %
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Evaluacion RRHH" prop="evaluacion_rrhh">
+        <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+          <span *ngIf="row.is_rrhh_evaluado === '0'">
+           No ha sido evaluado por recursos humanos.
+          </span>
+          <span *ngIf="row.is_rrhh_evaluado === '1'">
+           {{ row.evaluacion_rrhh }} <br>
+            Equivale al {{ settings.evaluacion_rrhh_percentage * 100 }} %
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Evaluacion docente" prop="evaluacion_docente">
+        <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+          <span *ngIf="row.is_docente_evaluado === '0'">
+            No ha sido evaluado por el docente.
+          </span>
+
+          <span *ngIf="row.is_docente_evaluado === '1'">
+            {{ row.evaluacion_docente }} <br>
+            Equivale al {{ settings.evaluacion_docente_percentage * 100 }} %
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Nota de desempeño" prop="nota">
+        <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+          Nota final {{ row.nota }} <br>
+          Equivale al {{ (settings.autoevaluacion_percentage + settings.evaluacion_rrhh_percentage + settings.evaluacion_docente_percentage) * 100 }} %
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+  </div>
+</ng-template>
+
+
+<ng-template #evaluationRRHH let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Evaluaci&oacute;n de recursos humanos.</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="nota">Nota:</label>
+        <input type="text"
+               name="nota"
+               id="nota"
+               mask="separator.2"
+               formControlName="nota"
+               class="form-control"
+               autocomplete="off">
+        <input-error-messages [frmName]="frm" ipName="nota" [dataValidation]="permissions"></input-error-messages>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Enviar" (click)="postData(c); "></button>
+  </div>
+</ng-template>

@@ -14,3 +14,82 @@
     </div>
   </div>
 </div>
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+            <button class="btn btn-outline-secondary mr-1 ft-filter" type="button" placement="top" ngbTooltip="Filtrar" (click)="openModal(content)"></button>
+
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+
+              <div class="alert alert-secondary" role="alert" *ngIf="!isFiltered">
+                Filtre para generar un reporte.
+              </div>
+
+              <iframe [src]="url | safe" frameborder="0" width="100%" height="500px" *ngIf="isFiltered"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4>
+      Filtrar datos para el reporte
+    </h4>
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="carrera">Carrera:</label>
+
+        <ng-select
+          id="carrera"
+          name="carrera"
+          [items]="carreras"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="carrera"
+          placeholder="Seleccione la carrera" formControlName="carrera">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.carrera }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="carrera" [dataValidation]="permissions"></input-error-messages>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" name="capacitaciones" id="capacitaciones"  formControlName="capacitaciones" class="form-check-input">
+        <label for="capacitaciones">Todas las capacitaciones?</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" name="scholarshipped" id="scholarshipped"  formControlName="scholarshipped" class="form-check-input">
+        <label for="scholarshipped">Becados</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-danger ft-check mr-1" ngbTooltip="Generar reporte" [disabled]="frm.invalid" (click)="filterData(c);" ></button>
+  </div>
+</ng-template>

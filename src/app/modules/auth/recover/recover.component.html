@@ -1,0 +1,52 @@
+<div class="col-4 mx-auto login-form">
+  <div class="card mb-1">
+    <div class="card-header border-0 pb-0">
+      <div class="card-title text-center">
+      </div>
+      <h1 class="text-center mt-3 mb-0">Recuperar cuenta</h1>
+    </div>
+    <div class="card-content">
+      <div class="card-body mx-2">
+        <div id="checkUserByEmailFrm" [ngClass]="{ 'hidden': emailChecked }">
+          <form [formGroup]="checkUserFrm" class="form-horizontal form-simple">
+            <fieldset class="form-group position-relative has-icon-left mb-2">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="email"
+                     placeholder="Email"
+                     formControlName="email"
+                     required
+                     autocomplete="email" tabindex="1">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </fieldset>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block" [disabled]="checkUserFrm.invalid" (click)="recoverCredentials()" tabindex="0">
+              <i class="ft-check"></i> Recuperar credenciales
+            </button>
+          </form>
+        </div>
+
+        <div>
+          <div class="alert alert-info" role="alert" *ngIf="recovered">
+            Por favor espere a recibir un correo con las nuevas credenciales
+          </div>
+        </div>
+      </div>
+      <div class="card-footer pt-0 border-0">
+        <div class="mx-2">
+          <h6 class="line-on-side text-muted text-center font-small-3 my-2"><span>O</span></h6>
+          <p class="text-center">
+            <a [routerLink]="['/login']" class="card-link align-self-center">
+              &laquo; Iniciar sesi&oacute;n &raquo;
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="copyright">
+  <p class="text-center">&copy;  2019 {{ copy }}</p>
+</div>

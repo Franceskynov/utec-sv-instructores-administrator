@@ -5,8 +5,9 @@
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 //@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700'); // custom font
-@import "~ngx-toastr/toastr.css";
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~ngx-toastr/toastr.css';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import '~angular-archwizard/archwizard.css';
 
 .profile-card-with-stats .btn-float {
   padding: 8px 14px 4px 14px; }
@@ -185,15 +186,15 @@ ngx-datatable.material.ngx-datatable {
 
 .cd-cart__trigger { // button that triggers the cart content
   z-index: 3;
-  height: 72px;
-  width: 72px;
+  height: 50px;
+  width: 50px;
   overflow: visible;
 
   &::after, &::before { // used to create the cart/'X' icon
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 31%;
+    left: 31%;
     transform: translateY(-50%) translateX(-50%);
     height: 100%;
     width: 100%;
@@ -202,7 +203,7 @@ ngx-datatable.material.ngx-datatable {
   }
 
   &::after { // 'X' icon
-    background-position: -72px 0;
+    background-position: -76px 0;
     opacity: 0;
     transform: translateX(-50%) translateY(-50%) rotate(90deg);
   }
@@ -229,8 +230,8 @@ ngx-datatable.material.ngx-datatable {
   position: absolute;
   top: -10px;
   right: -10px;
-  height: 28px;
-  width: 28px;
+  height: 20px;
+  width: 20px;
   background: var(--cd-color-5);
   color: var(--cd-color-3);
   font-size: var(--text-sm);
@@ -287,8 +288,8 @@ ngx-datatable.material.ngx-datatable {
   right: 0;
   z-index: 2;
   overflow: hidden;
-  height: 72px;
-  width: 72px;
+  height: 50px;
+  width: 50px;
   border-radius: var(--radius);
   transition: height .4s .1s, width  .4s .1s, box-shadow .3s;
   transition-timing-function: cubic-bezier(.67,.17,.32,.95);
@@ -370,18 +371,18 @@ ngx-datatable.material.ngx-datatable {
   flex-grow: 1;
   padding-top: var(--space-sm);
   padding-bottom: var(--space-sm);
-  overflow: auto;
+  overflow: scroll;
   -webkit-overflow-scrolling: touch;
   transition: opacity .2s;
 
   ul {
     position: relative;
-    padding-bottom: 60px; // make sure animation of last item is visible when it is removed from the cart
+    padding-bottom: 0px; // make sure animation of last item is visible when it is removed from the cart
   }
 
   @include breakpoint(md) {
     ul {
-      padding-bottom: 90px;
+      padding-bottom: 0px;
     }
   }
 }
@@ -568,7 +569,7 @@ ngx-datatable.material.ngx-datatable {
 }
 
 .cd-cart__footer {
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   width: 100%;
   border-radius: 0 0 var(--radius) var(--radius);
@@ -578,9 +579,9 @@ ngx-datatable.material.ngx-datatable {
 
 .cd-cart__checkout {
   display: block;
-  height: 72px;
-  line-height: 72px;
-  margin-right: 72px;
+  height: 50px;
+  line-height: 50px;
+  margin-right: 50px;
   background: var(--cd-color-2);
   color: alpha(var(--cd-color-3), 0);
   @include fontSmooth;
@@ -763,4 +764,9 @@ a.disabled {
   pointer-events: none;
   cursor: default;
   background: #cecece!important;
+}
+
+
+.highlight {
+  background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%);
 }

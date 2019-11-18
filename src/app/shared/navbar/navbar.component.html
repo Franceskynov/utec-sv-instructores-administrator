@@ -1,10 +1,11 @@
 <!-- fixed-top-->
 <nav id="stackNav" #stackNav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-semi-dark navbar-shadow">
   <div class="navbar-wrapper">
-    <div class="navbar-header">
+    <div class="navbar-header" *ngIf="Sidebar==='si'"  (mouseover)="adjustNavOver()"
+         (mouseleave)="adjustNavLeave()">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mobile-menu d-md-none mr-auto">
-          <a class="nav-link nav-menu-main menu-toggle hidden-xs">
+          <a class="nav-link nav-menu-main menu-toggle hidden-xs"  (click)="menuToggleNav()">
             <i class="ft-menu font-large-1"></i>
           </a>
         </li>
@@ -14,7 +15,8 @@
 <!--          </a>-->
         </li>
         <li class="nav-item d-md-none">
-          <a data-toggle="collapse" data-target="#navbar-mobile" class="nav-link open-navbar-container">
+          <a data-toggle="collapse" aria-expanded="true" data-target="#navbar-mobile" class="nav-link open-navbar-container" >
+            <span class="user-name"> {{ userName }} </span> &nbsp;
             <i class="fa fa-ellipsis-v"></i>
           </a>
         </li>
@@ -24,10 +26,10 @@
       <div id="navbar-mobile" class="collapse navbar-collapse">
         <ul class="nav navbar-nav mr-auto float-left">
           <li class="nav-item d-none d-md-block">
-            <a href="javascript:;" class="nav-link nav-menu-main menu-toggle hidden-xs d-block" id="stackNavMenu" #stackNavMenu>
+            <a href="javascript:;" class="nav-link nav-menu-main menu-toggle hidden-xs d-block" id="stackNavMenu" (click)="adjustMenu()" #stackNavMenu>
               <i class="ft-menu"></i>
             </a>
-            <a routerLink="/changelog" class="nav-link nav-menu-main hidden-xs font-small-3 d-none" id="stackNavBack" #stackNavBack>
+            <a routerLink="/changelog" class="nav-link nav-menu-main hidden-xs font-small-3 d-none" id="stackNavBack"  #stackNavBack>
               <i class="ft-arrow-left"></i>Back
             </a>
           </li>
@@ -37,13 +39,17 @@
             <a href="javascript:;" class="dropdown-toggle nav-link dropdown-user-link" id="dropdownUser" ngbDropdownToggle>
               <span class="avatar avatar-online">
                 <img src="assets/app/images/portrait/small/avatar-s-1.png" alt="avatar">
-                <i></i>
+                <i> </i>
               </span>
               <span class="user-name"> {{ userName }} </span>
             </a>
             <div ngbDropdownMenu aria-labelledby="dropdownUser">
-              <a class="dropdown-item" href="javascript:;">
-                <i class="ft-user"></i> Editar perfil
+              <a class="dropdown-item" href="javascript:;" routerLink="/perfil">
+                <i class="ft-user"></i>Perfil
+              </a>
+
+              <a class="dropdown-item" href="javascript:;" routerLink="/credenciales">
+                <i class="ft-user"></i> Cambio de credenciales
               </a>
 
               <div class="dropdown-divider"></div>

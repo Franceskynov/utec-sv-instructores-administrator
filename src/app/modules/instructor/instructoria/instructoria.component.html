@@ -1,0 +1,57 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Instructoria</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Instructor
+        </li>
+
+        <li class="breadcrumb-item active">
+          Instructoria
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+<button class="btn btn-outline-secondary mr-1 ft-refresh-ccw mb-2" type="button" placement="top" ngbTooltip="Recargar" (click)="getInstructorInstructory()"></button>
+
+
+<section id="card-headings">
+  <div class="row">
+
+    <div class="col-md-6 col-sm-12" *ngFor="let i of row.instructoria" >
+      <div class="card">
+        <div class="card-header" id="heading-linksc">
+          <h4 class="card-title">Instructoria</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <div>
+            <h4 class="card-title"></h4>
+            <p> <b>Nombre</b>: {{ i.nombre }}</p>
+            <p> <b>Ciclo</b>: {{ i.ciclo.nombre }}</p>
+            <p> <b>Aula</b>: {{ i.aula.codigo }}</p>
+            <p> <b>Docente</b> :
+              <span>  <b>Nombre</b> : {{ i.docente.nombre }}</span> &nbsp;
+              <span> <b>Apellido</b>: {{ i.docente.apellido }} </span>
+            </p>
+            <p> <b>Materia</b> : {{ i.materia.nombre }}</p>
+            <p> <b>Horario</b> : <span  class="badge badge-pill badge-secondary text-light ml-1 "> {{ i.nombre_dia }} {{ i.fin }} - {{ i.fin }}  </span></p>
+            <p> <b>Estatus</b> :
+              <span *ngIf="i.is_enabled === '1'" class="badge badge-pill badge-secondary text-light ml-1 ">Habilitado</span>
+              <span *ngIf="i.is_enabled === '0'" class="badge badge-pill badge-primary text-light ml-1">Deshabilitado</span>
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning" role="alert" *ngIf="row.instructoria.length === 0">
+      Por el momento no tiene asignada una instructoria.
+    </div>
+
+  </div>
+</section>

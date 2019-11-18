@@ -18,32 +18,37 @@
       </header>
 
       <div class="cd-cart__body">
-        <ul>
-          <!-- products added to the cart will be inserted here using JavaScript -->
-          <li class="cd-cart__product" *ngFor="let element of elements">
-            <div class="cd-cart__image">
-              <a href="javascript:;">
-                <img src="/assets/img/product-preview.png" alt="placeholder">
-              </a>
-            </div>
-            <div class="cd-cart__details">
-              <h3 class="truncate">
-                <span> {{ element.nombre }} </span><br>
-                <span> {{ element.carnet }} </span><br>
-                <span> {{ element.carrera }} </span>
-              </h3>
-              <span class="cd-cart__price"> {{ element.cum }} CUM</span>
-              <div class="cd-cart__actions">
-                <a href="javascript:;" class="cd-cart__delete-item" (click)="deleteElement(element)">Borrar</a>
-              </div>
-            </div>
-          </li>
 
-        </ul>
+
+        <perfect-scrollbar style="max-height: 400px; max-width: 498px" [config]="config">
+          <ul>
+            <!-- products added to the cart will be inserted here using JavaScript -->
+            <li class="cd-cart__product" *ngFor="let element of elements">
+              <div class="cd-cart__image">
+                <a href="javascript:;">
+                  <img src="/assets/img/product-preview.png" alt="placeholder">
+                </a>
+              </div>
+              <div class="cd-cart__details">
+                <h3 class="truncate">
+                  <span> {{ element.nombre }} </span><br>
+                  <span> {{ element.carnet }} </span><br>
+                  <span> {{ element.carrera }} </span>
+                </h3>
+                <span class="cd-cart__price"> {{ element.cum }} CUM</span>
+                <div class="cd-cart__actions">
+                  <a href="javascript:;" class="cd-cart__delete-item" (click)="deleteElement(element)">Borrar</a>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </perfect-scrollbar>
+
       </div>
 
       <footer class="cd-cart__footer">
-        <a href="javascript:;" class="cd-cart__checkout" [class.disabled]="elements.length <=0">
+        <a href="javascript:;" (click)="assign()" class="cd-cart__checkout" [class.disabled]="elements.length <=0">
           <em> Asignar
             <svg class="icon icon--sm" viewBox="0 0 24 24"><g fill="none" stroke="currentColor"><line stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="3" y1="12" x2="21" y2="12"/><polyline stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="15,6 21,12 15,18 "/></g>
             </svg>
@@ -53,3 +58,5 @@
     </div>
   </div> <!-- .cd-cart__content -->
 </div> <!-- cd-cart -->
+
+

@@ -16,6 +16,13 @@ export class DocenteService {
       }));
   }
 
+  public retrieveById(id) {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('docente/', id))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   public make(frmData) {
     return this.http.post<any>(environment.CONTROL_URL_API.concat('docente'), frmData)
       .pipe(map(data => {
@@ -32,6 +39,20 @@ export class DocenteService {
 
   public destroy(item) {
     return this.http.delete<any>(environment.CONTROL_URL_API.concat(`docente/${ item }`))
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public addMateria(frmData) {
+    return this.http.post<any>(environment.CONTROL_URL_API.concat('docente/materia'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public removeMateria(item, frmData) {
+    return this.http.patch<any>(environment.CONTROL_URL_API.concat(`docente/materia/${ item }`), frmData)
       .pipe(map(data => {
         return data;
       }));

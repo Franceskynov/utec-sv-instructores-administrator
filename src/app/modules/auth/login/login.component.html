@@ -1,56 +1,4 @@
-<!--<div class="content-body">-->
-<!--  <section class="flexbox-container">-->
-<!--    <div class="col-12 d-flex align-items-center justify-content-center">-->
-<!--      <div class=" box-shadow-1 p-0">-->
-<!--        <div class="card border-grey border-lighten-3 m-0">-->
-<!--          <div class="card-header border-0">-->
-<!--            <div class="card-title text-center">-->
-<!--              <div class="p-1">-->
-<!--                <img src="/assets/img/brand.png" alt="Logo Utec" height="100px" >-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="card-content">-->
-<!--            <div class="card-body">-->
-<!--              <form class="form-horizontal form-simple" action="index.html" novalidate [formGroup]="frm">-->
-<!--                <fieldset class="form-group position-relative has-icon-left mb-2">-->
-<!--                  <input type="text" class="form-control form-control-lg" id="user-name" placeholder="Email" formControlName="email"-->
-<!--                  required>-->
-<!--                  <div class="form-control-position">-->
-<!--                    <i class="ft-user"></i>-->
-<!--                  </div>-->
-<!--                </fieldset>-->
-<!--                <fieldset class="form-group position-relative has-icon-left">-->
-<!--                  <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password"-->
-<!--                  required>-->
-<!--                  <div class="form-control-position">-->
-<!--                    <i class="fa fa-key"></i>-->
-<!--                  </div>-->
-<!--                </fieldset>-->
-<!--                <div class="form-group row">-->
-
-
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary btn-lg btn-block" (click)="authenticate()"><i class="ft-unlock"></i> Iniciar sesi&oacute;n</button>-->
-<!--              </form>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="card-footer">-->
-<!--            &lt;!&ndash;-->
-<!--              <div class="">-->
-<!--              <p class="float-sm-left text-center m-0"><a href="recover-password.html" class="card-link">Recover password</a></p>-->
-<!--              <p class="float-sm-right text-center m-0">New to Stack? <a href="register-simple.html" class="card-link">Sign Up</a></p>-->
-<!--            </div>-->
-<!--            &ndash;&gt;-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
-<!--</div>-->
-
-
-<div class="col-4 mx-auto login-form">
+<div class="col-md-6 col-sm-8 col-xl-4 mx-auto login-form">
   <div class="card mb-1">
     <div class="card-header border-0 pb-0">
       <div class="card-title text-center">
@@ -61,39 +9,75 @@
     <div class="card-content">
       <div class="card-body mx-2">
 
-        <form class="form-horizontal form-simple" action="index.html" novalidate [formGroup]="frm">
-          <fieldset class="form-group position-relative has-icon-left mb-2">
-            <input type="text" class="form-control form-control-lg" id="user-name" placeholder="Email" formControlName="email" required autocomplete="off">
-            <div class="form-control-position">
-              <i class="ft-user"></i>
-            </div>
-          </fieldset>
-          <fieldset class="form-group position-relative has-icon-left">
-            <input type="password" class="form-control form-control-lg" id="user-password" placeholder=" Contrase&ntilde;a" formControlName="password" required>
-            <div class="form-control-position">
-              <i class="fa fa-key"></i>
-            </div>
-          </fieldset>
-          <div class="form-group row">
+        <div id="checkUserByEmailFrm" [ngClass]="{ 'hidden': emailChecked }">
+          <div class="alert alert-danger" role="alert" *ngIf="accountBlocked">
+            Su cuenta esta desactivada.
           </div>
-          <button type="button" class="btn btn-primary btn-lg btn-block" (click)="authenticate()" [disabled]="frm.invalid"><i class="ft-unlock"></i> Iniciar sesi&oacute;n</button>
-        </form>
+          <div class="alert alert-warning" role="alert" *ngIf="!accountChecked">
+            Su cuenta aun no esta activada.
+          </div>
+          <form [formGroup]="checkUserFrm" class="form-horizontal form-simple">
+            <fieldset class="form-group position-relative has-icon-left mb-2">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="email"
+                     placeholder="Email"
+                     formControlName="email" required autocomplete="email" (keydown.enter)="checkUserByEmail()">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </fieldset>
 
+            <button type="button" class="btn btn-primary btn-lg btn-block" [disabled]="checkUserFrm.invalid" (click)="checkUserByEmail()">
+              <i class="ft-check"></i> Verificar email
+            </button>
+          </form>
+        </div>
+
+        <div *ngIf="emailChecked">
+          <form class="form-horizontal form-simple" action="index.html" novalidate [formGroup]="frm">
+            <fieldset class="form-group position-relative has-icon-left mb-2">
+              <input type="text"
+                     class="form-control form-control-lg"
+                     id="user-name"
+                     placeholder="Email"
+                     formControlName="email" required autocomplete="off">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </fieldset>
+            <fieldset class="form-group position-relative has-icon-left">
+              <input type="password"
+                     class="form-control form-control-lg"
+                     id="user-password"
+                     placeholder=" Contrase&ntilde;a"
+                     formControlName="password"
+                     autofocus
+                     autocomplete="current-password" required (keydown.enter)="authenticate()">
+              <div class="form-control-position">
+                <i class="fa fa-key"></i>
+              </div>
+            </fieldset>
+            <div class="form-group row">
+            </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="authenticate()" (keydown.enter)="authenticate()" [disabled]="frm.invalid"><i class="ft-unlock"></i> Iniciar sesi&oacute;n</button>
+          </form>
+        </div>
 
       </div>
       <div class="card-footer pt-0 border-0">
         <div class="mx-2">
           <h6 class="line-on-side text-muted text-center font-small-3 my-2"><span>O</span></h6>
-<!--          <p class="text-center">-->
-<!--            <a [routerLink]="['/forgotPassword']" class="card-link align-self-center">-->
-<!--              &laquo; Recuperar contraseña &raquo;-->
-<!--            </a>-->
-<!--          </p>-->
+          <p class="text-center">
+            <a [routerLink]="['/login/accountRecover']" class="card-link align-self-center">
+              &laquo; Recuperar contraseña &raquo;
+            </a>
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="copyright">
-  <p class="text-center">&copy; Franceskynov 2019</p>
+  <p class="text-center">&copy; {{ copy }} 2019</p>
 </div>

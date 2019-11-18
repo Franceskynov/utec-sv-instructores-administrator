@@ -43,10 +43,12 @@ export class DirectorioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.gotoTop();
     this.config = {
       itemsPerPage: 0,
       currentPage: 0,
-      totalItems: 0
+      totalItems: 0,
+      id: 'directorioDocentes'
     };
     this.docentes = [];
     this.especialidades = [];
@@ -113,7 +115,8 @@ export class DirectorioComponent implements OnInit {
       this.config = {
         itemsPerPage: 6,
         currentPage: 1,
-        totalItems: this.docentes.length
+        totalItems: this.docentes.length,
+        id: 'directorioDocentes'
       };
       console.log(response);
     }, error => {
@@ -163,4 +166,11 @@ export class DirectorioComponent implements OnInit {
     this.config.currentPage = event;
   }
 
+  public gotoTop(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 }

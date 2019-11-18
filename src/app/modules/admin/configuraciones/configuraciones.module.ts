@@ -9,6 +9,11 @@ import { FacultadComponent } from './facultad/facultad.component';
 import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
+import { CapacitacionComponent } from './capacitacion/capacitacion.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { PreferenciasComponent } from './preferencias/preferencias.component';
+import { EscuelaComponent } from './escuela/escuela.component';
+import { EdificioComponent } from './edificio/edificio.component';
 
 @NgModule({
   imports: [
@@ -16,6 +21,19 @@ import { EspecialidadesComponent } from './especialidades/especialidades.compone
     routing,
     UtilModule
   ],
-  declarations: [IndexComponent, MateriasComponent, CicloComponent, FacultadComponent, HorarioComponent, AulaComponent, EspecialidadesComponent]
+  declarations: [
+    IndexComponent,
+    MateriasComponent,
+    CicloComponent,
+    FacultadComponent,
+    HorarioComponent,
+    AulaComponent,
+    EspecialidadesComponent,
+    CapacitacionComponent,
+    UsuariosComponent,
+    PreferenciasComponent,
+    EscuelaComponent,
+    EdificioComponent,
+  ]
 })
 export class ConfiguracionesModule { }

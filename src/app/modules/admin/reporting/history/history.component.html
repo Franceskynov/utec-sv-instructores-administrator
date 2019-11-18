@@ -1,0 +1,106 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Notas de instructoria</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Reportes
+        </li>
+
+        <li class="breadcrumb-item active">
+          Notas de instructoria
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <div>
+            <button class="btn btn-outline-secondary mr-1 ft-filter" type="button" placement="top" ngbTooltip="Filtrar" (click)="openModal(content)"></button>
+
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="alert alert-secondary" role="alert" *ngIf="!isFiltered">
+                Filtre el ciclo para generar un reporte.
+              </div>
+
+              <iframe [src]="url | safe" frameborder="0" width="100%" height="500px" *ngIf="isFiltered"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4>
+      Filtrar datos para el reporte
+    </h4>
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="form-group">
+        <label for="ciclo">Ciclo:</label>
+
+        <ng-select
+          id="ciclo"
+          name="ciclo"
+          [items]="ciclos"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="nombre"
+          placeholder="Seleccione el ciclo" formControlName="ciclo">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.nombre }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+      </div>
+
+
+      <div class="form-group">
+        <label for="school">Escuela:</label>
+
+        <ng-select
+          id="school"
+          name="school"
+          [items]="schools"
+          [multiple]="false"
+          [closeOnSelect]="true"
+          bindLabel="name"
+
+          placeholder="Seleccione la escuela" formControlName="school">
+          <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+            {{ item.name }}
+          </ng-template>
+        </ng-select>
+        <input-error-messages [frmName]="frm" ipName="school" [dataValidation]="permissions"></input-error-messages>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-danger ft-check mr-1" ngbTooltip="Generar reporte" [disabled]="frm.invalid" (click)="filterData(c);" ></button>
+  </div>
+</ng-template>

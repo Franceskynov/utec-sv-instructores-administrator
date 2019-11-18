@@ -1,0 +1,274 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Instructor&iacute;as</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Instructores
+        </li>
+
+        <li class="breadcrumb-item active">
+          Instructor&iacute;as
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-body">
+  <section class="row">
+    <div class="col-sm-12">
+
+      <div id="kick-start" class="card">
+        <div class="card-header">
+          <h4 class="card-title"></h4>
+          <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
+
+          <div>
+          </div>
+          <a class="heading-elements-toggle">
+            <i class="fa fa-ellipsis-v font-medium-3"></i>
+          </a>
+
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="ft-search"></i>
+                      </span>
+                </div>
+                <input type="text" class="form-control" placeholder="Busque en la tabla" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]='filterValue'>
+
+              </div>
+              <ngx-datatable class='material'
+                             [columnMode]="'force'"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             [limit]="limit"
+                             [rowHeight]="'auto'"
+                             [rows]='rows|filter:filterValue:searchColums'>
+                <!---->
+                <ngx-datatable-column name="Nombre" prop="nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Ciclo" prop="ciclo.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Horario" prop="horario">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    Dia: {{ row.nombre_dia }} <br>
+                    Hora inicio: {{ row.inicio }} <br>
+                    Hora fin: {{ row.fin }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Instructor" prop="instructor">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    Nombre: {{ row.instructor.nombre }} <br>
+                    Carnet: {{ row.instructor.carnet }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Materia" prop="materia.nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Aula" prop="aula.codigo">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    Codigo: {{ row.aula.codigo }} <br>
+                    Capacidad: {{ row.aula.capacidad }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Docente" prop="materia.docente">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    Nombre: {{ row.docente.nombre }} <br>
+                    Apellido: {{ row.docente.apellido }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Acciones" prop="actions">
+                  <ng-template let-row="row" let-id="value" ngx-datatable-cell-template>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1 ft-edit" placement="top" ngbTooltip="Modificar instructoria" (click)="editMode=true; openModal(content, row)"></button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modificar una instructor&iacute;a</h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+
+      <aw-wizard>
+        <aw-wizard-step stepTitle="Preparar">
+          <div class="row">
+            <div class="col-md-10 mx-auto">
+              <div class="form-group">
+                <label for="nombre">Nombre de la asignaci&oacute;n:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" [ngClass]="paintError(frm, 'nombre')" autocomplete="off">
+                <input-error-messages [frmName]="frm" ipName="nombre" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="form-group">
+                <label for="ciclo">Ciclo:</label>
+
+                <ng-select
+                  id="ciclo"
+                  name="ciclo"
+                  [items]="ciclos"
+                  [multiple]="false"
+                  [closeOnSelect]="true"
+                  bindLabel="nombre"
+                  placeholder="Seleccione el ciclo" formControlName="ciclo">
+                  <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+                    {{ item.nombre }}
+                  </ng-template>
+                </ng-select>
+                <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="form-group">
+                <label for="aula">Aula:</label>
+
+                <ng-select
+                  id="aula"
+                  name="aula"
+                  [items]="aulas"
+                  [multiple]="false"
+                  [closeOnSelect]="true"
+                  bindLabel="codigo"
+                  placeholder="Seleccione el aula" formControlName="aula">
+                  <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+                    <b>Codigo</b> {{ item.codigo }} <br>
+                    <b>Capacidad:</b> {{ item.capacidad }} alumnos
+                  </ng-template>
+                </ng-select>
+                <input-error-messages [frmName]="frm" ipName="aula" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  &nbsp;
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-secondary pull-right" awNextStep> Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Horario">
+          <div class="row">
+            <div class="col-md-10 mx-auto">
+
+              <div class="form-group">
+                <label for="dia">Dia:</label>
+
+                <ng-select
+                  id="dia"
+                  name="dia"
+                  [items]="days"
+                  [multiple]="false"
+                  [closeOnSelect]="true"
+                  bindLabel="nombre"
+                  placeholder="Seleccione el dia" formControlName="dia">
+                </ng-select>
+                <input-error-messages [frmName]="frm" ipName="dia" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="form-group">
+                <label for="inicio">Hora de inicio</label>
+                <ngb-timepicker  [meridian]="meridian" [(ngModel)]="inicio" name="inicio" id="inicio" formControlName="inicio"></ngb-timepicker>
+                <!--        <input type="text" class="form-control" id="inicio" name="inicio" formControlName="inicio" [ngClass]="paintError(frm, 'inicio')">-->
+                <input-error-messages [frmName]="frm" ipName="inicio" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="form-group">
+                <label for="fin">Hora de finalizacion</label>
+                <ngb-timepicker  [meridian]="meridian" [(ngModel)]="fin" name="inicio" id="fin" formControlName="fin"></ngb-timepicker>
+                <!--        <input type="text" class="form-control" id="fin" name="description" formControlName="fin" [ngClass]="paintError(frm, 'fin')">-->
+                <input-error-messages [frmName]="frm" ipName="fin" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-secondary" awPreviousStep> Anterior</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-secondary pull-right" awNextStep> Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Asignacion">
+
+          <div class="row">
+            <div class="col-md-10 mx-auto">
+              <div class="form-group">
+                <label for="docente">Docente:</label>
+
+                <ng-select
+                  id="docente"
+                  name="docente"
+                  [items]="docentes"
+                  [multiple]="false"
+                  [closeOnSelect]="true"
+                  bindLabel="nombre"
+                  placeholder="Seleccione el docente" formControlName="docente">
+                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                    <b>Apellido:</b> {{ item.apellido }} <br>
+                    <b>Nombre:</b> {{ item.nombre }} <br>
+                    <b>Email:</b> {{ item.email }}
+                  </ng-template>
+                </ng-select>
+                <input-error-messages [frmName]="frm" ipName="docente" [dataValidation]="permissions"></input-error-messages>
+              </div>
+
+              <div class="form-group">
+                <label for="materia">Materia:</label>
+
+                <ng-select
+                  id="materia"
+                  name="materia"
+                  [items]="frm.get('docente').value.materias"
+                  [multiple]="false"
+                  [closeOnSelect]="true"
+                  bindLabel="nombre"
+
+                  placeholder="Seleccione la materia" formControlName="materia">
+                  <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+                    {{ item.nombre }}
+                  </ng-template>
+                </ng-select>
+                <input-error-messages [frmName]="frm" ipName="materia" [dataValidation]="permissions"></input-error-messages>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-secondary" awPreviousStep> Anterior</button>
+                </div>
+                <div class="col-md-6">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+        </aw-wizard-step>
+      </aw-wizard>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Modificar" [disabled]="frm.invalid"  (click)="patchData(c);" ></button>
+  </div>
+</ng-template>
+

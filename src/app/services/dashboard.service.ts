@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
 export class DashboardService {
 
   constructor(private http: HttpClient) { }
-  public retrieve() {
-    return this.http.get<any>(environment.CONTROL_URL_API.concat('dashboard'))
+  public retrieve(cicloId) {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('dashboard?cicloId=', cicloId))
       .pipe(map(data => {
         return data;
       }));

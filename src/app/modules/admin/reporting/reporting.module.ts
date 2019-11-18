@@ -9,6 +9,7 @@ import { IndexComponent } from './index/index.component';
 import { InstructorsComponent } from './instructors/instructors.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     routing
   ],
-  declarations: [AssistsComponent, IndexComponent, InstructorsComponent, TeachersComponent, DashboardComponent]
+  declarations: [AssistsComponent, IndexComponent, InstructorsComponent, TeachersComponent, DashboardComponent, HistoryComponent]
 })
 export class ReportingModule { }

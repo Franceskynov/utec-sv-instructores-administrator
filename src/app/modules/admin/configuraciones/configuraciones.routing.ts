@@ -7,7 +7,13 @@ import { FacultadComponent } from './facultad/facultad.component';
 import { HorarioComponent } from './horario/horario.component';
 import { AulaComponent } from './aula/aula.component';
 import { AuthGuard } from 'app/guards/auth.guard';
+import { RoleGuard } from 'app/guards/role.guard';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
+import { CapacitacionComponent } from './capacitacion/capacitacion.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { PreferenciasComponent } from './preferencias/preferencias.component';
+import { EscuelaComponent } from './escuela/escuela.component';
+import { EdificioComponent } from './edificio/edificio.component';
 
 export const routes: Routes = [
   {
@@ -16,52 +22,103 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'escuelas',
+    component: EscuelaComponent,
+    data: {
+      title: 'Escuelas',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
     path: 'materias',
     component: MateriasComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Materias'
-    }
+      title: 'Materias',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'ciclo',
     component: CicloComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Ciclo'
-    }
+      title: 'Ciclo',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'facultad',
     component: FacultadComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Fcultad'
-    }
+      title: 'Fcultad',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'horario',
     component: HorarioComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Horario'
-    }
+      title: 'Horario',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'aula',
     component: AulaComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Aula'
-    }
+      title: 'Aula',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
   },
   {
     path: 'especialidad',
     component: EspecialidadesComponent,
-    canActivate: [AuthGuard],
     data: {
-      title: 'Especialidades'
-    }
-  }
+      title: 'Especialidades',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'capacitacion',
+    component: CapacitacionComponent,
+    data: {
+      title: 'Capacitaciones',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
+    data: {
+      title: 'Usuarios',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'preferencias',
+    component: PreferenciasComponent,
+    data: {
+      title: 'Preferencias del sistema',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
+  {
+    path: 'edificio',
+    component: EdificioComponent,
+    data: {
+      title: 'Edificios',
+      role: 'Administrador'
+    },
+    canActivate: [RoleGuard],
+  },
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

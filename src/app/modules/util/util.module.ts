@@ -14,9 +14,14 @@ import { environment } from 'environments/environment';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FilterPipe } from 'app/pipes/filter.pipe';
+import { SafePipe } from 'app/pipes/safe.pipe';
 import { OnlynumberDirective } from './directives/onlynumber.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ArchwizardModule } from 'angular-archwizard';
+import { RangeSliderComponent } from 'app/components/range-slider/range-slider.component';
 
 @NgModule({
   imports: [
@@ -30,6 +35,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxMaskModule.forRoot(),
     NgxPaginationModule,
     // NgbModule.forRoot(),
+    PasswordStrengthMeterModule,
+    PerfectScrollbarModule,
+    ArchwizardModule,
   ],
   declarations: [
     InputErrorMessagesComponent,
@@ -38,6 +46,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UploadComponent,
     OnlynumberDirective,
     CartComponent,
+    SafePipe,
+    RangeSliderComponent,
   ],
   exports: [
     InputErrorMessagesComponent,
@@ -54,6 +64,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxMaskModule,
     NgxPaginationModule,
     CartComponent,
+    PasswordStrengthMeterModule,
+    SafePipe,
+    ArchwizardModule,
+    RangeSliderComponent
   ]
 })
 export class UtilModule { }

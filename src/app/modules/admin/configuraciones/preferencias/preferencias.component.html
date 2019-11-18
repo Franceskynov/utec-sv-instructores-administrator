@@ -1,0 +1,153 @@
+<div class="content-header-left col-md-6 col-12 mb-2">
+  <h3 class="content-header-title mb-0">Preferencias del sistema</h3>
+  <div class="row breadcrumbs-top">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Configuraciones
+        </li>
+
+        <li class="breadcrumb-item active">
+          Preferencias del sistema
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-secondary mr-1 mb-2 ft-save" container="body" type="button" placement="top" ngbTooltip="Guardar cambios" (click)="saveSettings()"></button>
+
+
+<section id="card-headings">
+  <div class="row">
+
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksc">
+          <h4 class="card-title">Ciclo actual</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="frm">
+            <div class="form-group">
+              <label for="ciclo">Ciclo:</label>
+
+              <ng-select
+                id="ciclo"
+                name="ciclo"
+                [items]="ciclos"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                bindLabel="nombre"
+                placeholder="Seleccione el ciclo" formControlName="ciclo">
+                <ng-template ng-label-tmp let-item="item" let-search="searchTerm">
+                  {{ item.nombre }}
+                </ng-template>
+              </ng-select>
+              <input-error-messages [frmName]="frm" ipName="ciclo" [dataValidation]="permissions"></input-error-messages>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksd">
+          <h4 class="card-title">Prefijos de correo:</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="emailFrm">
+            <div class="form-group">
+              <label for="docente_email_prefix">Prefijo para el email del docente:</label>
+              <input type="text" name="docente_email_prefix" id="docente_email_prefix" formControlName="docente_email_prefix" class="form-control">
+              <input-error-messages [frmName]="emailFrm" ipName="docente_email_prefix" [dataValidation]="emailPermissions"></input-error-messages>
+            </div>
+
+            <div class="form-group">
+              <label for="instructor_email_prefix">Prefijo para el email del instructor:</label>
+              <input type="text" name="instructor_email_prefix" id="instructor_email_prefix" formControlName="instructor_email_prefix" class="form-control">
+              <input-error-messages [frmName]="emailFrm" ipName="instructor_email_prefix" [dataValidation]="emailPermissions"></input-error-messages>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linkse">
+          <h4 class="card-title">Horas sociales a asignar:</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="socialFrm">
+            <div class="form-group">
+              <label for="horas_sociales_a_asignar">Horas:</label>
+              <input type="text" name="ho" id="horas_sociales_a_asignar" formControlName="horas_sociales_a_asignar" class="form-control" appOnlynumber>
+              <input-error-messages [frmName]="socialFrm" ipName="horas_sociales_a_asignar" [dataValidation]="socialPermissions"></input-error-messages>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksf">
+          <h4 class="card-title">Par&aacute;metros para el instructor:</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="minimumFrm">
+            <div class="form-group">
+              <label for="minimun_cum">CUM minimo requerido:</label>
+              <input type="text" name="minimun_cum" id="minimun_cum" formControlName="minimun_cum" class="form-control">
+              <input-error-messages [frmName]="minimumFrm" ipName="minimun_cum" [dataValidation]="minimumPermissions"></input-error-messages>
+            </div>
+
+            <div class="form-group">
+              <label for="minimum_score">Nota minima requerida por mater&iacute;a:</label>
+              <input type="text" name="minimum_score" id="minimum_score" formControlName="minimum_score" class="form-control">
+              <input-error-messages [frmName]="minimumFrm" ipName="minimum_score" [dataValidation]="minimumPermissions"></input-error-messages>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12" >
+      <div class="card">
+        <div class="card-header" id="heading-linksg">
+          <h4 class="card-title">Par&aacute;metros para las evaluaciones:</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-danger" role="alert" *ngIf="validatePercentage(evaluacionFrm.get('autoevaluacion_percentage').value, evaluacionFrm.get('evaluacion_rrhh_percentage').value, evaluacionFrm.get('evaluacion_docente_percentage').value)">
+            Por favor revise, los numeros deben de sumar 1, lo que equivale al 100%.
+          </div>
+          <form [formGroup]="evaluacionFrm">
+            <div class="form-group">
+              <label for="autoevaluacion_percentage">Porcentaje para autoevaluacion:</label>
+              <input type="number" step="0.01" min="0.01" max="1" name="autoevaluacion_percentage" id="autoevaluacion_percentage" formControlName="autoevaluacion_percentage" class="form-control">
+              <input-error-messages [frmName]="evaluacionFrm" ipName="autoevaluacion_percentage" [dataValidation]="evaluacionPermissions"></input-error-messages>
+            </div>
+
+            <div class="form-group">
+              <label for="evaluacion_rrhh_percentage">Porcentaje para la evaluaci&oacute;n de recursos humanos:</label>
+              <input type="number" step="0.01" min="0.01" max="1" name="evaluacion_rrhh_percentage" id="evaluacion_rrhh_percentage" formControlName="evaluacion_rrhh_percentage" class="form-control">
+              <input-error-messages [frmName]="evaluacionFrm" ipName="evaluacion_rrhh_percentage" [dataValidation]="evaluacionPermissions"></input-error-messages>
+            </div>
+
+            <div class="form-group">
+              <label for="evaluacion_docente_percentage">Porcentaje para la evaluaci&oacute;n docente:</label>
+              <input type="number" step="0.01" min="0.01" max="1" name="evaluacion_docente_percentage" id="evaluacion_docente_percentage" formControlName="evaluacion_docente_percentage" class="form-control">
+              <input-error-messages [frmName]="evaluacionFrm" ipName="evaluacion_docente_percentage" [dataValidation]="evaluacionPermissions"></input-error-messages>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

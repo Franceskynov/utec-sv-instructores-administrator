@@ -16,17 +16,17 @@ export class FilterPipe implements PipeTransform {
     }
 
     filter = filter.toString();
-    if (filter != '') {
+    if (filter !== '') {
       return items.filter(singleItem => {
         let result = false;
 
-        for (let col of columns) {
-          if (singleItem[col])
+        for (const col of columns) {
+          if (singleItem[col]) {
             if (singleItem[col].toString().toLowerCase().includes(filter.toLowerCase())) {
-              console.log("un encontrado")
               result = true;
               break;
             }
+          }
 
         }
         return result;

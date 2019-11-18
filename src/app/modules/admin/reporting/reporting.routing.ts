@@ -7,6 +7,7 @@ import { InstructorsComponent } from './instructors/instructors.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AuthGuard} from 'app/guards/auth.guard';
+import { HistoryComponent } from './history/history.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: 'Dashboard'
+    }
+  },
+  {
+    path: 'notas',
+    component: HistoryComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Notas'
     }
   }
 
