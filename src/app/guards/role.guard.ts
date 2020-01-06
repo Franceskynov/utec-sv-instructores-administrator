@@ -30,7 +30,8 @@ export class RoleGuard implements CanActivate, OnInit {
       return true;
     }
 
-    if (this.token.role === next.data.role) {
+    if (this.token.role === next.data.role ||
+        this.token.role === next.data.subRole) {
       return true;
     }
 

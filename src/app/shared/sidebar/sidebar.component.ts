@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ADM_ROUTES, DCNT_ROUTES, INSTR_ROUTES } from './sidebar-routes.config';
+import { ADM_ROUTES, DCNT_ROUTES, INSTR_ROUTES, CORD_ROUTES } from './sidebar-routes.config';
 import { RouteInfo } from './sidebar.metadata';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DecodeTokenService } from 'app/services/decode-token.service';
@@ -40,12 +40,11 @@ export class SidebarComponent implements OnInit {
 
     public buildMenu(): void {
       this.token = this.decodeToken.decodePayload();
-      // console.log('from sidebar', this.token);
-      //  $.getScript('./assets/app/js/core/app-menu.js');
-      //  $.getScript('./assets/app/js/core/app.js');
 
       if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
         this.menuItems = ADM_ROUTES.filter(menuItem => menuItem);
+      } else if (this.token.is_admin === '1' && this.token.role === 'Coordinador') {
+        this.menuItems = CORD_ROUTES.filter(menuItem => menuItem);
       } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
         this.menuItems = DCNT_ROUTES.filter(menuItem => menuItem);
       } else {

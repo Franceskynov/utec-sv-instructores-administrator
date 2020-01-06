@@ -116,7 +116,8 @@ export class PreferenciasComponent implements OnInit {
       } else {
         this.toastr.warning(environment.MESSAGES.SERVICE_WARN);
       }
-    }, () => {
+    }, error => {
+      console.log(error.body);
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }

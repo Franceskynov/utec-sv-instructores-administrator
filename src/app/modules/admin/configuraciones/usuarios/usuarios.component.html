@@ -24,7 +24,7 @@
         <div class="card-header">
           <h4 class="card-title"></h4>
           <div>
-<!--            <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>-->
+            <button class="btn btn-outline-secondary mr-1 ft-plus" type="button" placement="top" ngbTooltip="Agregar" (click)="editMode=false; openModal(content, null)"></button>
             <button class="btn btn-outline-secondary mr-1 ft-refresh-ccw" type="button" placement="top" ngbTooltip="Recargar" (click)="retrieveData()"></button>
             <!--            <button class="btn btn-outline-secondary mr-1 ft-upload" type="button" placement="top" ngbTooltip="Carga masiva"></button>-->
           </div>
@@ -79,3 +79,84 @@
     </div>
   </section>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="editMode == false" class="modal-title">Registrar un usuario</h4>
+    <h4 *ngIf="editMode == true" class="modal-title">Modificsr un usuario </h4>
+    <!-- <h4 *ngIf="newTitle" class="modal-title">Nuevo modulo</h4> -->
+    <button type="button" class="close" aria-label="Cerrar" (click)="d('Cross click');">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="frm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" name="name" formControlName="name" [ngClass]="paintError(frm, 'name')" autocomplete="off">
+            <input-error-messages [frmName]="frm" ipName="name" [dataValidation]="permissions"></input-error-messages>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="form-group">
+            <label for="lastname">Apellido:</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" formControlName="lastname" [ngClass]="paintError(frm, 'lastname')" autocomplete="off">
+            <input-error-messages [frmName]="frm" ipName="lastname" [dataValidation]="permissions"></input-error-messages>
+          </div>
+        </div>
+        <div class="col-md-12">
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <div class="input-group">
+
+              <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')" autocomplete="off">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">{{ data.docente_email_prefix }}</span>
+              </div>
+            </div>
+            <input-error-messages [frmName]="frm" ipName="email" [dataValidation]="permissions"></input-error-messages>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Telefono:</label>
+            <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')" autocomplete="off">
+            <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
+          </div>
+        </div>
+        <div class="col-md-12">
+
+          <div class="form-group">
+            <label for="role">Rol: </label>
+            <ng-select
+              [items]="roles"
+              [multiple]="false"
+              [closeOnSelect]="true"
+              bindLabel="nombre"
+              placeholder="Seleccione el rol"
+              name="role"
+              id="role"
+              formControlName="role">
+            </ng-select>
+            <input-error-messages [frmName]="frm" ipName="role" [dataValidation]="permissions"></input-error-messages>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Oficina:</label>
+            <input type="text" class="form-control" id="office" name="phone" formControlName="office" [ngClass]="paintError(frm, 'office')" autocomplete="off">
+            <input-error-messages [frmName]="frm" ipName="office" [dataValidation]="permissions"></input-error-messages>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary fa fa-times" (click)="c('Close click')" ngbTooltip="Cerrar"></button>
+    <button type="button" *ngIf="editMode == false" class="btn btn-outline-secondary ft-file-plus mr-1" ngbTooltip="Crear" [disabled]="frm.invalid"  (click)="postData(c);" ></button>
+    <button type="button" *ngIf="editMode == true" class="btn btn-outline-secondary ft-save mr-1" ngbTooltip="Actualizar" [disabled]="frm.invalid"  (click)="patchData(); c('Close click')" ></button>
+  </div>
+</ng-template>

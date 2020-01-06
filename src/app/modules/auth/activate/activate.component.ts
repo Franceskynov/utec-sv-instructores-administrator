@@ -86,7 +86,7 @@ export class ActivateComponent implements OnInit {
     };
     this.credentialService.activate(frmData).subscribe(response => {
       if (!response.error) {
-        localStorage.removeItem('emailForActivate');
+        // localStorage.removeItem('emailForActivate');
         this.toastr.success(response.message, environment.MESSAGES.OK);
         setTimeout(() => {
           this.router.navigate(['/', 'login']);

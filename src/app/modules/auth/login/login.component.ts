@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.accountBlocked = false;
     this.copy = environment.copy;
     this.checkUserFrm = new FormGroup({
-      email: new FormControl('', [
+      email: new FormControl(localStorage.getItem('emailForActivate'), [
         Validators.required,
         Validators.email
       ])
@@ -105,16 +105,18 @@ export class LoginComponent implements OnInit {
       } else {
         this.toastr.warning('El usuario y la clave no coinciden', 'Login iconrrecto');
       }
-    }, error => {
+    }, () => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
   }
 
   public goTo(): void {
     this.token = this.decodeToken.decodePayload();
-
+    localStorage.removeItem('emailForActivate');
+    console.log(this.token.role);
     if (this.returnUrl === '/') {
-      if (this.token.is_admin === '1' && this.token.role === 'Administrador') {
+      if (this.token.is_admin === '1' && this.token.role === 'Administrador' ||
+          this.token.is_admin === '1' && this.token.role === 'Coordinador') {
         this.router.navigate(['/', 'admin']);
       } else if (this.token.is_admin === '0' && this.token.role === 'Docente') {
         this.router.navigate(['/', 'docente', 'dashboard']);

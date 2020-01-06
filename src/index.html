@@ -56,9 +56,6 @@
   <script src="/assets/app/vendors/pace/pace.min.js"></script>
   <script type="text/javascript">
     (function (window) {
-      // Polyfills DOM4 MouseEvent only on IE11
-      // Fixes ngx-charts line-chart hover
-      // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/MouseEvent#Polyfill
       if (!!window.MSInputMethodContext && !!document.documentMode || document.documentMode === 10) {
         function MouseEvent(eventType, params) {
           params = params || { bubbles: false, cancelable: false };

@@ -29,7 +29,8 @@ export const routes: Routes = [
         loadChildren: 'app/modules/admin/admin.module#AdminModule',
         canActivate: [RoleGuard],
         data: {
-          role: 'Administrador'
+          role: 'Administrador',
+          subRole: 'Coordinador'
         }
       },
       {

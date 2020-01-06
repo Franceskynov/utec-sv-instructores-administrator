@@ -26,7 +26,8 @@ export const routes: Routes = [
     component: EscuelaComponent,
     data: {
       title: 'Escuelas',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -35,7 +36,8 @@ export const routes: Routes = [
     component: MateriasComponent,
     data: {
       title: 'Materias',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -44,7 +46,8 @@ export const routes: Routes = [
     component: CicloComponent,
     data: {
       title: 'Ciclo',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -53,7 +56,8 @@ export const routes: Routes = [
     component: FacultadComponent,
     data: {
       title: 'Fcultad',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -62,7 +66,8 @@ export const routes: Routes = [
     component: HorarioComponent,
     data: {
       title: 'Horario',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -71,7 +76,8 @@ export const routes: Routes = [
     component: AulaComponent,
     data: {
       title: 'Aula',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -80,7 +86,8 @@ export const routes: Routes = [
     component: EspecialidadesComponent,
     data: {
       title: 'Especialidades',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -89,7 +96,8 @@ export const routes: Routes = [
     component: CapacitacionComponent,
     data: {
       title: 'Capacitaciones',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },
@@ -116,7 +124,8 @@ export const routes: Routes = [
     component: EdificioComponent,
     data: {
       title: 'Edificios',
-      role: 'Administrador'
+      role: 'Administrador',
+      subRole: 'Coordinador'
     },
     canActivate: [RoleGuard],
   },

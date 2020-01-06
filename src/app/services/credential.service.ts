@@ -17,6 +17,13 @@ export class CredentialService {
       }));
   }
 
+  public updateEmailOrUserName(frmData) {
+    return this.http.put<any>(environment.CONTROL_URL_API.concat('credentials/updateEmailOrUserName'), frmData)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
   public check(frmData) {
     return this.http.post<any>(environment.CONTROL_URL_API.concat('credentials/checkUserByEmail'), frmData)
       .pipe(map(data => {

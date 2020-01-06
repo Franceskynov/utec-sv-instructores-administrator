@@ -8,17 +8,25 @@ import { map } from 'rxjs/operators';
 })
 export class ExpedienteService {
 
-  constructor(private http: HttpClient) { }
+  public headers: HttpHeaders;
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      'Platform': 'website',
+      'Client': environment.CLIENT_AUTHORIZATION
+    });
+  }
   public retrieve(frmData) {
-    return this.http.get<any>(environment.CONTROL_URL_API.concat('expediente', '?carnet=', frmData.carnet ))
-      .pipe(map(data => {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat('expediente', '?carnet=', frmData.carnet ), {
+      headers: this.headers
+    }).pipe(map(data => {
         return data;
       }));
   }
 
   public getPensum(frmData) {
-    return this.http.get<any>(environment.CONTROL_URL_API.concat(`pensum?carnet=${frmData.carnet}`))
-      .pipe(map(data => {
+    return this.http.get<any>(environment.CONTROL_URL_API.concat(`pensum?carnet=${frmData.carnet}`), {
+      headers: this.headers
+    }).pipe(map(data => {
         return data;
       }));
   }

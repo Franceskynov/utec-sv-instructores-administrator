@@ -91,11 +91,11 @@
   <div class="modal-body">
     <form [formGroup]="frm">
       <div class="form-group">
-        <label for="dia">Edificio:</label>
+        <label for="edificio">Edificio:</label>
 
         <ng-select
-          id="dia"
-          name="dia"
+          id="edificio"
+          name="edificio"
           [items]="edificios"
           [multiple]="false"
           [closeOnSelect]="true"
@@ -148,7 +148,7 @@
 
       <div class="form-group">
         <label for="codigo">Codigo</label>
-        <input type="text" class="form-control" id="codigo" name="codigo" formControlName="codigo" [ngClass]="paintError(frm, 'codigo')">
+        <input type="text" class="form-control" id="codigo" name="codigo" formControlName="codigo" [ngClass]="paintError(frm, 'codigo')" [value]="makeCode(frm.get('edificio').value.abreviacion || '')">
         <input-error-messages [frmName]="frm" ipName="codigo" [dataValidation]="permissions"></input-error-messages>
       </div>
 

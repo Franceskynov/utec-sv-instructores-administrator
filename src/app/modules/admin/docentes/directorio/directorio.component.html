@@ -70,48 +70,62 @@
             <input-error-messages [frmName]="frm" ipName="name" [dataValidation]="permissions"></input-error-messages>
           </div>
 
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')" autocomplete="off">
-            <input-error-messages [frmName]="frm" ipName="email" [dataValidation]="permissions"></input-error-messages>
-          </div>
+
         </div>
+
         <div class="col-md-6">
           <div class="form-group">
             <label for="lastname">Apellido:</label>
             <input type="text" class="form-control" id="lastname" name="lastname" formControlName="lastname" [ngClass]="paintError(frm, 'lastname')" autocomplete="off">
             <input-error-messages [frmName]="frm" ipName="lastname" [dataValidation]="permissions"></input-error-messages>
           </div>
-          <div class="form-group">
-            <label for="name">Telefono:</label>
-            <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')" autocomplete="off">
-            <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
+
+        </div>
+
+
+      <div class="col-md-12">
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <div class="input-group">
+
+            <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="paintError(frm, 'email')" autocomplete="off">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">{{ data.docente_email_prefix }}</span>
+            </div>
           </div>
+          <input-error-messages [frmName]="frm" ipName="email" [dataValidation]="permissions"></input-error-messages>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Telefono:</label>
+          <input type="text" class="form-control" id="phone" name="phone" appOnlynumber="true" formControlName="phone" [ngClass]="paintError(frm, 'phone')" autocomplete="off">
+          <input-error-messages [frmName]="frm" ipName="phone" [dataValidation]="permissions"></input-error-messages>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Oficina:</label>
+          <input type="text" class="form-control" id="office" name="phone" formControlName="office" [ngClass]="paintError(frm, 'office')" autocomplete="off">
+          <input-error-messages [frmName]="frm" ipName="office" [dataValidation]="permissions"></input-error-messages>
+        </div>
+
+        <div class="form-group">
+          <label for="speciality">Especialidad: </label>
+          <ng-select
+            [items]="especialidades"
+            [multiple]="true"
+            [closeOnSelect]="true"
+            bindLabel="nombre"
+            placeholder="Seleccione las materias"
+            name="speciality"
+            id="speciality"
+            formControlName="speciality">
+          </ng-select>
+          <input-error-messages [frmName]="frm" ipName="speciality" [dataValidation]="permissions"></input-error-messages>
         </div>
       </div>
 
-
-      <div class="form-group">
-        <label for="name">Oficina:</label>
-        <input type="text" class="form-control" id="office" name="phone" formControlName="office" [ngClass]="paintError(frm, 'office')" autocomplete="off">
-        <input-error-messages [frmName]="frm" ipName="office" [dataValidation]="permissions"></input-error-messages>
       </div>
-
-      <div class="form-group">
-        <label for="speciality">Especialidad: </label>
-        <ng-select
-          [items]="especialidades"
-          [multiple]="true"
-          [closeOnSelect]="true"
-          bindLabel="nombre"
-          placeholder="Seleccione las materias"
-          name="speciality"
-          id="speciality"
-          formControlName="speciality">
-        </ng-select>
-        <input-error-messages [frmName]="frm" ipName="speciality" [dataValidation]="permissions"></input-error-messages>
-      </div>
-
     </form>
   </div>
   <div class="modal-footer">

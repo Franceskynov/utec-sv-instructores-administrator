@@ -17,8 +17,11 @@ export class CredentialsComponent implements OnInit {
 
   public token: any;
   public frm: FormGroup;
+  public frmEm: FormGroup;
   public ctrls: Array<String>;
+  public ctrlsEm: Array<String>;
   public permissions: any;
+  public permissionsEm: any;
   constructor(
     private permissionsService: PermissionsService,
     private decodeToken: DecodeTokenService,
@@ -29,6 +32,7 @@ export class CredentialsComponent implements OnInit {
 
   ngOnInit() {
     this.ctrls = ['email', 'oldPassword', 'password', 'confirmPassword'];
+    this.ctrlsEm = ['email', 'emailAccount', 'username'];
     this.permissions = {
       email: {
         required: true,
@@ -44,8 +48,23 @@ export class CredentialsComponent implements OnInit {
         required: true
       }
     };
+    this.permissionsEm = {
+      email: {
+        required: true,
+        email: true
+     },
+      emailAccount: {
+        // required: true,
+        email: true
+      },
+      username: {
+        required: true,
+        minLength: 6,
+        maxLength: 75
+      }
+    };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
-
+    this.frmEm = this.permissionsService.findPermission(this.ctrlsEm, this.permissionsEm);
     this.token = this.token = {
       iss: null,
       iat: null,
@@ -63,9 +82,12 @@ export class CredentialsComponent implements OnInit {
 
     this.token = this.decodeToken.decodePayload();
     this.f.email.setValue(this.token.email);
+    this.fEm.email.setValue(this.token.email);
+    this.fEm.username.setValue(this.token.username);
   }
 
   get f() { return this.frm.controls; }
+  get fEm() { return this.frmEm.controls; }
   public changeCredentials(): void {
     const formData = {
       oldPassword: this.f.oldPassword.value,
@@ -93,4 +115,32 @@ export class CredentialsComponent implements OnInit {
     }
   }
 
+  public changeEmailOrUserName(): void {
+    const formData = {
+      email: this.token.email,
+      newEmail: this.fEm.emailAccount.value,
+      username: this.fEm.username.value,
+      userId: this.token.userId
+    };
+    this.credentialService.updateEmailOrUserName(formData).subscribe(response => {
+      if (!response.error) {
+        this.toaster.success(response.message, environment.MESSAGES.OK);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+          localStorage.clear();
+        }, 2 * 1000);
+      } else {
+        this.toaster.warning(response.message, environment.MESSAGES.WARN);
+      }
+    }, error => {
+      this.toaster.error(error.error.message, environment.MESSAGES.ERROR);
+    });
+  }
+
+  public paintError(form, input): any {
+    return {
+      'is-invalid': form.get(input).touched && !form.get(input).valid,
+      'is-valid': form.get(input).touched && form.get(input).valid
+    };
+  }
 }

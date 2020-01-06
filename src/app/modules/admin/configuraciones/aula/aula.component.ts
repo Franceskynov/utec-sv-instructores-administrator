@@ -49,13 +49,13 @@ export class AulaComponent implements OnInit {
     private cicloService: CicloService,
     private sharedService: SharedService,
   ) {
-    // const thisComponent = this;
-    // this.subscription = this.sharedService.getFixWidthTable().subscribe(
-    //   result => {
-    //     setInterval((e) => {
-    //       thisComponent.rows = [...thisComponent.rows];
-    //     }, 450);
-    //   });
+    const thisComponent = this;
+    this.subscription = this.sharedService.getFixWidthTable().subscribe(
+      result => {
+        setInterval((e) => {
+          thisComponent.rows = [...thisComponent.rows];
+        }, 1500);
+      });
   }
 
   ngOnInit() {
@@ -64,6 +64,14 @@ export class AulaComponent implements OnInit {
     this.edificios = [];
     this.filteredHorarios = [];
     this.searchColums = ['nombre', 'descripcion'];
+    this.initForm();
+   // this.f.ciclo.patchValue(this.token.people.settings.ciclo);
+    this.retrieveData();
+    this.retrieveEdificios();
+   // this.retrieveHorarios();
+  }
+
+  public initForm(): void {
     this.ctrls = ['edificio', 'codigo', 'capacidad'];
     this.permissions = {
       edificio: {
@@ -77,10 +85,6 @@ export class AulaComponent implements OnInit {
       },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
-   // this.f.ciclo.patchValue(this.token.people.settings.ciclo);
-    this.retrieveData();
-    this.retrieveEdificios();
-   // this.retrieveHorarios();
   }
 
   get f () { return  this.frm.controls; }
@@ -126,6 +130,7 @@ export class AulaComponent implements OnInit {
         if (!data.error) {
           this.toastr.info(environment.MESSAGES.CREATED_OK, 'Ok');
           this.frm.reset();
+          this.initForm();
           this.retrieveData();
         } else {
           this.toastr.warning(data.message, environment.MESSAGES.WARN);
@@ -211,6 +216,10 @@ export class AulaComponent implements OnInit {
     this.frm.controls.horarios.reset();
     this.filteredHorarios = [];
     this.filteredHorarios = this.horarios.filter(row =>  row.ciclo.nombre === this.frm.controls.ciclo.value.nombre);
+  }
+
+  public makeCode(building): string {
+    return building !== undefined ? building.concat('_') : 'seleccione un edificio';
   }
 
 }

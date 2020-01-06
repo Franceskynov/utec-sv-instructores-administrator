@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { EspecialidadService } from 'app/services/especialidad.service';
 import { DocenteService } from 'app/services/docente.service';
+import { SettingService } from 'app/services/setting.service';
 
 @Component({
   selector: 'app-directorio',
@@ -33,13 +34,15 @@ export class DirectorioComponent implements OnInit {
   public searchColums: Array<String>;
   public tableValidation: Array<any>;
   public filterValue: any;
+  public data;
   constructor(
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
     private permissionsService: PermissionsService,
     private service: DocenteService,
-    private especialidadService: EspecialidadService
+    private especialidadService: EspecialidadService,
+    private settingService: SettingService
   ) { }
 
   ngOnInit() {
@@ -76,7 +79,7 @@ export class DirectorioComponent implements OnInit {
         maxLength: 50
       },
       email: {
-        email: true,
+        // email: true,
         required: true,
         minLength: 5,
         maxLength: 50
@@ -94,6 +97,9 @@ export class DirectorioComponent implements OnInit {
       },
     };
     this.frm = this.permissionsService.findPermission(this.ctrls, this.permissions);
+    this.data = {
+      docente_email_prefix: null
+    };
   }
 
   get f() { return this.frm.controls; }
@@ -122,13 +128,19 @@ export class DirectorioComponent implements OnInit {
     }, error => {
       this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
     });
+    this.settingService.retrieve().subscribe(response => {
+      this.data = response.data;
+    }, () => {
+      this.toastr.error(environment.MESSAGES.SERVER_ERROR, environment.MESSAGES.ERROR);
+    });
   }
 
   public postData(): void {
+    const email = this.f.email.value.concat(this.data.docente_email_prefix);
     const data = {
       nombre: this.f.name.value,
       apellido: this.f.lastname.value ,
-      email:  this.f.email.value,
+      email:  email,
       telefono:  this.f.phone.value,
       oficina: this.f.office.value,
       especialidades: this.mapEspecialidad(this.f.speciality.value)
