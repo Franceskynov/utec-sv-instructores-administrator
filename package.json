@@ -36,7 +36,7 @@
     "core-js": "^2.5.4",
     "humanize": "^0.0.9",
     "intl": "^1.2.5",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "ng-http-loader": "^2.3.0",
     "ngx-mask": "^8.0.5",
     "ngx-pagination": "^4.1.0",
